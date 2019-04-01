@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:e207e1c31b6483dc3d18de9916f218a1$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="start_ui.png" width="1024" height="1024">
+    <sprite n="T_logo.png" x="485" y="644" w="406" h="129" oX="18" oY="11" oW="438" oH="163"/>
+    <sprite n="about_text.png" x="893" y="739" w="99" h="23" oX="0" oY="4" oW="99" oH="39"/>
+    <sprite n="create_data_text.png" x="893" y="764" w="60" h="16" oX="0" oY="3" oW="60" oH="30"/>
+    <sprite n="data_1_text.png" x="994" y="739" w="19" h="60" oX="0" oY="5" oW="60" oH="39" r="y"/>
+    <sprite n="data_2_text.png" x="893" y="662" w="60" h="19" oX="0" oY="5" oW="60" oH="39"/>
+    <sprite n="data_3_text.png" x="248" y="1001" w="60" h="19" oX="0" oY="5" oW="60" oH="39"/>
+    <sprite n="exit_text.png" x="893" y="714" w="118" h="23" oX="0" oY="4" oW="118" oH="39"/>
+    <sprite n="game_time_text.png" x="893" y="644" w="64" h="16" oX="0" oY="3" oW="64" oH="30"/>
+    <sprite n="load_text.png" x="893" y="689" w="123" h="23" oX="0" oY="4" oW="125" oH="39"/>
+    <sprite n="loading_2.png" x="390" y="644" w="60" h="342" r="y"/>
+    <sprite n="loading_3.png" x="328" y="644" w="60" h="342" r="y"/>
+    <sprite n="loading_4.png" x="248" y="689" w="44" h="310" r="y"/>
+    <sprite n="loading_5.png" x="294" y="689" w="32" h="298" r="y"/>
+    <sprite n="loading_bg.jpg" x="2" y="2" w="960" h="640"/>
+    <sprite n="made_by_sky.png" x="452" y="644" w="23" h="174" oX="0" oY="4" oW="174" oH="39" r="y"/>
+    <sprite n="music00.png" x="510" y="801" w="56" h="56" oX="2" oY="2" oW="60" oH="60"/>
+    <sprite n="music01.png" x="485" y="936" w="56" h="56" oX="2" oY="2" oW="60" oH="60"/>
+    <sprite n="save_data_bg.png" x="2" y="644" w="244" h="363" oX="0" oY="0" oW="363" oH="248" r="y"/>
+    <sprite n="sbt1_1.png" x="964" y="460" w="58" h="227" r="y"/>
+    <sprite n="sbt1_2.png" x="964" y="231" w="58" h="227" r="y"/>
+    <sprite n="sbt1_3.png" x="964" y="2" w="58" h="227" r="y"/>
+    <sprite n="sbt6_1.png" x="248" y="644" w="38" h="40" oX="11" oY="11" oW="60" oH="60"/>
+    <sprite n="sbt6_2.png" x="288" y="644" w="38" h="38" oX="11" oY="13" oW="60" oH="60"/>
+    <sprite n="search_data_text.png" x="310" y="989" w="173" h="33" oX="0" oY="9" oW="175" oH="67"/>
+    <sprite n="sound00.png" x="452" y="878" w="56" h="56" oX="2" oY="2" oW="60" oH="60"/>
+    <sprite n="sound01.png" x="452" y="820" w="56" h="56" oX="2" oY="2" oW="60" oH="60"/>
+    <sprite n="time_atlas.png" x="2" y="1009" w="83" h="12" oX="0" oY="6" oW="89" oH="30"/>
+</TextureAtlas>

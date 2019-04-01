@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="13" tilewidth="48" tileheight="48" infinite="0" nextobjectid="9">
+ <properties>
+  <property name="name" value="网吧"/>
+ </properties>
+ <tileset firstgid="1" source="meta_tiles.tsx"/>
+ <imagelayer name="bg">
+  <image source="Map01_01_bg.png" width="960" height="624"/>
+ </imagelayer>
+ <layer name="meta layer" width="20" height="13" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzkGB1gE4OJU2IuqYBa5qCbR6y76eVPdPuobd6ofynzLzXNAwAqKwCK
+  </data>
+ </layer>
+ <layer name="collision layer" width="20" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjAIIAAAEEAAB
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Mother" x="432" y="576" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Mother"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Mother.lua"/>
+    <property name="trigger" value="Click"/>
+   </properties>
+  </object>
+  <object id="3" name="Map01_01" x="0" y="0" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map01_01.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="5" name="Passerby1" x="192" y="392" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Passerby1"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map01_01.lua"/>
+    <property name="trigger" value="Click"/>
+   </properties>
+  </object>
+  <object id="6" name="Passerby2" x="96" y="392" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Passerby1"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map01_01.lua"/>
+    <property name="trigger" value="Click"/>
+   </properties>
+  </object>
+  <object id="7" name="Passerby3" x="144" y="392" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Passerby1"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map01_01.lua"/>
+    <property name="trigger" value="Click"/>
+   </properties>
+  </object>
+  <object id="8" name="Passerby4" x="240" y="392" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Passerby1"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map01_01.lua"/>
+    <property name="trigger" value="Click"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

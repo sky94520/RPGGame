@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:409e3c47cf89495338a954bc3e661b7d$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="enemy.png" width="512" height="512">
+    <sprite n="Goblin1Atk_01.png" x="138" y="101" w="48" h="76" oX="41" oY="38" oW="136" oH="122"/>
+    <sprite n="Goblin1Atk_02.png" x="76" y="101" w="60" h="78" oX="35" oY="36" oW="136" oH="122"/>
+    <sprite n="Goblin1Atk_03.png" x="2" y="2" w="70" h="114" oX="15" oY="0" oW="136" oH="122"/>
+    <sprite n="Goblin1Atk_04.png" x="2" y="118" w="72" h="100" oX="36" oY="42" oW="136" oH="122" r="y"/>
+    <sprite n="Goblin1Atk_05.png" x="211" y="2" w="66" h="72" oX="38" oY="42" oW="136" oH="122"/>
+    <sprite n="Goblin1Atk_06.png" x="208" y="153" w="62" h="72" oX="30" oY="38" oW="136" oH="122"/>
+    <sprite n="Goblin1Hurt_01.png" x="241" y="227" w="54" h="72" oX="36" oY="38" oW="136" oH="122"/>
+    <sprite n="Goblin1Hurt_02.png" x="258" y="76" w="56" h="72" oX="17" oY="38" oW="136" oH="122"/>
+    <sprite n="Goblin1Hurt_03.png" x="272" y="150" w="54" h="72" oX="9" oY="61" oW="136" oH="122" r="y"/>
+    <sprite n="Goblin1Hurt_04.png" x="279" y="2" w="56" h="72" oX="12" oY="66" oW="136" oH="122" r="y"/>
+    <sprite n="Goblin1Hurt_05.png" x="2" y="220" w="38" h="94" oX="0" oY="83" oW="136" oH="122" r="y"/>
+    <sprite n="Goblin1Hurt_06.png" x="246" y="456" w="60" h="52" oX="34" oY="48" oW="136" oH="122" r="y"/>
+    <sprite n="Goblin1_01.png" x="193" y="255" w="46" h="74" oX="38" oY="36" oW="136" oH="122"/>
+    <sprite n="Goblin1_02.png" x="316" y="76" w="50" h="72" oX="34" oY="38" oW="136" oH="122"/>
+    <sprite n="Goblin1_03.png" x="190" y="388" w="54" h="72" oX="31" oY="38" oW="136" oH="122"/>
+    <sprite n="Goblin1_04.png" x="158" y="179" w="48" h="74" oX="35" oY="37" oW="136" oH="122"/>
+    <sprite n="Goblin1_05.png" x="139" y="260" w="52" h="74" oX="39" oY="36" oW="136" oH="122"/>
+    <sprite n="StoneMonster1Hurt_01.png" x="144" y="2" w="65" h="74" oX="24" oY="19" oW="139" oH="108"/>
+    <sprite n="StoneMonster1Hurt_02.png" x="54" y="408" w="60" h="81" oX="0" oY="36" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonster1Hurt_03.png" x="94" y="181" w="62" h="77" oX="2" oY="46" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonster1Hurt_04.png" x="139" y="336" w="73" h="50" oX="2" oY="56" oW="139" oH="108"/>
+    <sprite n="StoneMonster1Hurt_05.png" x="42" y="220" w="50" h="85" oX="3" oY="56" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonster1Hurt_06.png" x="2" y="408" w="50" h="83" oX="3" oY="56" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonster1_01.png" x="246" y="388" w="57" h="66" oX="37" oY="30" oW="139" oH="108"/>
+    <sprite n="StoneMonster1_02.png" x="407" y="70" w="71" h="58" oX="42" oY="31" oW="139" oH="108"/>
+    <sprite n="StoneMonster1_03.png" x="188" y="78" w="68" h="73" oX="42" oY="33" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonster1_04.png" x="337" y="2" w="68" h="71" oX="39" oY="31" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonster1_05.png" x="284" y="301" w="55" h="66" oX="33" oY="28" oW="139" oH="108"/>
+    <sprite n="StoneMonster1_06.png" x="214" y="331" w="68" h="55" oX="31" oY="28" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonsterAtk1_01.png" x="116" y="388" w="72" h="77" oX="19" oY="18" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonsterAtk1_02.png" x="2" y="316" w="77" h="90" oX="20" oY="0" oW="139" oH="108"/>
+    <sprite n="StoneMonsterAtk1_03.png" x="74" y="2" w="68" h="97" oX="42" oY="31" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonsterAtk1_04.png" x="81" y="307" w="56" h="79" oX="42" oY="30" oW="139" oH="108" r="y"/>
+    <sprite n="StoneMonsterAtk1_05.png" x="407" y="2" w="71" h="66" oX="42" oY="20" oW="139" oH="108"/>
+    <sprite n="StoneMonsterAtk1_06.png" x="297" y="224" w="62" h="65" oX="31" oY="30" oW="139" oH="108" r="y"/>
+</TextureAtlas>

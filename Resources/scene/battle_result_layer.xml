@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer anchor-point="0,0">
+	<!--bg-->
+	<Sprite anchor-point="0.5,0.5" name="bg" position="384,140">
+		<properties>
+			<property name="filename" value="battle_result_bg.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--战斗成功 or 失败-->
+	<Sprite anchor-point="0.5,0.5" name="battle_result_sp" position="384,60">
+		<properties>
+			<property name="filename" value="battle_win.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--gold-->
+	<Sprite position="200,170" anchor-point="0,0.5">
+		<properties>
+			<property name="filename" value="gold_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>	
+	<LabelAtlas position="250,165" anchor-point="0,0.5" name="gold_label">
+		<properties>
+			<property name="text" value="1000"/>
+			<property name="filename" value="common-font.png"/>
+			<property name="item-width" value="16"/>
+			<property name="item-height" value="24"/>
+			<property name="start-char" value="48"/>
+		</properties>
+	</LabelAtlas>
+	<!--exp-->
+	<Sprite position="390,170" anchor-point="0,0.5">
+		<properties>
+			<property name="filename" value="exp_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>	
+	<LabelAtlas position="440,165" anchor-point="0,0.5" name="exp_label">
+		<properties>
+			<property name="text" value="1000"/>
+			<property name="filename" value="common-font.png"/>
+			<property name="item-width" value="16"/>
+			<property name="item-height" value="24"/>
+			<property name="start-char" value="48"/>
+		</properties>
+	</LabelAtlas>
+	<!--掉落-->
+	<Sprite position="200,200" anchor-point="0,0.5">
+		<properties>
+			<property name="filename" value="drop_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<LabelBMFont position="200,200"  anchor-point="0,0" name="drop_label">
+		<properties>
+			<property name="text" value="无"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+</Layer>

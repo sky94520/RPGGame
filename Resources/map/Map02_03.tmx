@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="39" height="35" tilewidth="48" tileheight="48" infinite="0" nextobjectid="6">
+ <properties>
+  <property name="name" value="魔王城-3层"/>
+ </properties>
+ <tileset firstgid="1" source="meta_tiles.tsx"/>
+ <tileset firstgid="17" source="shelter_tiles.tsx"/>
+ <imagelayer name="bg1">
+  <image source="Map02_03_bg01.png" width="912" height="912"/>
+ </imagelayer>
+ <imagelayer name="bg2" offsetx="912" offsety="0">
+  <image source="Map02_03_bg02.png" width="960" height="912"/>
+ </imagelayer>
+ <imagelayer name="bg3" offsetx="0" offsety="912">
+  <image source="Map02_03_bg03.png" width="912" height="768"/>
+ </imagelayer>
+ <imagelayer name="bg4" offsetx="912" offsety="912">
+  <image source="Map02_03_bg04.png" width="960" height="768"/>
+ </imagelayer>
+ <layer name="meta layer" width="39" height="35" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzt0lEKwDAIA1B7/0vvt0h1ypqlhQj5m/qwG2Y2FEVRlDBzsS3eE9WpLpZPNqzrdJ/etO9juN6MbFPkY1tYtlXttn3d0en9e4dssqFtfkb1Gz+/uqfj6fRVim2L7oa2VSqzVft3J5uN3Hu7Lftf2K75Pqti25C3egAvDARL
+  </data>
+ </layer>
+ <layer name="collision layer" width="39" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzt0cEJwCAQRUHLMDmaeLb/7rIFCEIQFmEG3mFvH7YUAE5Voyu6s4dMtOiJ3uwhbNEXd6axuJnzUwAA+O8DVE4CBQ==
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Map02_03_EnemySpawner01" x="526" y="336" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map02_03.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="2" name="Map02_03_BOSS" x="912" y="480" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="BowKnight"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map02_03.lua"/>
+    <property name="trigger" value="Click"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="3" name="Map02_03" x="384" y="384" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map02_03.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="4" name="Map02_03_Warrior01" x="816" y="528" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Skeleton01"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map02_03.lua"/>
+    <property name="trigger" value="Click"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="5" name="Map02_03_Warrior02" x="1008" y="528" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Skeleton01"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map02_03.lua"/>
+    <property name="trigger" value="Click"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

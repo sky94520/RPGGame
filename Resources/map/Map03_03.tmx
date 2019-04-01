@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="48" tileheight="48" infinite="0" nextobjectid="3">
+ <properties>
+  <property name="name" value="旅店"/>
+ </properties>
+ <tileset firstgid="1" source="meta_tiles.tsx"/>
+ <imagelayer name="bg">
+  <image source="Map03_03_bg.png" width="960" height="672"/>
+ </imagelayer>
+ <layer name="meta layer" width="20" height="14" visible="0" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFVMP4ACsWmhLz2LDQlJiHDYz6l3xzqZVuaOU+Ut2Ibj4x6gBNbgD1
+  </data>
+ </layer>
+ <layer name="collision layer" width="20" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjALaAAAEYAAB
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Map03_03Merchant01" x="192" y="528" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Merchant1"/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map03_03.lua"/>
+    <property name="trigger" value="Click"/>
+   </properties>
+  </object>
+  <object id="2" name="Map03_03Merchant02" x="240" y="528" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map03_03.lua"/>
+    <property name="trigger" value="Click"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

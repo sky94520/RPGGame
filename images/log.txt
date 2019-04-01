@@ -1,0 +1,86 @@
+2018-05-20
+1.fix 修复了操作层和背包层的显示/隐藏bug
+
+2018-05-23
+1.fix 修复背包购买bug
+2.fix 修复了Text的再显示bug
+3.fix 修复了Windows下和android的代码相同。
+
+2018-05-27
+1.add 添加了寻路算法的死路避免。
+2.fix 修复了事件层分发点击地面事件的问题。
+
+2018-05-28
+1.fix 修复了脚本的相关问题。
+
+2018-05-29
+1.add 添加了对音乐和音效的控制。
+2.fix 修正了Text::wind的参数问题。
+
+2018-05-30
+1.fix 修正了文本层的部分问题。
+2.fix 修正了SoundManager的播放控制。
+3.fix 修正了脚本类的重用。
+4.fix 修正了文本层的showText的立绘显示问题。
+5.fix 修正了特效层的遮挡关系。
+6.fix 修正了战斗层的相关内容。
+
+2018-06-11
+1.fix 修正了战斗层主角死亡后的1点血量的显示问题。
+
+2018-06-17
+1.add 添加了对主角的当前方向的保存2
+2.add 添加了主角的实际名字以及脚本化
+
+2018-06-18
+1.add NPC当隐藏时，默认不会发生碰撞
+2.add NPC调用initialize进行脚本初始化的时候，会传入一个参数地图名称，如Map01_01
+
+2018-06-23
+1.fix 修正了lua的require和GameScene::executeScriptFile()的冲突问题
+      使得require和execute的同一个文件仅仅执行一次。仅仅保存文件名称，使之互斥。
+
+2018-06-30
+1.fix 修正了加载脚本文件时的取得文件名失败的问题
+
+2018-07-05
+1.fix 修正了MessageLayer的文本长度显示问题
+2.fix 修正了GameScene::moveToTile的触发和脚本问题
+3.fix 修正了ScriptLayer::clear()函数，使之只是进行废弃标志处理，而不改变容器
+
+2018-07-12
+1.upd 更新了Actor的动画改变方法，为脚本化和Enemy的更新做准备
+
+2018-07-13
+1.fix 修正了AnimationCache::getAnimation()当获取失败的错误。
+2.fix 修正了Enemy的动画切换问题，并把changeFightState暴露给脚本。
+3.fix 修正了特效层的显示动画。
+
+2018-07-14
+1.fix 近战攻击当前有靠近动作
+2.fix 敌人血条和名称跟随敌人
+3.fix 统一了Weapon的execute脚本函数，使得Actor和Enemy几乎相同
+4.fix 战斗人物的出手状态由对应的武器所改变。比如剑是Swing，则Sword:execute中会改变人物的状态为Swing
+
+2018-07-15
+1.fix 加载层显示当前加载资源
+2.fix Enemy中的initialize的问题。注：该函数调用只能使用Enemy.initialize(self, id);
+
+2018-07-16
+1.fix 物品层显示bug
+2.fix 对于消耗类装备，可以装备多个
+3.fix 箭头类物品可以装备多个，不过目前实现尚有点问题
+
+2018-07-22
+1.add 当出现到一个新地图时显示地图名 如主角的家等。
+2.fix 删除任务层=》展示层。展示层可以用于任务层、打造层等。
+
+2018-07-24
+1.fix 把ScriptFunc中的部分lua模块划分到其他文件中
+2.fix showTip函数和showText不再使用同一个Text。
+3.fix 气泡显示的GlobalZOrder为10
+
+2018-07-26
+1.fix Text显示字符串不全
+2.fix DynamicData::setProperty()设置血量和蓝的时候会参考最大值（未算上装备或武器提供的值）
+3.add 在party中添加了recover函数，使之可以用于单体或者全体恢复（分为战斗状态和非战斗状态）。

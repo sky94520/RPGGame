@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="20" height="14" tilewidth="48" tileheight="48" infinite="0" nextobjectid="1">
+ <properties>
+  <property name="name" value="武器防具店"/>
+ </properties>
+ <tileset firstgid="1" source="meta_tiles.tsx"/>
+ <imagelayer name="bg">
+  <image source="Map03_04_bg.png" width="960" height="672"/>
+ </imagelayer>
+ <layer name="meta layer" width="20" height="14" visible="0" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFVMOkgsFiHjY5avt3IM2jtjpquXGwm4fPHmLUAQDEAwC4
+  </data>
+ </layer>
+ <layer name="collision layer" width="20" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjALaAAAEYAAB
+  </data>
+ </layer>
+ <objectgroup name="script layer"/>
+</map>

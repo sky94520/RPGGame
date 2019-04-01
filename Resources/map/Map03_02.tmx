@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="21" height="18" tilewidth="48" tileheight="48" infinite="0" nextobjectid="6">
+ <properties>
+  <property name="name" value="大法师居所"/>
+ </properties>
+ <tileset firstgid="1" source="meta_tiles.tsx"/>
+ <tileset firstgid="17" source="shelter_tiles.tsx"/>
+ <imagelayer name="b'g">
+  <image source="Map03_02_bg.png" width="1008" height="864"/>
+ </imagelayer>
+ <layer name="meta layer" width="21" height="18" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFVMesDKgAWQ4GWEk0kw2HmciADYsYLnegq8MlzoBDjBgzcbkTXQyfW4h1Dy3MRBcnJp5wqUMXH25mUgJoYSatzCUlz5IaJ7TCAHi1AQ8=
+  </data>
+ </layer>
+ <layer name="collision layer" width="21" height="18">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFyEAPja+LRYxUYIHGN8ciNgpGwSgYBbQCAIGvATE=
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Map03_02Portal01" x="432" y="768" width="96" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map03_02.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="3" name="GreatMaster" x="144" y="336" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="GreatMaster"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/GreatMaster.lua"/>
+    <property name="trigger" value="Click"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="4" name="moon" x="528" y="384" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="moon"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/moon.lua"/>
+    <property name="trigger" value="Click"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="5" name="Map03_02" x="0" y="288" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map03_02.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

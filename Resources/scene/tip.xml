@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Sprite anchor-point="0.5,0.5" name="bg">
+	<properties>
+		<property name="filename" value="msgtip.png"/>
+		<property name="res-type" value="XML"/>
+	</properties>
+	<LabelBMFont position="145,21"  anchor-point="0.5,0.5" name="text_label">
+		<properties>
+			<property name="text" value="无"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+</Sprite>

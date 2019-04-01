@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer anchor-point="0,0" position="100,26" name="bag_layer">
+	<!--bg-->
+	<Sprite anchor-point="0.5,0.5" name="bg" position="384,240">
+		<properties>
+			<property name="filename" value="task_bg.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--关闭按钮-->
+	<Button position="680,50" name="close_btn">
+		<properties>
+			<property name="normal-image" value="sbt6_1.png"/>
+			<property name="selected-image" value="sbt6_2.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Button>
+  <!--上一页-->
+  <Button position="150,390" name="pre_page_btn">
+    <properties>
+      <property name="normal-image" value="sbt4_1.png"/>
+      <property name="selected-image" value="sbt4_2.png"/>
+      <property name="disabled-image" value="sbt4_3.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <Sprite position="33,16">
+      <properties>
+        <property name="filename" value="pre_page_text.png"/>
+        <property name="res-type" value="XML"/>
+      </properties>
+    </Sprite>
+  </Button>
+  <!--下一页-->
+  <Button position="220,390" name="next_page_btn">
+    <properties>
+      <property name="normal-image" value="sbt4_1.png"/>
+      <property name="selected-image" value="sbt4_2.png"/>
+      <property name="disabled-image" value="sbt4_3.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <Sprite position="33,16">
+      <properties>
+        <property name="filename" value="next_page_text.png"/>
+        <property name="res-type" value="XML"/>
+      </properties>
+    </Sprite>
+  </Button>
+  <!--当前页数/总页数-->
+  <LabelAtlas position="200,420" name="page_label">
+    <properties>
+      <property name="text" value="1/1"/>
+      <property name="filename" value="TextAtlas.png"/>
+      <property name="item-width" value="14"/>
+      <property name="item-height" value="18"/>
+      <property name="start-char" value="46"/>
+    </properties>
+  </LabelAtlas>
+  <!--左边按钮列表-->
+  <Xml name="task_btn_list">
+    <properties>
+      <property name="filename" value="scene/display_list.xml"/>
+    </properties>
+  </Xml>
+  <!--名称-->
+  <LabelBMFont position="380,50"  anchor-point="0,0" >
+    <properties>
+      <property name="text" value="名称"/>
+      <property name="font-path" value="fonts/1.fnt"/>
+      <property name="font-color" value="119,136,179"/>
+    </properties>
+  </LabelBMFont>
+  <LabelBMFont position="380,70"  anchor-point="0,0" name="title">
+    <properties>
+      <property name="text" value="无"/>
+      <property name="font-path" value="fonts/1.fnt"/>
+      <property name="font-color" value="0,255,255"/>
+    </properties>
+  </LabelBMFont>
+  <!--任务描述-->
+  <LabelBMFont position="380,90"  anchor-point="0,0">
+    <properties>
+      <property name="text" value="描述"/>
+      <property name="font-path" value="fonts/1.fnt"/>
+      <property name="font-color" value="119,136,179"/>
+    </properties>
+  </LabelBMFont>
+  <LabelBMFont position="380,110"  anchor-point="0,0" name="description">
+    <properties>
+      <property name="text" value="无"/>
+      <property name="font-path" value="fonts/1.fnt"/>
+      <property name="width" value="300"/>
+      <property name="font-color" value="0,0,0"/>
+    </properties>
+  </LabelBMFont>  
+  <!--任务进度-->
+  <LabelBMFont position="380,240"  anchor-point="0,0">
+    <properties>
+      <property name="text" value="进度"/>
+      <property name="font-path" value="fonts/1.fnt"/>
+      <property name="font-color" value="119,136,179"/>
+    </properties>
+  </LabelBMFont>
+  <LabelBMFont position="380,260"  anchor-point="0,0" name="step">
+    <properties>
+      <property name="text" value="无"/>
+      <property name="font-path" value="fonts/1.fnt"/>
+      <property name="font-color" value="0,0,0"/>
+    </properties>
+  </LabelBMFont>
+  <!--奖励-->
+  <LabelBMFont position="380,350"  anchor-point="0,0">
+    <properties>
+      <property name="text" value="奖励"/>
+      <property name="font-path" value="fonts/1.fnt"/>
+      <property name="font-color" value="119,136,179"/>
+    </properties>
+  </LabelBMFont>
+</Layer>

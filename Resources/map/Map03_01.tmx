@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="48" tileheight="48" infinite="0" nextobjectid="8">
+ <properties>
+  <property name="name" value="近卫营地"/>
+ </properties>
+ <tileset firstgid="1" source="meta_tiles.tsx"/>
+ <tileset firstgid="17" source="shelter_tiles.tsx"/>
+ <tileset firstgid="117" source="decoration_tiles.tsx"/>
+ <imagelayer name="bg">
+  <image source="Map03_01_bg.png" width="1200" height="1200"/>
+ </imagelayer>
+ <layer name="meta layer" width="25" height="25" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztlcEKACAIQ+3/f7pTEJGy2ewQDbzJXuiqZmbt17UaUvjMfp6q/bMcRqezZuXNAmUgvdlcrH2rJ8PwfCJl5qHUSwxVRhFGlGeE5bEzjB2zgsHewYq9f8YZQ8VC/gvm3VWU6twdCQkBOg==
+  </data>
+ </layer>
+ <layer name="collision layer" width="25" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AU0AJYArEVEFvT0BxnIHYBYlcSzFOHYmLN8QViPyD2J8EOQyim1JxRMLIAerqkBUBPl9QA1MrrmkCshUOOlLyObg4y3xiITXDoIyWPopsD4psyYHc/Pn+RCnC5H5+/hjMAAPj6C68=
+  </data>
+ </layer>
+ <layer name="3" width="25" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjALcoJpK5pRD6QoqmTeSQeVAO2AUjIJRMCgAAKE/AeQ=
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Map03_01Portal01" x="527" y="1152" width="96" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map03_01.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="2" name="GreatMaster" x="528" y="576" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="GreatMaster"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/GreatMaster.lua"/>
+    <property name="trigger" value="Click"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="3" name="Map03_01" x="15" y="729" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map03_01.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="4" name="Map03_01Door01" x="240" y="480" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="Door1_4"/>
+    <property name="priority" type="int" value="0"/>
+    <property name="script" value="script/Map03_01.lua"/>
+    <property name="trigger" value="Click"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="5" name="Map03_01Portal02" x="1152" y="576" width="48" height="96">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map03_01.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="6" name="Map03_01Portal03" x="768" y="480" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map03_01.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="7" name="Map03_01Portal04" x="432" y="528" width="48" height="48">
+   <properties>
+    <property name="chartlet" value=""/>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map03_01.lua"/>
+    <property name="trigger" value="Touch"/>
+    <property name="update" type="bool" value="false"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

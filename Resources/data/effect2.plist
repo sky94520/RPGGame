@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+ <dict>
+   <key>animations</key>
+   <dict>
+      <!--箭头1-->
+     <key>arrow01</key>
+     <dict>
+       <key>delay</key>
+       <real>1</real>
+       <key>loops</key>
+       <string>-1</string>
+       <key>frames</key>
+       <array>
+         <string>arrow_01.png</string>
+       </array>
+     </dict>
+      <!--箭头2-->
+     <key>arrow02</key>
+     <dict>
+       <key>delay</key>
+       <real>1</real>
+       <key>loops</key>
+       <string>-1</string>
+       <key>frames</key>
+       <array>
+         <string>arrow_02.png</string>
+       </array>
+     </dict> 
+      <!--箭头2 hit-->
+     <key>arrow02_hit</key>
+     <dict>
+       <key>delay</key>
+       <real>0.1</real>
+       <key>loops</key>
+       <string>1</string>
+       <key>frames</key>
+       <array>
+         <string>arrow_fire_01.png</string>
+         <string>arrow_fire_02.png</string>
+         <string>arrow_fire_03.png</string>
+         <string>arrow_fire_04.png</string>
+         <string>arrow_fire_05.png</string>
+       </array>
+     </dict>
+      <!--箭头3-->
+     <key>arrow03</key>
+     <dict>
+       <key>delay</key>
+       <real>1</real>
+       <key>loops</key>
+       <string>-1</string>
+       <key>frames</key>
+       <array>
+         <string>arrow_03.png</string>
+       </array>
+     </dict> 
+      <!--箭头3 hit-->
+     <key>arrow03_hit</key>
+     <dict>
+       <key>delay</key>
+       <real>0.1</real>
+       <key>loops</key>
+       <string>1</string>
+       <key>frames</key>
+       <array>
+         <string>arrow_drug_01.png</string>
+         <string>arrow_drug_02.png</string>
+         <string>arrow_drug_03.png</string>
+         <string>arrow_drug_04.png</string>
+         <string>arrow_drug_05.png</string>
+       </array>
+     </dict>
+
+
+
+   </dict>
+ </dict>
+</plist>

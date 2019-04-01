@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Node>
+	<!--logo-->
+	<Sprite anchor-point="0.5,0.5" position="480,200" name="logo">
+		<properties>
+			<property name="filename" value="T_logo.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<Sprite anchor-point="0,1" position="0,640">
+		<properties>
+			<property name="filename" value="made_by_sky.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+
+	<Button position="480,300" name="load_btn">
+		<properties>
+			<property name="normal-image" value="sbt1_1.png"/>
+			<property name="selected-image" value="sbt1_2.png"/>
+			<property name="selected-image" value="sbt1_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="113,28">
+			<properties>
+				<property name="filename" value="load_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<Button position="480,400" name="about_btn">
+		<properties>
+			<property name="normal-image" value="sbt1_1.png"/>
+			<property name="selected-image" value="sbt1_2.png"/>
+			<property name="selected-image" value="sbt1_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="113,28">
+			<properties>
+				<property name="filename" value="about_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<Button position="480,500" name="exit_btn">
+		<properties>
+			<property name="normal-image" value="sbt1_1.png"/>
+			<property name="selected-image" value="sbt1_2.png"/>
+			<property name="selected-image" value="sbt1_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="113,28">
+			<properties>
+				<property name="filename" value="exit_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+  <!--音乐-->
+  <CheckBox position="800,350" name="music_btn">
+    <properties>
+      <property name="res-type" value="XML"/>
+      <property name="background" value="music00.png"/>
+      <property name="cross" value="music01.png"/>
+    </properties>
+  </CheckBox>
+  <!--音效-->
+  <CheckBox position="800,420" name="chunk_btn">
+    <properties>
+      <property name="res-type" value="XML"/>
+      <property name="background" value="sound00.png"/>
+      <property name="cross" value="sound01.png"/>
+    </properties>
+  </CheckBox>
+  
+	<Xml name="save_data_layer" position="0,-580">
+		<properties>
+			<property name="filename" value="scene/save_data_layer.xml"/>
+		</properties>
+	</Xml>
+</Node>
