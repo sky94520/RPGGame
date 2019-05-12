@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="48" tileheight="48" nextobjectid="9">
+ <properties>
+  <property name="name" value="商店"/>
+ </properties>
+ <tileset firstgid="1" source="Inside_B.tsx"/>
+ <tileset firstgid="257" source="Inside_A4.tsx"/>
+ <tileset firstgid="497" source="Inside_A2.tsx"/>
+ <tileset firstgid="689" source="Outside_A5.tsx"/>
+ <tileset firstgid="817" source="Inside_C.tsx"/>
+ <tileset firstgid="1073" source="Outside_B.tsx"/>
+ <layer name="bg layer" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh48JGRdPyJEaGfkYk0jK5fkIk0jK4fxicVI7ufCQs2B2ILHHIgjOx+ISzYHYg9cMgJMaG6n5Lwp5X/CWFC/ieEYUCRCTt+A8W45AkBYSYIxgcAb+tA+w==
+  </data>
+ </layer>
+ <layer name="collision layer" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJwLZ2RgCKcQTwLiRgYGhiYgbmZAiCFjXGIgvBCoZyIQTwLiyVD96GASFjGY/o1YxD8zY6rHpR+bOAhcA5pxlRlVDJv/sbn1KAMqhrkfm//R7SUWEOMWbGrR+chuwqcfWQ029xNyKyier2BxE7H6scUzKfqxieHDxKhDT9PYwhKfGgA90Dmh
+  </data>
+ </layer>
+ <layer name="3" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAN6ALibijupJEdgxUYsTAwLGFG8EFsE5aBcw+xwHQIuHG4AQDONAQf
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Map01_03_Portal01" x="336" y="622" width="96" height="48">
+   <properties>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map01_03.lua"/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+  <object id="4" name="Map01_03_NPC01" x="288" y="192" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="moon"/>
+    <property name="priority" type="int" value="2"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="OKButton"/>
+   </properties>
+  </object>
+  <object id="5" name="Map01_03_NPC02" x="432" y="192" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="moon"/>
+    <property name="priority" type="int" value="2"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="OKButton"/>
+   </properties>
+  </object>
+  <object id="6" name="Map01_03_NPC03" x="96" y="432" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="moon"/>
+    <property name="priority" type="int" value="2"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="OKButton"/>
+   </properties>
+  </object>
+  <object id="7" name="Map01_03_NPC04" x="292" y="245" width="39" height="38">
+   <properties>
+    <property name="priority" type="int" value="2"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="OKButton"/>
+   </properties>
+  </object>
+  <object id="8" name="Map01_03_NPC05" x="436" y="245" width="41" height="37">
+   <properties>
+    <property name="priority" type="int" value="2"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="OKButton"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

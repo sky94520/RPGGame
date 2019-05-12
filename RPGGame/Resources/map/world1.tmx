@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="17" height="13" tilewidth="48" tileheight="48" nextobjectid="8">
+ <properties>
+  <property name="bgm" value="audio/bgm/Field2.ogg"/>
+  <property name="name" value="世界"/>
+ </properties>
+ <tileset firstgid="1" source="Outside_A5.tsx"/>
+ <tileset firstgid="129" source="World_B.tsx"/>
+ <tileset firstgid="385" source="World_A2.tsx"/>
+ <layer name="bg" width="17" height="13">
+  <data encoding="base64" compression="zlib">
+   eJwTZWBgEB3Fo3gU0w0DAHaBEiI=
+  </data>
+ </layer>
+ <layer name="bg2" width="17" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQwEcJkPPdyR2JyO1XEK6WdSweybQjC4gnsVIvpldUDNWMZLvppUU6gcBAGXyCc0=
+  </data>
+ </layer>
+ <layer name="collision layer" width="17" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg+YDMQbyGCxgcuA/EVImh85jwG4idE0EfwmHEYKg+jF5LhDlzmkuIOYt03UICUuMWln95hCgCnIzbi
+  </data>
+ </layer>
+ <layer name="3" width="17" height="13">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AU0BMAAAN0AAE=
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="World01_Portal01" x="0" y="336" width="48" height="48">
+   <properties>
+    <property name="priority" value="1"/>
+    <property name="script" value="script/World01.lua"/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+  <object id="5" name="World01_Obstacle01" x="336" y="432" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="World01_Obstacle01"/>
+    <property name="priority" value="2"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="OKButton"/>
+   </properties>
+  </object>
+  <object id="6" name="World01_Enemy01" x="2.66633" y="338.666" width="334.667" height="285.333">
+   <properties>
+    <property name="priority" value="1"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+  <object id="7" name="World01_Portal02" x="192" y="289.333" width="48" height="48">
+   <properties>
+    <property name="priority" value="1"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

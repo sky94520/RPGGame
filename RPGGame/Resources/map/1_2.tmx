@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="48" tileheight="48" nextobjectid="5">
+ <properties>
+  <property name="name" value="自己的家"/>
+ </properties>
+ <tileset firstgid="1" source="Inside_B.tsx"/>
+ <tileset firstgid="257" source="Inside_A4.tsx"/>
+ <tileset firstgid="497" source="Inside_A2.tsx"/>
+ <tileset firstgid="689" source="Outside_A5.tsx"/>
+ <tileset firstgid="817" source="Inside_C.tsx"/>
+ <layer name="bg layer" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBh4oMiEH+NSQ6x+fOaO6mdgCGZCxSNNPz41b4jQjw8IE1AHALS/GOw=
+  </data>
+ </layer>
+ <layer name="collision layer" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJwLZ2RgCKcQTyKAkdV0MDAwtANxGwNC/0Mg+xEQPwHieGYGDABSsxBIPwXiGUA8HYinIeknBEBqNuIQJ1Y/LnEQ3okmfhGI+ZkYGASYIGxC+tExSI88UK8CVP8kRvzq0cMbnz/Q4wWEbwPl7gDxbyD+RUQ4fAbipQykhR+62q1I4qsYIBgXwOU3ZP3kAGLSNiF1hNI+uvvRMQDjWEIJ
+  </data>
+ </layer>
+ <layer name="3" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAceDIzMHgxU8GgYQSSgOFhSKcwOQ3EZ4D4NRDHEGGn72hcDRoAAKWmBGQ=
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Map01_02_Portal01" x="383" y="624" width="48" height="48">
+   <properties>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map01_02.lua"/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+  <object id="3" name="Map01_02" x="0" y="0" width="48" height="48">
+   <properties>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+  <object id="4" name="Map01_02_NPC01" x="528" y="144" width="48" height="48">
+   <properties>
+    <property name="chartlet" value="moon"/>
+    <property name="priority" type="int" value="2"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="OKButton"/>
+    <property name="update" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
