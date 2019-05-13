@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Node position="0,200">
+	<!--攻击按钮-->
+	<Button position="910,150" name="attack_btn">
+		<properties>
+			<property name="normal-image" value="bt5_1.png"/>
+			<property name="selected-image" value="bt5_2.png"/>
+			<property name="disabled-image" value="bt5_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="50,25">
+			<properties>
+				<property name="filename" value="bt_attack_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<!--魔法按钮-->
+	<Button position="910,220" name="magic_btn">
+		<properties>
+			<property name="normal-image" value="bt5_1.png"/>
+			<property name="selected-image" value="bt5_2.png"/>
+			<property name="disabled-image" value="bt5_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="50,25">
+			<properties>
+				<property name="filename" value="bt_magic_attack_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<!--道具按钮-->
+	<Button position="910,290" name="good_btn">
+		<properties>
+			<property name="normal-image" value="bt5_1.png"/>
+			<property name="selected-image" value="bt5_2.png"/>
+			<property name="disabled-image" value="bt5_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="50,25">
+			<properties>
+				<property name="filename" value="bt_good_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<!--防御按钮-->
+	<Button position="910,360" name="guard_btn">
+		<properties>
+			<property name="normal-image" value="bt5_1.png"/>
+			<property name="selected-image" value="bt5_2.png"/>
+			<property name="disabled-image" value="bt5_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="50,25">
+			<properties>
+				<property name="filename" value="bt_defense_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<!--逃跑按钮-->
+	<Button position="910,430" name="escape_btn">
+		<properties>
+			<property name="normal-image" value="bt5_1.png"/>
+			<property name="selected-image" value="bt5_2.png"/>
+			<property name="disabled-image" value="bt5_3.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite position="50,25">
+			<properties>
+				<property name="filename" value="bt_escape_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+</Node>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Node position="0,0">
+	<!--角色1-->
+	<Node position="0,440" tag="0">
+		<Sprite position="150,160" anchor-point="0.5,0.5" name="bg">
+			<properties>
+				<property name="filename" value="fm_bg.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<!--hp-->
+		<LoadingBar position="147,152" anchor-point="0.5,0.5" name="hp">
+			<properties>
+				<property name="filename" value="fm_s1.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--hp label-->
+		<LabelAtlas position="147,152" anchor-point="0.5,0.5" name="hp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<!--mp-->
+		<LoadingBar position="147,178" anchor-point="0.5,0.5" name="mp">
+			<properties>
+				<property name="filename" value="fm_s2.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--mp label-->
+		<LabelAtlas position="147,178" anchor-point="0.5,0.5" name="mp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<Sprite position="50,140" anchor-point="0.5,0.5" scale="0.8,0.8" name="face">
+			<properties>
+				<property name="filename" value="Actor01-face01.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<LabelBMFont position="100,135"  anchor-point="0,0.5" name="name">
+			<properties>
+				<property name="text" value="sky"/>
+				<property name="font-path" value="fonts/1.fnt"/>
+				<property name="font-color" value="255,255,255"/>
+			</properties>
+		</LabelBMFont>
+	</Node>
+	<!--角色2-->
+	<Node position="230,440" tag="1">
+		<Sprite position="150,160" anchor-point="0.5,0.5" name="bg">
+			<properties>
+				<property name="filename" value="fm_bg.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<!--hp-->
+		<LoadingBar position="147,152" anchor-point="0.5,0.5" name="hp">
+			<properties>
+				<property name="filename" value="fm_s1.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--hp label-->
+		<LabelAtlas position="147,152" anchor-point="0.5,0.5" name="hp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<!--mp-->
+		<LoadingBar position="147,178" anchor-point="0.5,0.5" name="mp">
+			<properties>
+				<property name="filename" value="fm_s2.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--mp label-->
+		<LabelAtlas position="147,178" anchor-point="0.5,0.5" name="mp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<Sprite position="50,140" anchor-point="0.5,0.5" scale="0.8,0.8" name="face">
+			<properties>
+				<property name="filename" value="Actor01-face01.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<LabelBMFont position="100,135"  anchor-point="0,0.5" name="name">
+			<properties>
+				<property name="text" value="sky"/>
+				<property name="font-path" value="fonts/1.fnt"/>
+				<property name="font-color" value="255,255,255"/>
+			</properties>
+		</LabelBMFont>
+	</Node>
+	<!--角色3-->
+	<Node position="460,440" tag="2">
+		<Sprite position="150,160" anchor-point="0.5,0.5" name="bg">
+			<properties>
+				<property name="filename" value="fm_bg.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<!--hp-->
+		<LoadingBar position="147,152" anchor-point="0.5,0.5" name="hp">
+			<properties>
+				<property name="filename" value="fm_s1.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--hp label-->
+		<LabelAtlas position="147,152" anchor-point="0.5,0.5" name="hp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<!--mp-->
+		<LoadingBar position="147,178" anchor-point="0.5,0.5" name="mp">
+			<properties>
+				<property name="filename" value="fm_s2.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--mp label-->
+		<LabelAtlas position="147,178" anchor-point="0.5,0.5" name="mp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<Sprite position="50,140" anchor-point="0.5,0.5" scale="0.8,0.8" name="face">
+			<properties>
+				<property name="filename" value="Actor01-face01.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<LabelBMFont position="100,135"  anchor-point="0,0.5" name="name">
+			<properties>
+				<property name="text" value="sky"/>
+				<property name="font-path" value="fonts/1.fnt"/>
+				<property name="font-color" value="255,255,255"/>
+			</properties>
+		</LabelBMFont>
+	</Node>
+	<!--角色4-->
+	<Node position="690,440" tag="3">
+		<Sprite position="150,160" anchor-point="0.5,0.5" name="bg">
+			<properties>
+				<property name="filename" value="fm_bg.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<!--hp-->
+		<LoadingBar position="147,152" anchor-point="0.5,0.5" name="hp">
+			<properties>
+				<property name="filename" value="fm_s1.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--hp label-->
+		<LabelAtlas position="147,152" anchor-point="0.5,0.5" name="hp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<!--mp-->
+		<LoadingBar position="147,178" anchor-point="0.5,0.5" name="mp">
+			<properties>
+				<property name="filename" value="fm_s2.png"/>
+				<property name="res-type" value="XML"/>
+				<property name="percent" value="1"/>
+				<property name="dir" value="0"/>
+			</properties>
+		</LoadingBar>
+		<!--mp label-->
+		<LabelAtlas position="147,178" anchor-point="0.5,0.5" name="mp_label">
+			<properties>
+				<property name="text" value="10/10"/>
+				<property name="filename" value="TextAtlas.png"/>
+				<property name="item-width" value="14"/>
+				<property name="item-height" value="18"/>
+				<property name="start-char" value="46"/>
+			</properties>
+		</LabelAtlas>
+		<Sprite position="50,140" anchor-point="0.5,0.5" scale="0.8,0.8" name="face">
+			<properties>
+				<property name="filename" value="Actor01-face01.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+		<LabelBMFont position="100,135" anchor-point="0,0.5" name="name">
+			<properties>
+				<property name="text" value="sky"/>
+				<property name="font-path" value="fonts/1.fnt"/>
+				<property name="font-color" value="255,255,255"/>
+			</properties>
+		</LabelBMFont>
+	</Node>
+</Node>

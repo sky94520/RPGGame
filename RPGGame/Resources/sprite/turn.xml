@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:225f5cf5ec348023f36dc69c0074d035$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="turn.png" width="128" height="256">
+    <sprite n="Actor01_turn.png" x="52" y="102" w="48" h="48"/>
+    <sprite n="Actor02_turn.png" x="2" y="102" w="48" h="48"/>
+    <sprite n="BowKnight_turn.png" x="52" y="52" w="48" h="48"/>
+    <sprite n="Goblin1_turn.png" x="2" y="52" w="48" h="48"/>
+    <sprite n="People1_2_turn.png" x="52" y="2" w="48" h="48"/>
+    <sprite n="StoneMonster1_turn.png" x="2" y="2" w="48" h="48"/>
+</TextureAtlas>

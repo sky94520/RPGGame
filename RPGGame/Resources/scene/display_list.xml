@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Node>
+  <RadioButton position="220,75" name="task_btn0">
+    <properties>
+      <property name="background" value="bag_item_bg.png"/>
+      <property name="cross" value="bag_item_selected.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <LabelBMFont position="150,25"  anchor-point="0.5,0.4" name="title">
+      <properties>
+        <property name="text" value="1"/>
+        <property name="font-path" value="fonts/1.fnt"/>
+        <property name="font-color" value="0,0,0"/>
+      </properties>
+    </LabelBMFont>
+  </RadioButton>
+  <RadioButton position="220,125" name="task_btn1">
+    <properties>
+      <property name="background" value="bag_item_bg.png"/>
+      <property name="cross" value="bag_item_selected.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <LabelBMFont position="150,25"  anchor-point="0.5,0.4" name="title">
+      <properties>
+        <property name="text" value="1"/>
+        <property name="font-path" value="fonts/1.fnt"/>
+        <property name="font-color" value="0,0,0"/>
+      </properties>
+    </LabelBMFont>
+  </RadioButton>
+  <RadioButton position="220,175" name="task_btn2">
+    <properties>
+      <property name="background" value="bag_item_bg.png"/>
+      <property name="cross" value="bag_item_selected.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <LabelBMFont position="150,25"  anchor-point="0.5,0.4" name="title">
+      <properties>
+        <property name="text" value="sky"/>
+        <property name="font-path" value="fonts/1.fnt"/>
+        <property name="font-color" value="0,0,0"/>
+      </properties>
+    </LabelBMFont>
+  </RadioButton>
+  <RadioButton position="220,225" name="task_btn3">
+    <properties>
+      <property name="background" value="bag_item_bg.png"/>
+      <property name="cross" value="bag_item_selected.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <LabelBMFont position="150,25"  anchor-point="0.5,0.4" name="title">
+      <properties>
+        <property name="text" value="sky"/>
+        <property name="font-path" value="fonts/1.fnt"/>
+        <property name="font-color" value="0,0,0"/>
+      </properties>
+    </LabelBMFont>
+  </RadioButton>
+  <RadioButton position="220,275" name="task_btn4">
+    <properties>
+      <property name="background" value="bag_item_bg.png"/>
+      <property name="cross" value="bag_item_selected.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <LabelBMFont position="150,25"  anchor-point="0.5,0.4" name="title">
+      <properties>
+        <property name="text" value="sky"/>
+        <property name="font-path" value="fonts/1.fnt"/>
+        <property name="font-color" value="0,0,0"/>
+      </properties>
+    </LabelBMFont>
+  </RadioButton>
+  <RadioButton position="220,325" name="task_btn5">
+    <properties>
+      <property name="background" value="bag_item_bg.png"/>
+      <property name="cross" value="bag_item_selected.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+    <LabelBMFont position="150,25"  anchor-point="0.5,0.4" name="title">
+      <properties>
+        <property name="text" value="sky"/>
+        <property name="font-path" value="fonts/1.fnt"/>
+        <property name="font-color" value="0,0,0"/>
+      </properties>
+    </LabelBMFont>
+  </RadioButton>
+</Node>

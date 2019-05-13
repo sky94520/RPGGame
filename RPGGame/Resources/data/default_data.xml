@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <map>map/Map01_01.tmx</map>
+  <tile_position>{1,8}</tile_position>
+  <gold>20</gold>
+  <sell_ratio>0.5</sell_ratio>
+  <direction>3</direction>
+  <player name="sky" level="1" exp="0">
+    <skill name="SwordAttack"/>
+  </player>
+  <bag>
+    <good name="Herbs" number="2"/>
+  </bag>
+</root>

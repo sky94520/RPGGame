@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:2c41c03b9e109102eec56540b683fa19$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="Weapon.png" width="256" height="512">
+    <sprite n="Weapons1_01.png" x="76" y="360" w="28" h="28" oX="52" oY="22" oW="96" oH="64"/>
+    <sprite n="Weapons1_02.png" x="168" y="76" w="28" h="40" oX="23" oY="18" oW="96" oH="64"/>
+    <sprite n="Weapons1_03.png" x="116" y="332" w="28" h="28" oX="23" oY="30" oW="96" oH="64"/>
+    <sprite n="Weapons1_04.png" x="198" y="144" w="46" h="44" oX="27" oY="17" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_05.png" x="2" y="148" w="46" h="18" oX="42" oY="17" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_06.png" x="2" y="148" w="46" h="18" oX="42" oY="17" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_07.png" x="42" y="294" w="38" h="38" oX="51" oY="21" oW="96" oH="64"/>
+    <sprite n="Weapons1_08.png" x="2" y="108" w="48" h="38" oX="13" oY="10" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_09.png" x="86" y="262" w="38" h="38" oX="13" oY="20" oW="96" oH="64"/>
+    <sprite n="Weapons1_10.png" x="54" y="68" w="50" h="26" oX="17" oY="24" oW="96" oH="64"/>
+    <sprite n="Weapons1_11.png" x="126" y="266" w="38" h="26" oX="30" oY="24" oW="96" oH="64"/>
+    <sprite n="Weapons1_12.png" x="126" y="266" w="38" h="26" oX="30" oY="24" oW="96" oH="64"/>
+    <sprite n="Weapons1_13.png" x="154" y="118" w="42" h="44" oX="51" oY="22" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_14.png" x="198" y="84" w="50" h="34" oX="1" oY="27" oW="96" oH="64"/>
+    <sprite n="Weapons1_15.png" x="2" y="84" w="50" h="22" oX="1" oY="39" oW="96" oH="64"/>
+    <sprite n="Weapons1_16.png" x="82" y="302" w="36" h="22" oX="19" oY="26" oW="96" oH="64"/>
+    <sprite n="Weapons1_17.png" x="198" y="120" w="48" h="22" oX="8" oY="26" oW="96" oH="64"/>
+    <sprite n="Weapons1_18.png" x="232" y="222" w="22" h="36" oX="20" oY="26" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_19.png" x="100" y="142" w="44" h="38" oX="52" oY="21" oW="96" oH="64"/>
+    <sprite n="Weapons1_20.png" x="54" y="96" w="48" h="44" oX="7" oY="10" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_21.png" x="2" y="168" w="44" h="38" oX="7" oY="20" oW="96" oH="64"/>
+    <sprite n="Weapons1_22.png" x="62" y="20" w="1" h="1" oX="0" oY="0" oW="96" oH="64"/>
+    <sprite n="Weapons1_23.png" x="236" y="298" w="16" h="24" oX="21" oY="34" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_24.png" x="236" y="298" w="16" h="24" oX="21" oY="34" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_25.png" x="92" y="226" w="40" h="34" oX="51" oY="21" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_26.png" x="198" y="46" w="50" h="36" oX="1" oY="22" oW="96" oH="64"/>
+    <sprite n="Weapons1_27.png" x="168" y="24" w="28" h="50" oX="1" oY="30" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_28.png" x="62" y="20" w="1" h="1" oX="0" oY="0" oW="96" oH="64"/>
+    <sprite n="Weapons1_29.png" x="234" y="190" w="20" h="30" oX="17" oY="31" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_30.png" x="234" y="190" w="20" h="30" oX="17" oY="31" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_31.png" x="2" y="268" w="38" h="38" oX="48" oY="18" oW="96" oH="64"/>
+    <sprite n="Weapons1_32.png" x="116" y="64" w="50" h="38" oX="16" oY="11" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons1_33.png" x="46" y="254" w="38" h="38" oX="16" oY="23" oW="96" oH="64"/>
+    <sprite n="Weapons1_34.png" x="2" y="2" w="68" h="16" oX="28" oY="34" oW="96" oH="64"/>
+    <sprite n="Weapons1_35.png" x="2" y="2" w="68" h="16" oX="0" oY="34" oW="96" oH="64"/>
+    <sprite n="Weapons1_36.png" x="2" y="2" w="68" h="16" oX="0" oY="34" oW="96" oH="64"/>
+    <sprite n="Weapons2_01.png" x="138" y="224" w="40" h="40" oX="49" oY="20" oW="96" oH="64"/>
+    <sprite n="Weapons2_02.png" x="2" y="42" w="50" h="40" oX="14" oY="12" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_03.png" x="190" y="212" w="40" h="40" oX="14" oY="22" oW="96" oH="64"/>
+    <sprite n="Weapons2_04.png" x="164" y="326" w="30" h="26" oX="34" oY="22" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_05.png" x="42" y="334" w="32" h="30" oX="22" oY="22" oW="96" oH="64"/>
+    <sprite n="Weapons2_06.png" x="42" y="334" w="32" h="30" oX="22" oY="22" oW="96" oH="64"/>
+    <sprite n="Weapons2_07.png" x="94" y="182" w="42" h="42" oX="48" oY="19" oW="96" oH="64"/>
+    <sprite n="Weapons2_08.png" x="62" y="24" w="52" h="42" oX="13" oY="11" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_09.png" x="146" y="180" w="42" h="42" oX="13" oY="21" oW="96" oH="64"/>
+    <sprite n="Weapons2_10.png" x="146" y="164" w="44" h="14" oX="11" oY="33" oW="96" oH="64"/>
+    <sprite n="Weapons2_11.png" x="198" y="2" w="56" h="18" oX="0" oY="29" oW="96" oH="64"/>
+    <sprite n="Weapons2_12.png" x="146" y="164" w="44" h="14" oX="12" oY="33" oW="96" oH="64"/>
+    <sprite n="Weapons2_13.png" x="126" y="294" w="36" h="36" oX="48" oY="19" oW="96" oH="64"/>
+    <sprite n="Weapons2_14.png" x="104" y="104" w="48" h="36" oX="18" oY="14" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_15.png" x="166" y="288" w="36" h="36" oX="18" oY="26" oW="96" oH="64"/>
+    <sprite n="Weapons2_16.png" x="2" y="20" w="58" h="20" oX="7" oY="27" oW="96" oH="64"/>
+    <sprite n="Weapons2_17.png" x="72" y="2" w="66" h="20" oX="0" oY="27" oW="96" oH="64"/>
+    <sprite n="Weapons2_18.png" x="140" y="2" w="56" h="20" oX="8" oY="27" oW="96" oH="64"/>
+    <sprite n="Weapons2_19.png" x="190" y="190" w="42" h="20" oX="50" oY="21" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_20.png" x="48" y="176" w="44" h="36" oX="7" oY="23" oW="96" oH="64"/>
+    <sprite n="Weapons2_21.png" x="2" y="208" w="44" h="18" oX="7" oY="41" oW="96" oH="64"/>
+    <sprite n="Weapons2_22.png" x="198" y="22" w="54" h="22" oX="29" oY="29" oW="96" oH="64"/>
+    <sprite n="Weapons2_23.png" x="198" y="22" w="54" h="22" oX="1" oY="29" oW="96" oH="64"/>
+    <sprite n="Weapons2_24.png" x="198" y="22" w="54" h="22" oX="1" oY="29" oW="96" oH="64"/>
+    <sprite n="Weapons2_25.png" x="2" y="228" w="42" h="38" oX="51" oY="21" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_26.png" x="116" y="24" w="50" h="38" oX="14" oY="11" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_27.png" x="48" y="214" w="42" h="38" oX="14" oY="19" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_28.png" x="62" y="20" w="1" h="1" oX="0" oY="0" oW="96" oH="64"/>
+    <sprite n="Weapons2_29.png" x="82" y="326" w="32" h="32" oX="6" oY="26" oW="96" oH="64"/>
+    <sprite n="Weapons2_30.png" x="220" y="260" w="34" h="36" oX="0" oY="25" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_31.png" x="2" y="308" w="38" h="32" oX="50" oY="21" oW="96" oH="64"/>
+    <sprite n="Weapons2_32.png" x="52" y="142" w="46" h="32" oX="21" oY="15" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_33.png" x="180" y="254" w="38" h="32" oX="21" oY="23" oW="96" oH="64" r="y"/>
+    <sprite n="Weapons2_34.png" x="62" y="20" w="1" h="1" oX="0" oY="0" oW="96" oH="64"/>
+    <sprite n="Weapons2_35.png" x="204" y="298" w="30" h="30" oX="16" oY="20" oW="96" oH="64"/>
+    <sprite n="Weapons2_36.png" x="2" y="342" w="30" h="30" oX="16" oY="20" oW="96" oH="64"/>
+</TextureAtlas>

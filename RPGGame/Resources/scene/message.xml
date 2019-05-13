@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--bg-->
+<Sprite anchor-point="0.5,0.5" name="bg" position="384,400" size="768,130">
+	<properties>
+		<property name="filename" value="msg.png"/>
+		<property name="res-type" value="XML"/>
+	</properties>
+	<!--立绘-->
+	<Sprite anchor-point="0.5,0.5" name="face" position="0,0">
+		<properties>
+			<property name="filename" value=""/>
+			<property name="res-type" value="LOCAL"/>
+		</properties>
+	</Sprite>
+	<!--name-->
+	<LabelBMFont position="140,20" anchor-point="0,0.5" name="name">
+		<properties>
+			<property name="text" value="sky"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,255"/>
+		</properties>
+	</LabelBMFont>
+</Sprite>

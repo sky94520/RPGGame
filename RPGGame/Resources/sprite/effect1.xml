@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:7a6b6e999b502c94f80233c476072698$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+-->
+<TextureAtlas imagePath="effect1.png" width="1024" height="1024">
+    <sprite n="ClawPhysical_01.png" x="542" y="2" w="120" h="122" oX="65" oY="10" oW="192" oH="192"/>
+    <sprite n="ClawPhysical_02.png" x="484" y="550" w="136" h="138" oX="34" oY="23" oW="192" oH="192" r="y"/>
+    <sprite n="ClawPhysical_03.png" x="508" y="690" w="130" h="138" oX="14" oY="50" oW="192" oH="192" r="y"/>
+    <sprite n="ClawPhysical_04.png" x="336" y="386" w="152" h="162" oX="2" oY="40" oW="192" oH="192" r="y"/>
+    <sprite n="ClawPhysical_05.png" x="370" y="836" w="106" h="134" oX="36" oY="38" oW="192" oH="192" r="y"/>
+    <sprite n="ClawPhysical_06.png" x="612" y="830" w="114" h="136" oX="40" oY="35" oW="192" oH="192" r="y"/>
+    <sprite n="HitEffect_01.png" x="190" y="778" w="178" h="192" oX="0" oY="10" oW="192" oH="192" r="y"/>
+    <sprite n="HitEffect_02.png" x="2" y="778" w="186" h="192" oX="0" oY="6" oW="192" oH="192" r="y"/>
+    <sprite n="HitEffect_03.png" x="2" y="584" w="188" h="192" oX="0" oY="4" oW="192" oH="192" r="y"/>
+    <sprite n="HitEffect_04.png" x="2" y="390" w="188" h="192" oX="0" oY="0" oW="192" oH="192"/>
+    <sprite n="HitEffect_05.png" x="2" y="196" w="188" h="192" oX="1" oY="0" oW="192" oH="192"/>
+    <sprite n="HitPhysical_01.png" x="374" y="2" w="166" h="178" oX="4" oY="10" oW="192" oH="192"/>
+    <sprite n="HitPhysical_02.png" x="196" y="2" w="176" h="186" oX="0" oY="6" oW="192" oH="192"/>
+    <sprite n="HitPhysical_03.png" x="192" y="196" w="188" h="188" oX="0" oY="4" oW="192" oH="192"/>
+    <sprite n="HitPhysical_04.png" x="2" y="2" w="192" h="192"/>
+    <sprite n="SlashEffect_01.png" x="382" y="196" w="134" h="150" oX="42" oY="0" oW="192" oH="192" r="y"/>
+    <sprite n="SlashEffect_02.png" x="370" y="696" w="136" h="138" oX="44" oY="13" oW="192" oH="192" r="y"/>
+    <sprite n="SlashEffect_03.png" x="192" y="556" w="154" h="162" oX="30" oY="17" oW="192" oH="192" r="y"/>
+    <sprite n="SlashEffect_04.png" x="192" y="386" w="142" h="168" oX="11" oY="40" oW="192" oH="192" r="y"/>
+    <sprite n="SlashEffect_05.png" x="348" y="550" w="134" h="144" oX="3" oY="46" oW="192" oH="192"/>
+    <sprite n="SlashPhysical_01.png" x="618" y="428" w="106" h="110" oX="86" oY="0" oW="192" oH="192"/>
+    <sprite n="SlashPhysical_02.png" x="478" y="836" w="132" h="138" oX="44" oY="17" oW="192" oH="192" r="y"/>
+    <sprite n="SlashPhysical_03.png" x="490" y="348" w="126" h="132" oX="30" oY="45" oW="192" oH="192" r="y"/>
+    <sprite n="SlashPhysical_04.png" x="518" y="182" w="110" h="124" oX="11" oY="58" oW="192" oH="192"/>
+    <sprite n="SlashPhysical_05.png" x="618" y="308" w="112" h="118" oX="2" oY="78" oW="192" oH="192" r="y"/>
+    <sprite n="WaitClick_01.png" x="267" y="758" w="24" h="18" oX="0" oY="6" oW="24" oH="24"/>
+    <sprite n="WaitClick_02.png" x="293" y="746" w="20" h="24" oX="0" oY="4" oW="24" oH="24" r="y"/>
+    <sprite n="WaitClick_03.png" x="277" y="720" w="24" h="24"/>
+    <sprite n="WaitClick_04.png" x="251" y="720" w="24" h="24"/>
+    <sprite n="arrow_01.png" x="123" y="972" w="11" h="43" r="y"/>
+    <sprite n="arrow_02.png" x="175" y="1014" w="38" h="8"/>
+    <sprite n="arrow_03.png" x="360" y="972" w="10" h="39" r="y"/>
+    <sprite n="arrow_drug_01.png" x="229" y="1014" w="7" h="8" r="y"/>
+    <sprite n="arrow_drug_02.png" x="251" y="746" w="10" h="10"/>
+    <sprite n="arrow_drug_03.png" x="360" y="1013" w="11" h="9" r="y"/>
+    <sprite n="arrow_drug_04.png" x="263" y="746" w="9" h="10" r="y"/>
+    <sprite n="arrow_drug_05.png" x="215" y="1014" w="12" h="8" r="y"/>
+    <sprite n="arrow_fire_01.png" x="315" y="740" w="15" h="16"/>
+    <sprite n="arrow_fire_02.png" x="318" y="720" w="14" h="16"/>
+    <sprite n="arrow_fire_03.png" x="303" y="720" w="13" h="18"/>
+    <sprite n="arrow_fire_04.png" x="374" y="182" w="13" h="12"/>
+    <sprite n="arrow_fire_05.png" x="315" y="758" w="13" h="13"/>
+    <sprite n="click_01.png" x="44" y="972" w="77" h="44" oX="3" oY="6" oW="50" oH="85" r="y"/>
+    <sprite n="click_02.png" x="175" y="972" w="65" h="40" oX="4" oY="18" oW="50" oH="85" r="y"/>
+    <sprite n="click_03.png" x="307" y="972" w="51" h="40" oX="5" oY="32" oW="50" oH="85" r="y"/>
+    <sprite n="click_04.png" x="136" y="972" w="37" h="42" oX="4" oY="46" oW="50" oH="85" r="y"/>
+    <sprite n="click_05.png" x="2" y="972" w="40" h="47" oX="5" oY="36" oW="50" oH="85"/>
+    <sprite n="click_06.png" x="192" y="720" w="57" h="38" oX="6" oY="26" oW="50" oH="85" r="y"/>
+    <sprite n="click_07.png" x="242" y="972" w="63" h="40" oX="6" oY="19" oW="50" oH="85" r="y"/>
+    <sprite n="click_08.png" x="192" y="760" w="73" h="16" oX="18" oY="7" oW="50" oH="85" r="y"/>
+</TextureAtlas>

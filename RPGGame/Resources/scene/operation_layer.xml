@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer anchor-point="0,0">
+  <!--任务按钮-->
+  <Button position="51,100" name="task_btn">
+    <properties>
+      <property name="normal-image" value="task_n.png"/>
+      <property name="selected-image" value="task_h.png"/>
+      <property name="disabled-image" value="task_d.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+  </Button>
+  <!--背包按钮-->
+  <Button position="51,330" name="bag_btn">
+    <properties>
+      <property name="normal-image" value="bag_n.png"/>
+      <property name="selected-image" value="bag_h.png"/>
+      <property name="disabled-image" value="bag_d.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+  </Button>
+  <!--箭头按钮-->
+  <Button position="930,31" name="arrow_btn">
+    <properties>
+      <property name="normal-image" value="arrow_n.png"/>
+      <property name="selected-image" value="arrow_h.png"/>
+      <property name="disabled-image" value="arrow_d.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+  </Button>
+  <!--存档按钮-->
+  <Button position="905,330" name="save_btn">
+    <properties>
+      <property name="normal-image" value="save_n.png"/>
+      <property name="selected-image" value="save_h.png"/>
+      <property name="disabled-image" value="save_d.png"/>
+      <property name="res-type" value="XML"/>
+    </properties>
+  </Button>
+</Layer>

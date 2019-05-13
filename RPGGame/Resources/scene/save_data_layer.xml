@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Node>
+	<!--bg-->
+	<Sprite anchor-point="0.5,0.5" position="480,300" scale="1.6,1.6">
+		<properties>
+			<property name="filename" value="save_data_bg.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<Sprite anchor-point="0.5,0.5" position="480,120">
+		<properties>
+			<property name="filename" value="search_data_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<Button position="740,115" name="close_btn">
+		<properties>
+			<property name="normal-image" value="sbt6_1.png"/>
+			<property name="selected-image" value="sbt6_2.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Button>
+	<!--存档1-->
+	<Button position="390,200" name="save1"  scale="0.8,0.8">
+		<properties>
+			<property name="normal-image" value="sbt1_1.png"/>
+			<property name="selected-image" value="sbt1_2.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite anchor-point="0.5,0.5" position="113,28">
+			<properties>
+				<property name="filename" value="data_1_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<!--新建存档/游戏时间-->
+	<Sprite position="500,200" anchor-point="0,0.5" name="game_time_bg1">
+		<properties>
+			<property name="filename" value="create_data_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<LabelAtlas position="560,200" anchor-point="0,0.5f" name="game_time1">
+		<properties>
+			<property name="text" value="00:00:00"/>
+			<property name="filename" value="time_atlas.png"/>
+			<property name="item-width" value="8"/>
+			<property name="item-height" value="30"/>
+			<property name="start-char" value="48"/>
+		</properties>
+	</LabelAtlas>
+	<!--存档2-->
+	<Button position="390,300" name="save2"  scale="0.8,0.8">
+		<properties>
+			<property name="normal-image" value="sbt1_1.png"/>
+			<property name="selected-image" value="sbt1_2.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite anchor-point="0.5,0.5" position="113,28">
+			<properties>
+				<property name="filename" value="data_2_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<!--新建存档/游戏时间-->
+	<Sprite position="500,300" anchor-point="0,0.5" name="game_time_bg2">
+		<properties>
+			<property name="filename" value="create_data_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<LabelAtlas position="560,300" anchor-point="0,0.5f" name="game_time2">
+		<properties>
+			<property name="text" value="00:00:00"/>
+			<property name="filename" value="time_atlas.png"/>
+			<property name="item-width" value="8"/>
+			<property name="item-height" value="30"/>
+			<property name="start-char" value="48"/>
+		</properties>
+	</LabelAtlas>
+	<!--存档3-->
+	<Button position="390,400" name="save3"  scale="0.8,0.8">
+		<properties>
+			<property name="normal-image" value="sbt1_1.png"/>
+			<property name="selected-image" value="sbt1_2.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite anchor-point="0.5,0.5" position="113,28">
+			<properties>
+				<property name="filename" value="data_3_text.png"/>
+				<property name="res-type" value="XML"/>
+			</properties>
+		</Sprite>
+	</Button>
+	<!--新建存档/游戏时间-->
+	<Sprite position="500,400" anchor-point="0,0.5" name="game_time_bg3">
+		<properties>
+			<property name="filename" value="create_data_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<LabelAtlas position="560,400" anchor-point="0,0.5f" name="game_time3">
+		<properties>
+			<property name="text" value="00:00:00"/>
+			<property name="filename" value="time_atlas.png"/>
+			<property name="item-width" value="8"/>
+			<property name="item-height" value="30"/>
+			<property name="start-char" value="48"/>
+		</properties>
+	</LabelAtlas>
+</Node>

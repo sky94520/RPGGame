@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Node position="0,0">
+	<!---生命-->
+	<Sprite position="240,110">
+		<properties>
+			<property name="filename" value="hp_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<LabelBMFont position="310,105"  anchor-point="0.5,0.5" name="hp">
+		<properties>
+			<property name="text" value="100/100"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<LabelBMFont position="360,105"  anchor-point="0.5,0.5" name="delta-hp">
+		<properties>
+			<property name="text" value="+10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!---魔法值-->
+	<Sprite position="240,130">
+		<properties>
+			<property name="filename" value="mp_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<LabelBMFont position="310,125"  anchor-point="0.5,0.5" name="mp">
+		<properties>
+			<property name="text" value="100/100"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<LabelBMFont position="360,125"  anchor-point="0.5,0.5" name="delta-mp">
+		<properties>
+			<property name="text" value="+10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--1力量-->
+	<Sprite position="100,380">
+		<properties>
+			<property name="filename" value="attack_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--现有力量-->
+	<LabelBMFont position="150,380"  anchor-point="0.5,0.5" name="attack">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--差值力量-->
+	<LabelBMFont position="180,380"  anchor-point="0.5,0.5" name="delta-attack">
+		<properties>
+			<property name="text" value="+10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+
+	<!--2物防-->
+	<Sprite position="240,380">
+		<properties>
+			<property name="filename" value="defense_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--现有物防-->
+	<LabelBMFont position="280,380"  anchor-point="0.5,0.5" name="defense">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--差值物防-->
+	<LabelBMFont position="320,380"  anchor-point="0.5,0.5" name="delta-defense">
+		<properties>
+			<property name="text" value="+10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+
+	<!--3智力-->
+	<Sprite position="100,400">
+		<properties>
+			<property name="filename" value="magic_attack_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--现有智力-->
+	<LabelBMFont position="150,400"  anchor-point="0.5,0.5" name="magicAttack">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--差值智力-->
+	<LabelBMFont position="180,400"  anchor-point="0.5,0.5" name="delta-magicAttack">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+
+	<!--4魔抗-->
+	<Sprite position="240,400">
+		<properties>
+			<property name="filename" value="magic_defense_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--现有魔抗-->
+	<LabelBMFont position="280,400"  anchor-point="0.5,0.5" name="magicDefense">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--差值魔抗-->
+	<LabelBMFont position="320,400"  anchor-point="0.5,0.5" name="delta-magicDefense">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--5敏捷-->
+	<Sprite position="100,420">
+		<properties>
+			<property name="filename" value="agility_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--现有敏捷-->
+	<LabelBMFont position="150,420"  anchor-point="0.5,0.5" name="agility">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--差值敏捷-->
+	<LabelBMFont position="180,420"  anchor-point="0.5,0.5" name="delta-agility">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--6幸运-->
+	<Sprite position="240,420">
+		<properties>
+			<property name="filename" value="luck_text.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--现有幸运-->
+	<LabelBMFont position="280,420"  anchor-point="0.5,0.5" name="luck">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+	<!--差值幸运-->
+	<LabelBMFont position="320,420"  anchor-point="0.5,0.5" name="delta-luck">
+		<properties>
+			<property name="text" value="10"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="0,0,0"/>
+		</properties>
+	</LabelBMFont>
+</Node>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Node position="0,0">
+	<!---人物-->
+	<RadioButton position="30,120" name="player_btn0">
+		<properties>
+			<property name="background" value="bag_player_bg.png"/>
+			<property name="cross" value="bag_player_selected.png"/>
+			<property name="background-disabled" value="bag_player_bg_disable.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite anchor-point="0.5,0.5" position="33,33" name="sprite">
+			<properties>
+				<property name="filename" value="img/characters/Actor1.png"/>
+				<property name="rect" value="{{0,0},{48,48}}"/>
+				<property name="res-type" value="LOCAL"/>
+			</properties>
+		</Sprite>
+	</RadioButton>
+	<!--2-->
+	<RadioButton position="30,186" name="player_btn1">
+		<properties>
+			<property name="background" value="bag_player_bg.png"/>
+			<property name="cross" value="bag_player_selected.png"/>
+			<property name="background-disabled" value="bag_player_bg_disable.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite anchor-point="0.5,0.5" position="33,33" name="sprite">
+			<properties>
+				<property name="filename" value="img/characters/Actor1.png"/>
+				<property name="rect" value="{{0,0},{48,48}}"/>
+				<property name="res-type" value="LOCAL"/>
+			</properties>
+		</Sprite>
+	</RadioButton>
+	<!--3-->
+	<RadioButton position="30,252" name="player_btn2">
+		<properties>
+			<property name="background" value="bag_player_bg.png"/>
+			<property name="cross" value="bag_player_selected.png"/>
+			<property name="background-disabled" value="bag_player_bg_disable.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite anchor-point="0.5,0.5" position="33,33" name="sprite">
+			<properties>
+				<property name="filename" value="img/characters/Actor1.png"/>
+				<property name="rect" value="{{0,0},{48,48}}"/>
+				<property name="res-type" value="LOCAL"/>
+			</properties>
+		</Sprite>
+	</RadioButton>
+	<!--4-->
+	<RadioButton position="30,318" name="player_btn3">
+		<properties>
+			<property name="background" value="bag_player_bg.png"/>
+			<property name="cross" value="bag_player_selected.png"/>
+			<property name="background-disabled" value="bag_player_bg_disable.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+		<Sprite anchor-point="0.5,0.5" position="33,33" name="sprite">
+			<properties>
+				<property name="filename" value="img/characters/Actor1.png"/>
+				<property name="rect" value="{{0,0},{48,48}}"/>
+				<property name="res-type" value="LOCAL"/>
+			</properties>
+		</Sprite>
+	</RadioButton>
+</Node>

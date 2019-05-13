@@ -1,5 +1,6 @@
 #include "SDL_Engine/SDL_Engine.h"
 #include "HelloWorldScene.h"
+#include "GameScene.h"
 
 using namespace std;
 using namespace SDL;
@@ -28,7 +29,7 @@ int main(int argv,char**argc)
 		SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
 
 		//第一个启动场景
-		Director::getInstance()->runWithScene(HelloWorld::createScene());
+		Director::getInstance()->runWithScene(GameScene::getInstance());
 		Director::getInstance()->setDisplayStates(true);
 		Director::getInstance()->setSecondsPerFrame(1/60.f);
 		Director::getInstance()->setResolutionScale();
@@ -41,6 +42,7 @@ int main(int argv,char**argc)
 		//系统清除
 		Director::purge();
 		//释放单例类
+		GameScene::purge();
 
 		//释放内存池
 		PoolManager::getInstance()->purge();

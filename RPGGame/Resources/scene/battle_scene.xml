@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer anchor-point="0,0">
+	<!--行动按钮-->
+	<Xml name="battle_action_layer">
+		<properties>
+			<property name="filename" value="scene/battle_action_layer.xml"/>
+		</properties>
+	</Xml>
+	<!--战斗结果-->
+	<Xml name="battle_result_layer" anchor-point="0,0" position="100,0">
+		<properties>
+			<property name="filename" value="scene/battle_result_layer.xml"/>
+		</properties>
+	</Xml>	
+	<!--撤销按钮-->
+	<Button position="906,31" name="undo_btn">
+		<properties>
+			<property name="normal-image" value="bt_undo_1.png"/>
+			<property name="selected-image" value="bt_undo_2.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Button>
+	<!--角色状态-->
+	<Xml name="battle_state_layer">
+		<properties>
+			<property name="filename" value="scene/battle_state_layer.xml"/>
+		</properties>
+	</Xml>
+</Layer>
