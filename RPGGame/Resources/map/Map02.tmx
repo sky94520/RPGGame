@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="41" height="30" tilewidth="48" tileheight="48" nextobjectid="3">
+ <properties>
+  <property name="name" value="废弃矿洞"/>
+ </properties>
+ <tileset firstgid="1" source="Dungeon_A4.tsx"/>
+ <tileset firstgid="241" source="Outside_A5.tsx"/>
+ <tileset firstgid="369" source="Dungeon_B.tsx"/>
+ <tileset firstgid="625" source="Inside_A2.tsx"/>
+ <layer name="bg" width="41" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt0+EKgCAMBGDtiXrsfvSQEQRBaN52p47owH+5fWOZ0p+vZK+c2am5IjmjG1EfYrTUsszM1kT7jphZsWtmdrWv9T3SQ230zqQyenp5Z+thVL0zxsj6LEZlfct9pPdbmH+Qdc0ynlkzNoNix6iVqa06CtvIGdhEN7J1GCM6RyQj4mxZtuwztvo+z3Idj7H0TQ9j6Z5lJyONqvfJvOVejh5h9hgtv/HOAbgKXEo=
+  </data>
+ </layer>
+ <layer name="bg2" width="41" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlMENgDAIAJH9V3EE3UAf7qEbaKyPfmyjQmkhkUua+gC5VgTAceqzIsCG6W6JPfgcmO5WXJ88oqs2VjwsItFHQ8gfK96vxPebQv6s2AM95p+1HKzS2vGqR61JiY+xpedq4VhKTUcttO7xviTqcnpdgtx53paGEzXfOu4og1RfLl25h0TMlzyuK2UWcd7N+U9bzxfNueb8lxMJX0p1
+  </data>
+ </layer>
+ <layer name="collision layer" width="41" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzNl01OwzAQhROrO9g1O9g1e7hDewD2cANYcaTeiQsgsYRF9yBskVFeHzPjcVt+nmRFSt3JlzczttN1f6tlHgtjDP+Ea8xjrYxNHqtpzl9oQSyartLX76tfo5pVPByDc2+Sz+jVyTH1U+YV7577GCczRurEGpvOrx2JHfVw1+uMkTqx9NjPNc5+Sn457s7xMiWbkaXl3Mop96PMGzv9nYXD0r1Sj1qNSfwI51P25aXfZxXGomgNFt0lvb/k+Vxnpb8O6RNkvK14xnqYPET/tZreTu99nb7nMcLKPkZUvNZYsKbXzn/luVwLVo8dwth1cy4l5l7PBfKhMXpzo4zigXiIEj5LW6pzZLT6FZ/VsiZifGZsUYmB/XSWvT8H/639yest7T8WI3sm4j5HXWS+S2BknyN7wnJ6B1zjLEbUhq5Ree9TYyzieh/o3tAY+1RCRj4/Si5aahvj/QQjShiLamcuHqf2OcKInmpnda8/W8+ZGksLI+/5clb31mxrb8T9h3v9GMbXvIa8pflqcQ4Ux2LU5vAeXMsPM75nro80X0XsBz5HqwnefyxGb51a0H30VIReIo8MlPbdgKrlWhOv4xojeom8tbOzphZG67tHY0Rx7r3YWm1ZNVvrNStGbW3xahu/D3m0fF9q8tbE0fhdfF8qsaPPPVS1+HJPGKM9cIw+ATQ5WAQ=
+  </data>
+ </layer>
+ <layer name="3" width="41" height="30">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF5IA9jAPtAghYTYQ71gwSt44UsBYa3vjSCCjeZg5AvNAqLewexGmMkJ/3DoDbZ9PJzrWDOF5wgV0D7GZYmO0bJGE3FMvvjiHo5ksE3DwY42Egyq7hAAai7qUGIJRGRwEqODAaXiMeIJfb63CkB+R20kCWDZ8Ysbc7rjKOlvWjYBQMFgAAsdkWmg==
+  </data>
+ </layer>
+ <objectgroup name="script layer">
+  <object id="1" name="Map02_Portal01" x="717" y="1391" width="48" height="48">
+   <properties>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value="script/Map02.lua"/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+  <object id="2" name="Map02" x="527" y="1391" width="48" height="48">
+   <properties>
+    <property name="priority" type="int" value="1"/>
+    <property name="script" value=""/>
+    <property name="trigger" value="TouchWithPlayer"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
