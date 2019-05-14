@@ -25,11 +25,11 @@ private:
 	GameScene();
 	~GameScene();
 	bool init();
-	bool initializeMapAndPlayers();
+	bool initializeMap();
 public:
 	//改变场景
-	void changeMap(const string& mapName, const Point& tileCoodinate);
+	void changeMap(const string& mapFilename, const Point& tileCoodinate);
 	//设置视图中心点
-	void setViewpointCenter(const Point& position, float duration = 0.f);
+	void setViewpointCenter(const Point& position, unsigned millisecond = 0);
 };
 #endif

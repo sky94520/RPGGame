@@ -66,3 +66,13 @@ bool DynamicData::save(const string&map,const Point& tilePos, int nDir)
 {
 	return true;
 }
+
+const string& DynamicData::getMapFilename() const
+{
+	return m_pUserRecord->mapFilename;
+}
+
+const Point& DynamicData::getTileCoordinate() const
+{
+	return m_pUserRecord->tileCoordinate;
+}

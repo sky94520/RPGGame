@@ -21,18 +21,6 @@ USING_NS_SDL;
 #define STATIC_DATA_ARRAY(key) (StaticData::getInstance()->getValueForKey(key)->asValueVector())
 #define STATIC_DATA_TOSTRING(key) (StaticData::getInstance()->toString(key))
 
-/*方向,跟贴图有关*/
-enum class Direction
-{
-	Down = 0,
-	Left,
-	Right,
-	Up,
-};
-/*优先级 */
-#define PRIORITY_SAME 0 /*与人物能产生碰撞*/
-#define PRIORITY_LOW  1 /*NPC显示在下*/
-#define PRIORITY_HIGH 2 /*NPC显示在上*/
 
 class StaticData : public Object
 {
@@ -44,8 +32,6 @@ public:
 private:
 	//键值对
 	ValueMap m_valueMap;
-	//角色键值对
-	ValueMap m_characterMap;
 private:
 	StaticData();
 	~StaticData();

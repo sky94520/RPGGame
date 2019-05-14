@@ -1,4 +1,4 @@
-#ifndef __UserRecord_H__
+ï»¿#ifndef __UserRecord_H__
 #define __UserRecord_H__
 
 #include <string>
@@ -15,21 +15,21 @@ public:
 	~UserRecord();
 	CREATE_FUNC(UserRecord);
 
-	//´ÓÎÄ¼şÖĞ¶ÁÈ¡Êı¾İ
+	//ä»æ–‡ä»¶ä¸­è¯»å–æ•°æ®
 	bool readFromXML(const string& filename);
-	//±£´æÊı¾İµ½ÎÄ¼şÖĞ
+	//ä¿å­˜æ•°æ®åˆ°æ–‡ä»¶ä¸­
 	bool writeToXML(const string& filename);
 private:
 	void parsePlayer(rapidxml::xml_node<>* root);
 	void parseBag(rapidxml::xml_node<>* root);
-private:
-	//½ğ±ÒÊıÁ¿
-	int m_goldNumber;
-	//³öÊÛ±ÈÀı
-	float m_sellRatio;
-	//µØÍ¼
-	string m_mapFilename;
-	//Íæ¼ÒÎ»ÖÃ
-	Point m_tilePosOfPlayer;
+public:
+	//é‡‘å¸æ•°é‡
+	int goldNumber;
+	//å‡ºå”®æ¯”ä¾‹
+	float sellRatio;
+	//åœ°å›¾
+	string mapFilename;
+	//ç©å®¶ä½ç½®
+	Point tileCoordinate;
 };
 #endif

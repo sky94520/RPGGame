@@ -1,8 +1,8 @@
-#include "UserRecord.h"
+Ôªø#include "UserRecord.h"
 
 UserRecord::UserRecord()
-	:m_goldNumber(0)
-	,m_sellRatio(0.f)
+	:goldNumber(0)
+	,sellRatio(0.f)
 {
 }
 
@@ -16,7 +16,7 @@ bool UserRecord::readFromXML(const string& filename)
 	std::unique_ptr<char> text_ptr = std::move(FileUtils::getInstance()->getUniqueDataFromFile(filename));
 	std::string text;
 
-	//Œƒº˛∂¡»° ß∞‹
+	//Êñá‰ª∂ËØªÂèñÂ§±Ë¥•
 	if (text_ptr == nullptr)
 		return false;
 	try
@@ -24,19 +24,19 @@ bool UserRecord::readFromXML(const string& filename)
 		doc.parse<0>(text_ptr.get());
 		//root
 		auto root = doc.first_node();
-		//∂‘Ω⁄µ„Ω¯––±È¿˙
+		//ÂØπËäÇÁÇπËøõË°åÈÅçÂéÜ
 		for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
 		{
 			string name = node->name();
 
 			if (name == "map")
-				m_mapFilename = node->value();
+				mapFilename = node->value();
 			else if (name == "tile_position")
-				m_tilePosOfPlayer = PointFromString(node->value());
+				tileCoordinate = PointFromString(node->value());
 			else if (name == "gold")
-				m_goldNumber = SDL_atoi(node->value());
+				goldNumber = SDL_atoi(node->value());
 			else if (name == "sell_ratio")
-				m_sellRatio = SDL_atof(node->value());
+				sellRatio = SDL_atof(node->value());
 			else if (name == "direction")
 				;
 			else if (name == "player")
@@ -49,7 +49,7 @@ bool UserRecord::readFromXML(const string& filename)
 	{
 		std::cout << e.what() << std::endl;
 	}
-	//«Â≥˝ª∫¥Ê
+	//Ê∏ÖÈô§ÁºìÂ≠ò
 	text_ptr.reset();
 
 	return true;

@@ -1,13 +1,15 @@
 #ifndef __DynamicData_H__
 #define __DynamicData_H__
+
 #include <map>
 #include <string>
 #include <vector>
 #include <algorithm>
+
 #include "SDL_Engine/SDL_Engine.h"
 
-using namespace std;
 USING_NS_SDL;
+using namespace std;
 
 class UserRecord;
 
@@ -22,6 +24,11 @@ public:
 	bool initializeSaveData(int idx);
 	//保存数据
 	bool save(const string& map,const Point& tilePos, int nDir);
+
+	//获取存档的所在地图名
+	const string& getMapFilename() const;
+	//获取角色的位置
+	const Point& getTileCoordinate() const;
 private:
 	DynamicData();
 	~DynamicData();

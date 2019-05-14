@@ -41,25 +41,42 @@ bool GameScene::init()
 	m_pMapLayer = MapLayer::create();
 	this->addChild(m_pMapLayer);
 
-	//初始化地图和角色
-	this->initializeMapAndPlayers();
+	//初始化地图
+	this->initializeMap();
 
 	return true;
 }
 
-bool GameScene::initializeMapAndPlayers()
+bool GameScene::initializeMap()
 {
 	//默认使用第一个存档
-	DynamicData::getInstance()->initializeSaveData(1);
+	auto dynamicData = DynamicData::getInstance();
+	dynamicData->initializeSaveData(1);
+
+	//获取地图和主角所在位置
+	const string& mapFilename = dynamicData->getMapFilename();
+	const Point& tileCoordinate = dynamicData->getTileCoordinate();
+	//改变地图
+	this->changeMap(mapFilename, tileCoordinate);
 
 	return true;
 }
 
-void GameScene::changeMap(const string& mapFileName, const Point& tileCoodinate)
+void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 {
+	//改变当前地图
+	m_pMapLayer->clear();
+	m_pMapLayer->init(mapFilename);
+
+	//改变当前中心点
+	auto tileSize = m_pMapLayer->getTiledMap()->getTileSize();
+	auto pos = Point(tileSize.width * (tileCoodinate.x + 0.5f)
+		,tileSize.height * (tileCoodinate.y + 0.5f));
+
+	this->setViewpointCenter(pos);
 }
 
-void GameScene::setViewpointCenter(const Point& position, float duration)
+void GameScene::setViewpointCenter(const Point& position, unsigned millisecond)
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	const int tag = 10;
@@ -84,12 +101,13 @@ void GameScene::setViewpointCenter(const Point& position, float duration)
 
 	FiniteTimeAction* action = nullptr;
 
-	if (duration < FLT_EPSILON)
+	if (millisecond == 0)
 	{
 		action = Place::create(delta);
 	}
 	else
 	{
+		float duration = (float)millisecond / 1000;
 		action = MoveTo::create(duration, delta);
 	}
 
