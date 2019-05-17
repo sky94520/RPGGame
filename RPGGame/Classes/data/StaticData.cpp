@@ -1,4 +1,5 @@
 #include "StaticData.h"
+#include "CharacterData.h"
 
 StaticData* StaticData::s_pInstance = nullptr;
 
@@ -18,17 +19,23 @@ void StaticData::purge()
 }
 
 StaticData::StaticData()
+	:m_pCharacterData(nullptr)
 {
 }
 
 StaticData::~StaticData()
 {
+	SDL_SAFE_RELEASE_NULL(m_pCharacterData);
 }
 
 bool StaticData::init()
 {
 	//读取文件并保存键值对
 	m_valueMap = FileUtils::getInstance()->getValueMapFromFile(STATIC_DATA_PATH);
+
+	m_pCharacterData = CharacterData::create();
+	SDL_SAFE_RETAIN(m_pCharacterData);
+	m_pCharacterData->loadCharacterFile("data/character.plist");
 	
 	return true;
 }

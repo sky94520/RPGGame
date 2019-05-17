@@ -30,6 +30,7 @@ int main(int argv,char**argc)
 
 		//第一个启动场景
 		Director::getInstance()->runWithScene(GameScene::getInstance());
+		//Director::getInstance()->runWithScene(HelloWorld::createScene());
 		Director::getInstance()->setDisplayStates(true);
 		Director::getInstance()->setSecondsPerFrame(1/60.f);
 		Director::getInstance()->setResolutionScale();

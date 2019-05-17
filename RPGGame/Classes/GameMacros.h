@@ -1,7 +1,7 @@
 #ifndef __GameMacros_H__
 #define __GameMacros_H__
 
-/*·½Ïò,¸úÌùÍ¼ÓĞ¹Ø*/
+/*æ–¹å‘,è·Ÿè´´å›¾æœ‰å…³*/
 enum class Direction
 {
 	Down = 0,
@@ -9,9 +9,15 @@ enum class Direction
 	Right,
 	Up,
 };
-/*ÓÅÏÈ¼¶ */
-#define PRIORITY_SAME 0 /*ÓëÈËÎïÄÜ²úÉúÅö×²*/
-#define PRIORITY_LOW  1 /*NPCÏÔÊ¾ÔÚÏÂ*/
-#define PRIORITY_HIGH 2 /*NPCÏÔÊ¾ÔÚÉÏ*/
+enum class State
+{
+	None,
+	Idle,
+	Walking,
+};
+/*ä¼˜å…ˆçº§ */
+#define PRIORITY_SAME 0 /*ä¸äººç‰©èƒ½äº§ç”Ÿç¢°æ’*/
+#define PRIORITY_LOW  1 /*NPCæ˜¾ç¤ºåœ¨ä¸‹*/
+#define PRIORITY_HIGH 2 /*NPCæ˜¾ç¤ºåœ¨ä¸Š*/
 
 #endif

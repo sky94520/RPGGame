@@ -5,6 +5,10 @@
 
 using namespace SDL;
 
+class AStarController;
+class MapLayer;
+class Character;
+
 class HelloWorld : public Layer
 {
 public:
@@ -18,11 +22,13 @@ public:
 	 
 	 // a selector callback
     void menuCloseCallback(Object* pSender);
-    //add a touch listener
-    bool onTouchBegan(Touch* touch, SDL_Event* event);
-
-	void onKeyPressed(SDL_Keycode keycode, SDL_Event* e);
-	void onKeyReleased(SDL_Keycode keycode, SDL_Event* e);
+	bool onTouchBegan(Touch* touch, SDL_Event* event);
+private:
+	bool isPassing(const SDL_Point& tilePos);
+private:
+	MapLayer* m_pMapLayer;
+	AStarController* m_pController;
+	Character* m_pViewpointCharacter;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

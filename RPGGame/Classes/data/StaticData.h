@@ -9,6 +9,9 @@
 
 using namespace std;
 USING_NS_SDL;
+
+class CharacterData;
+
 //定义一些常用的宏
 #define STATIC_DATA_PATH "data/static_data.plist"
 /*简化使用*/
@@ -21,21 +24,11 @@ USING_NS_SDL;
 #define STATIC_DATA_ARRAY(key) (StaticData::getInstance()->getValueForKey(key)->asValueVector())
 #define STATIC_DATA_TOSTRING(key) (StaticData::getInstance()->toString(key))
 
-
 class StaticData : public Object
 {
-private:
-	static StaticData* s_pInstance;
 public:
 	static StaticData* getInstance();
 	static void purge();
-private:
-	//键值对
-	ValueMap m_valueMap;
-private:
-	StaticData();
-	~StaticData();
-	bool init();
 public:
 	/**
 	@brief 根据键获取值
@@ -45,5 +38,15 @@ public:
 	Value* getValueForKey(const string& key);
 	Point getPointForKey(const string& key);
 	Size getSizeForKey(const string& key);
+private:
+	StaticData();
+	~StaticData();
+	bool init();
+private:
+	static StaticData* s_pInstance;
+private:
+	//键值对
+	ValueMap m_valueMap;
+	SDL_SYNTHESIZE_READONLY(CharacterData*, m_pCharacterData, CharacterData);
 };
 #endif
