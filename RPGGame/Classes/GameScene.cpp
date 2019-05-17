@@ -1,7 +1,9 @@
 #include "GameScene.h"
 #include "layer/MapLayer.h"
+#include "layer/EffectLayer.h"
 #include "data/StaticData.h"
 #include "data/DynamicData.h"
+#include "GameMacros.h"
 
 //static
 GameScene* GameScene::s_pInstance = nullptr;
@@ -27,6 +29,8 @@ void GameScene::purge()
 
 GameScene::GameScene()
 	:m_pMapLayer(nullptr)
+	,m_pEffectLayer(nullptr)
+	,m_gameState(GameState::Normal)
 {
 }
 
@@ -41,6 +45,15 @@ bool GameScene::init()
 	//地图层
 	m_pMapLayer = MapLayer::create();
 	this->addChild(m_pMapLayer);
+	//特效层
+	m_pEffectLayer = EffectLayer::create();
+	this->addChild(m_pEffectLayer);
+	//事件层
+	auto listener = EventListenerTouchOneByOne::create();
+
+	listener->setPriority(1);
+	listener->onTouchBegan = SDL_CALLBACK_2(GameScene::onTouchBegan,this);
+	_eventDispatcher->addEventListener(listener,this);
 
 	//初始化地图
 	this->initializeMap();
@@ -59,6 +72,30 @@ bool GameScene::initializeMap()
 	const Point& tileCoordinate = dynamicData->getTileCoordinate();
 	//改变地图
 	this->changeMap(mapFilename, tileCoordinate);
+
+	return true;
+}
+
+bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
+{
+	//转换成地图坐标
+	auto location = touch->getLocation();
+	auto tiledMap = m_pMapLayer->getTiledMap();
+	auto tileSize = tiledMap->getTileSize();
+	auto nodePos = tiledMap->convertToNodeSpace(location);
+	SDL_Point toTile = { int(nodePos.x / tileSize.width), int(nodePos.y / tileSize.height) };
+
+	//显示点击特效
+	auto collisionLayer = m_pMapLayer->getCollisionLayer();
+	Point pos((toTile.x + 0.5f) * tileSize.width, (toTile.y + 0.3f) * tileSize.height);
+
+	m_pEffectLayer->showClickAnimation(pos, collisionLayer);
+
+	//TODO:角色移动
+	/*
+	if (isPassing(toTile))
+		m_pController->moveToward(toTile);
+		*/
 
 	return true;
 }

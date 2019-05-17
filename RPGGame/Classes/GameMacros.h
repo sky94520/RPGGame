@@ -15,6 +15,13 @@ enum class State
 	Idle,
 	Walking,
 };
+//游戏状态
+enum class GameState
+{
+	Normal,/*正常状态，即行走状态*/
+	Fighting,/*战斗状态*/
+	Script,/*脚本状态*/
+};
 /*优先级 */
 #define PRIORITY_SAME 0 /*与人物能产生碰撞*/
 #define PRIORITY_LOW  1 /*NPC显示在下*/

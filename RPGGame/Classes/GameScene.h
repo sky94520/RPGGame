@@ -9,10 +9,14 @@ using namespace std;
 USING_NS_SDL;
 
 class MapLayer;
+class EffectLayer;
+enum class GameState;
 
 class GameScene : public Scene
 {
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
+	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//地图层
+	SDL_SYNTHESIZE_READONLY(GameState, m_gameState, GameState);//游戏状态
 private:
 	static GameScene* s_pInstance;
 public:
@@ -23,6 +27,8 @@ private:
 	~GameScene();
 	bool init();
 	bool initializeMap();
+public:
+	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);
