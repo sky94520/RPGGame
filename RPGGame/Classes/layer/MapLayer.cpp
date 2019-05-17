@@ -38,6 +38,49 @@ bool MapLayer::init(const string& filepath)
 	return true;
 }
 
+void MapLayer::setViewpointCenter(const Point& position, unsigned millisecond)
+{
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	const int tag = 10;
+	//地图跟随点移动
+	float x = (float)MAX(position.x, visibleSize.width / 2.f);
+	float y = (float)MAX(position.y, visibleSize.height / 2.f);
+	//获取地图层的地图
+
+	auto tileSize = m_pTiledMap->getTileSize();
+	auto mapSize = m_pTiledMap->getMapSize();
+	auto mapSizePixel = Size(tileSize.width * mapSize.width, tileSize.height * mapSize.height);
+	//不让显示区域超过地图的边界
+	x = (float)MIN(x, (mapSizePixel.width - visibleSize.width / 2.f));
+	y = (float)MIN(y, (mapSizePixel.height - visibleSize.height / 2.f));
+	//实际移动的位置
+	Point actualPosition = Point(x, y);
+	//屏幕中心位置坐标
+	Point centerOfView = Point(visibleSize.width / 2.f, visibleSize.height / 2.f);
+
+	Point delta = centerOfView - actualPosition;
+
+	FiniteTimeAction* action = nullptr;
+
+	if (millisecond == 0)
+	{
+		action = Place::create(delta);
+	}
+	else
+	{
+		float duration = (float)millisecond / 1000;
+		action = MoveTo::create(duration, delta);
+	}
+
+	action->setTag(tag);
+
+	if (m_pTiledMap->getActionByTag(tag) != nullptr)
+	{
+		m_pTiledMap->stopActionByTag(tag);
+	}
+	m_pTiledMap->runAction(action);
+}
+
 void MapLayer::clear()
 {
 	if (m_pTiledMap != nullptr)

@@ -18,9 +18,6 @@ private:
 public:
 	static GameScene* getInstance();
 	static void purge();
-public:
-	static const int CHARACTER_LOCAL_Z_ORDER = 9999;//需要比tmx地图总图块大
-	static const string CHARACTER_MOVE_TO_TILE;
 private:
 	GameScene();
 	~GameScene();
@@ -29,7 +26,5 @@ private:
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);
-	//设置视图中心点
-	void setViewpointCenter(const Point& position, unsigned millisecond = 0);
 };
 #endif
