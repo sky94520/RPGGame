@@ -13,6 +13,11 @@ Controller::~Controller()
 	SDL_SAFE_RELEASE(m_pFollowController);
 }
 
+ControllerListener* Controller::getControllerListener() const
+{
+	return m_pListener;
+}
+
 void Controller::setControllerListener(ControllerListener* pListener)
 {
 	this->m_pListener = pListener;

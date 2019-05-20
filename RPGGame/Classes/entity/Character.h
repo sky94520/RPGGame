@@ -27,6 +27,7 @@ public:
 	//站立
 	void sit();
 
+	void setTilePosition(const Point& tileCoordinate);
 	virtual SDL_Point getTilePosition() const;
 	//切换状态
 	virtual void changeState(State state);

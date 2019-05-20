@@ -76,6 +76,18 @@ void Character::sit()
 	this->getSprite()->stopActionByTag(Entity::ANIMATION_TAG);
 }
 
+void Character::setTilePosition(const Point& tileCoordinate)
+{
+	Point point;
+	//根据锚点来获取真正位置
+	auto anchor = this->getSprite()->getAnchorPoint();
+
+	point.x = (tileCoordinate.x + anchor.x) * TILE_WIDTH;
+	point.y = (tileCoordinate.y + anchor.y) * TILE_HEIGHT;
+
+	this->setPosition(point);
+}
+
 SDL_Point Character::getTilePosition() const
 {
 	SDL_Point tilePos = { 0, 0 };

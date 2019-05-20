@@ -17,6 +17,7 @@ public:
 	Controller();
 	virtual ~Controller();
 	//设置监听对象
+	ControllerListener* getControllerListener() const;
 	void setControllerListener(ControllerListener* pListener);
 	virtual float moveToward(const SDL_Point& tilePos) = 0;
 	virtual void moveOneStep(ShortestPathStep* step){}
