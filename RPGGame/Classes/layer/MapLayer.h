@@ -6,13 +6,10 @@
 using namespace std;
 USING_NS_SDL;
 enum class Direction;
+class Character;
 
 class MapLayer : public Layer
 {
-private:
-	FastTiledMap* m_pTiledMap;
-	//地图文件路径
-	string m_filepath;
 public:
 	MapLayer();
 	~MapLayer();
@@ -21,9 +18,12 @@ public:
 
 	bool init();
 	bool init(const string& filepath);
+	void update(float dt);
 
 	//设置视图中心点
 	void setViewpointCenter(const Point& position, unsigned millisecond = 0);
+	//设置视角跟随
+	void setViewpointFollow(Character* character);
 	//清除地图层
 	void clear();
 	//根据某图块的属性判断某方向是否可通过
@@ -44,5 +44,10 @@ public:
 	FastTiledMap* getTiledMap() const;
 private:
 	void resetLocalZOrderOfTile();
+private:
+	FastTiledMap* m_pTiledMap;
+	//地图文件路径
+	string m_filepath;
+	Character* m_pViewpointCharacter;
 };
 #endif

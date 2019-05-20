@@ -1,12 +1,15 @@
 #include "MapLayer.h"
+#include "../entity/Character.h"
 
 MapLayer::MapLayer()
 	:m_pTiledMap(nullptr)
+	,m_pViewpointCharacter(nullptr)
 {
 }
 
 MapLayer::~MapLayer()
 {
+	SDL_SAFE_RELEASE(m_pViewpointCharacter);
 }
 
 MapLayer* MapLayer::create(const string& filepath)
@@ -36,6 +39,16 @@ bool MapLayer::init(const string& filepath)
 	//this->resetLocalZOrderOfTile();
 
 	return true;
+}
+
+void MapLayer::update(float dt)
+{
+	//视角跟随
+	if (m_pViewpointCharacter != nullptr 
+		&& m_pViewpointCharacter->isMoving())
+	{
+		this->setViewpointCenter(m_pViewpointCharacter->getPosition());
+	}
 }
 
 void MapLayer::setViewpointCenter(const Point& position, unsigned millisecond)
@@ -80,6 +93,14 @@ void MapLayer::setViewpointCenter(const Point& position, unsigned millisecond)
 	}
 	m_pTiledMap->runAction(action);
 }
+
+void MapLayer::setViewpointFollow(Character* character)
+{
+	SDL_SAFE_RETAIN(character);
+	SDL_SAFE_RELEASE(m_pViewpointCharacter);
+	m_pViewpointCharacter = character;
+}
+
 
 void MapLayer::clear()
 {
