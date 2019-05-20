@@ -26,6 +26,7 @@ public:
 	void addCharacter(Node* layer);
 	//是否与角色发生碰撞
 	bool isCollidedWithCharacter(const Rect& rect);
+	void movePlayer(const SDL_Point& toTile);
 private:
 	//vector<Character*> m_characters;
 	vector<Controller*> m_controllers;

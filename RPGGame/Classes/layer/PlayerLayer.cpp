@@ -121,3 +121,10 @@ bool PlayerLayer::isCollidedWithCharacter(const Rect& rect)
 	*/
 	return false;
 }
+
+void PlayerLayer::movePlayer(const SDL_Point& toTile)
+{
+	auto controller = m_controllers.front();
+
+	controller->moveToward(toTile);
+}
