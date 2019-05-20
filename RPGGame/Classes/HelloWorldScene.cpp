@@ -65,7 +65,7 @@ bool HelloWorld::init()
     _eventDispatcher->addEventListener(listener, this);
 
 	Character* sky = Character::create("sky");
-	sky->setPosition(6.5f * tileSize.width, 5.5f * tileSize.height);
+	sky->setTilePosition(Point(6.f, 5.f));
 	m_pMapLayer->getTiledMap()->addChild(sky);
 	//创建控制器
 	m_pController = AStarController::create(pAStar);
@@ -73,7 +73,7 @@ bool HelloWorld::init()
 	m_pController->setControllerListener(sky);
 
 	Character* moon = Character::create("moon");
-	moon->setPosition(6.5f * tileSize.width, 5.5f * tileSize.height);
+	moon->setTilePosition(Point(6.f, 5.f));
 	m_pMapLayer->getTiledMap()->addChild(moon);
 	//控制器
 	FollowController* followController = FollowController::create();
@@ -81,7 +81,7 @@ bool HelloWorld::init()
 	m_pController->setFollower(followController);
 
 	Character* sun = Character::create("moon");
-	sun->setPosition(6.5f * tileSize.width, 5.5f * tileSize.height);
+	sun->setTilePosition(Point(6.f, 5.f));
 	m_pMapLayer->getTiledMap()->addChild(sun);
 	//控制器
 	FollowController* followController2 = FollowController::create();
