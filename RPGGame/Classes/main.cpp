@@ -40,10 +40,10 @@ int main(int argv,char**argc)
 			Director::getInstance()->update();
 			PoolManager::getInstance()->getCurReleasePool()->clear();
 		}
-		//系统清除
-		Director::purge();
 		//释放单例类
 		GameScene::purge();
+		//系统清除
+		Director::purge();
 
 		//释放内存池
 		PoolManager::getInstance()->purge();
