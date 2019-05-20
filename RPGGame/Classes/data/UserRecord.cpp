@@ -1,4 +1,5 @@
 ﻿#include "UserRecord.h"
+#include "../GameMacros.h"
 
 UserRecord::UserRecord()
 	:goldNumber(0)
@@ -8,6 +9,14 @@ UserRecord::UserRecord()
 
 UserRecord::~UserRecord()
 {
+	auto it = players.begin();
+
+	while (it != players.end())
+	{
+		PlayerData* data = it->second;
+		delete data;
+		it = players.erase(it);
+	}
 }
 
 bool UserRecord::readFromXML(const string& filename)
@@ -62,6 +71,24 @@ bool UserRecord::writeToXML(const string& filename)
 
 void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
 {
+	string playerName;
+	PlayerData* data = new PlayerData();
+	//获取player节点的属性
+	for (auto attr = root->first_attribute(); attr != nullptr; attr = attr->next_attribute())
+	{
+		auto name = attr->name();
+		auto value = attr->value();
+
+		if (strcmp(name, "name") == 0)
+			playerName = value;
+		else if (strcmp(name, "level") == 0)
+			data->level = SDL_atoi(value);
+		else if (strcmp(name, "exp") == 0)
+			data->exp = SDL_atoi(value);
+		//TODO:后续数据
+	}
+	//保存数据
+	players.insert(make_pair(playerName, data));
 }
 
 void UserRecord::parseBag(rapidxml::xml_node<>* root)

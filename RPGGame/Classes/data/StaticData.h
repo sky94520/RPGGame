@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include "SDL_Engine/SDL_Engine.h"
+#include "../entity/AStar.h"
 
 using namespace std;
 USING_NS_SDL;
@@ -47,6 +48,8 @@ private:
 private:
 	//键值对
 	ValueMap m_valueMap;
+	//A星算法
+	SDL_SYNTHESIZE_RETAIN(AStar*, m_pAStar, AStar);
 	SDL_SYNTHESIZE_READONLY(CharacterData*, m_pCharacterData, CharacterData);
 };
 #endif

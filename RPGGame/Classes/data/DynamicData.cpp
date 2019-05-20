@@ -76,3 +76,7 @@ const Point& DynamicData::getTileCoordinate() const
 {
 	return m_pUserRecord->tileCoordinate;
 }
+const unordered_map<string, PlayerData*>&  DynamicData::getPlayerData() const
+{
+	return m_pUserRecord->players;
+}

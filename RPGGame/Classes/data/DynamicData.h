@@ -1,7 +1,7 @@
 #ifndef __DynamicData_H__
 #define __DynamicData_H__
 
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -12,6 +12,7 @@ USING_NS_SDL;
 using namespace std;
 
 class UserRecord;
+struct PlayerData;
 
 //--------------------------------------------DynamicData---------------------------------------
 class DynamicData : public Object
@@ -29,6 +30,8 @@ public:
 	const string& getMapFilename() const;
 	//获取角色的位置
 	const Point& getTileCoordinate() const;
+	//获取角色属性结构体
+	const unordered_map<string, PlayerData*>& getPlayerData() const;
 private:
 	DynamicData();
 	~DynamicData();

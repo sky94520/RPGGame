@@ -20,12 +20,14 @@ void StaticData::purge()
 
 StaticData::StaticData()
 	:m_pCharacterData(nullptr)
+	,m_pAStar(nullptr)
 {
 }
 
 StaticData::~StaticData()
 {
 	SDL_SAFE_RELEASE_NULL(m_pCharacterData);
+	SDL_SAFE_RELEASE_NULL(m_pAStar);
 }
 
 bool StaticData::init()

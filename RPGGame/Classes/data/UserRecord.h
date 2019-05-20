@@ -2,11 +2,15 @@
 #define __UserRecord_H__
 
 #include <string>
+#include <cstring>
+#include <unordered_map>
 
 #include "SDL_Engine/SDL_Engine.h"
 
 USING_NS_SDL;
 using namespace std;
+
+struct PlayerData;
 
 class UserRecord : public Object
 {
@@ -31,5 +35,7 @@ public:
 	string mapFilename;
 	//玩家位置
 	Point tileCoordinate;
+	//玩家数据
+	unordered_map<string, PlayerData*> players;
 };
 #endif
