@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
   <map>map/Map01.tmx</map>
-  <tile_position>{1,8}</tile_position>
+  <tile_position>{6,5}</tile_position>
   <gold>20</gold>
   <sell_ratio>0.5</sell_ratio>
   <direction>3</direction>
