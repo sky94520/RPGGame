@@ -10,15 +10,15 @@ USING_NS_SDL;
 
 class MapLayer;
 class EffectLayer;
+class PlayerLayer;
 enum class GameState;
 
 class GameScene : public Scene
 {
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//地图层
+	SDL_SYNTHESIZE_READONLY(PlayerLayer*, m_pPlayerLayer, PlayerLayer);//玩家层
 	SDL_SYNTHESIZE_READONLY(GameState, m_gameState, GameState);//游戏状态
-private:
-	static GameScene* s_pInstance;
 public:
 	static GameScene* getInstance();
 	static void purge();
@@ -27,10 +27,13 @@ private:
 	~GameScene();
 	bool init();
 	bool initializeMap();
+	bool isPassing(const SDL_Point& tilePos);
 public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);
+private:
+	static GameScene* s_pInstance;
 };
 #endif

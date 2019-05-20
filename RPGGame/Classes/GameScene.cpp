@@ -1,9 +1,12 @@
 #include "GameScene.h"
 #include "layer/MapLayer.h"
 #include "layer/EffectLayer.h"
+#include "layer/PlayerLayer.h"
 #include "data/StaticData.h"
 #include "data/DynamicData.h"
 #include "GameMacros.h"
+#include "entity/AStar.h"
+#include "entity/Character.h"
 
 //static
 GameScene* GameScene::s_pInstance = nullptr;
@@ -30,6 +33,7 @@ void GameScene::purge()
 GameScene::GameScene()
 	:m_pMapLayer(nullptr)
 	,m_pEffectLayer(nullptr)
+	,m_pPlayerLayer(nullptr)
 	,m_gameState(GameState::Normal)
 {
 }
@@ -48,6 +52,9 @@ bool GameScene::init()
 	//特效层
 	m_pEffectLayer = EffectLayer::create();
 	this->addChild(m_pEffectLayer);
+	//玩家层
+	m_pPlayerLayer = PlayerLayer::create();
+	this->addChild(m_pPlayerLayer);
 	//事件层
 	auto listener = EventListenerTouchOneByOne::create();
 
@@ -63,17 +70,44 @@ bool GameScene::init()
 
 bool GameScene::initializeMap()
 {
+	//创建A星算法实例,并存入StaticData中
+	AStar* pAStar = AStar::create();
+	pAStar->isPassing = SDL_CALLBACK_1(GameScene::isPassing, this);
+	StaticData::getInstance()->setAStar(pAStar);
+
 	//默认使用第一个存档
 	auto dynamicData = DynamicData::getInstance();
 	dynamicData->initializeSaveData(1);
-
 	//获取地图和主角所在位置
 	const string& mapFilename = dynamicData->getMapFilename();
 	const Point& tileCoordinate = dynamicData->getTileCoordinate();
 	//改变地图
 	this->changeMap(mapFilename, tileCoordinate);
+	auto collisionLayer = m_pMapLayer->getCollisionLayer();
+	//添加角色
+	m_pPlayerLayer->addCharacter(m_pMapLayer->getTiledMap());
+	//设置中心点
+	//Character* player = m_pPlayerLayer->getPlayer();
 
 	return true;
+}
+
+bool GameScene::isPassing(const SDL_Point& tilePos)
+{
+	auto tiledMap = m_pMapLayer->getTiledMap();
+	auto mapSize = tiledMap->getMapSize();
+	//不可超出地图
+	if (tilePos.x < 0 || tilePos.x > (mapSize.width - 1)
+		|| tilePos.y > (mapSize.height - 1) || tilePos.y < 0)
+	{
+		return false;
+	}
+	//检测碰撞层
+	auto layer = m_pMapLayer->getCollisionLayer();
+	auto gid = layer->getTileGIDAt(tilePos);
+	bool ret = m_pMapLayer->isPassing(gid);
+
+	return ret;
 }
 
 bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
@@ -105,9 +139,15 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 	//改变当前地图
 	m_pMapLayer->clear();
 	m_pMapLayer->init(mapFilename);
+	//更新A星算法的地图尺寸
+	auto tiledMap = m_pMapLayer->getTiledMap();
+	auto mapSize = tiledMap->getMapSize();
+	StaticData::getInstance()->getAStar()->setMapSize(int(mapSize.width), int(mapSize.height));
 
 	//改变当前中心点
-	auto tileSize = m_pMapLayer->getTiledMap()->getTileSize();
+	auto tileSize = tiledMap->getTileSize();
+	//设置瓦片大小
+	Character::setTileSize((int)tileSize.width, (int)tileSize.height);
 	auto pos = Point(tileSize.width * (tileCoodinate.x + 0.5f)
 		,tileSize.height * (tileCoodinate.y + 0.5f));
 
