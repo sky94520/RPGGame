@@ -65,6 +65,8 @@ bool GameScene::init()
 	//初始化地图
 	this->initializeMap();
 
+	this->scheduleUpdate();
+
 	return true;
 }
 
@@ -87,7 +89,7 @@ bool GameScene::initializeMap()
 	//添加角色
 	m_pPlayerLayer->addCharacter(m_pMapLayer->getTiledMap());
 	//设置中心点
-	//Character* player = m_pPlayerLayer->getPlayer();
+	m_pMapLayer->setViewpointFollow(m_pPlayerLayer->getPlayer());
 
 	return true;
 }
@@ -126,12 +128,15 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 	m_pEffectLayer->showClickAnimation(pos, collisionLayer);
 
 	//TODO:角色移动
-	/*
 	if (isPassing(toTile))
-		m_pController->moveToward(toTile);
-		*/
+		m_pPlayerLayer->movePlayer(toTile);
 
 	return true;
+}
+
+void GameScene::update(float dt)
+{
+	m_pMapLayer->update(dt);
 }
 
 void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)

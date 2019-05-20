@@ -30,6 +30,7 @@ private:
 	bool isPassing(const SDL_Point& tilePos);
 public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
+	void update(float dt);
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);
