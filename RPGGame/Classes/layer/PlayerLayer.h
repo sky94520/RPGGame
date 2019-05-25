@@ -16,19 +16,19 @@ public:
 	CREATE_FUNC(PlayerLayer);
 	bool init();
 
+	//添加角色
+	void initializePlayers(Node* layer);
+
 	virtual void update(float dt);
 	//获取主角 默认第一个为主角
 	Character* getPlayer() const;
 	//获取角色对应的索引
 	int getIndexOfCharacter(const string& chartletName);
 	Character* getPlayerOfID(int id);
-	//添加角色
-	void addCharacter(Node* layer);
 	//是否与角色发生碰撞
 	bool isCollidedWithCharacter(const Rect& rect);
 	void movePlayer(const SDL_Point& toTile);
 private:
-	//vector<Character*> m_characters;
 	vector<Controller*> m_controllers;
 };
 #endif

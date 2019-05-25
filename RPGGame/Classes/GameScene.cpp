@@ -86,8 +86,8 @@ bool GameScene::initializeMap()
 	//改变地图
 	this->changeMap(mapFilename, tileCoordinate);
 	auto collisionLayer = m_pMapLayer->getCollisionLayer();
-	//添加角色
-	m_pPlayerLayer->addCharacter(m_pMapLayer->getTiledMap());
+	//初始化角色
+	m_pPlayerLayer->initializePlayers(m_pMapLayer->getTiledMap());
 	//设置中心点
 	m_pMapLayer->setViewpointFollow(m_pPlayerLayer->getPlayer());
 

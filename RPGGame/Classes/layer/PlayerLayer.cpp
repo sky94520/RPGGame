@@ -27,47 +27,7 @@ bool PlayerLayer::init()
 	return true;
 }
 
-void PlayerLayer::update(float dt)
-{
-}
-
-Character* PlayerLayer::getPlayer()const
-{
-	auto player = m_controllers.front()->getControllerListener();
-	return static_cast<Character*>(player);
-}
-
-int PlayerLayer::getIndexOfCharacter(const string& chartletName)
-{
-	int i = -1;
-
-	/*
-	for (i = 0;i < (int)m_characters.size();i++)
-	{
-		auto player = m_characters.at(i);
-		if (player->getChartletName() == chartletName)
-			break;
-	}
-	*/
-	return i;
-}
-
-Character* PlayerLayer::getPlayerOfID(int id)
-{
-	//遍历寻找
-	/*
-	for (unsigned int i = 0;i < m_characters.size();i++)
-	{
-		auto player = m_characters.at(i);
-		
-		if (player->getUniqueID() == id)
-			return player;
-	}
-	*/
-	return nullptr;
-}
-
-void PlayerLayer::addCharacter(Node* layer)
+void PlayerLayer::initializePlayers(Node* layer)
 {
 	auto dynamicData = DynamicData::getInstance();
 	auto& tileCoordinate = dynamicData->getTileCoordinate();
@@ -106,6 +66,46 @@ void PlayerLayer::addCharacter(Node* layer)
 	m_characters.push_back(character);
 	SDL_SAFE_RETAIN(character);
 	*/
+}
+
+void PlayerLayer::update(float dt)
+{
+}
+
+Character* PlayerLayer::getPlayer()const
+{
+	auto player = m_controllers.front()->getControllerListener();
+	return static_cast<Character*>(player);
+}
+
+int PlayerLayer::getIndexOfCharacter(const string& chartletName)
+{
+	int i = -1;
+
+	/*
+	for (i = 0;i < (int)m_characters.size();i++)
+	{
+		auto player = m_characters.at(i);
+		if (player->getChartletName() == chartletName)
+			break;
+	}
+	*/
+	return i;
+}
+
+Character* PlayerLayer::getPlayerOfID(int id)
+{
+	//遍历寻找
+	/*
+	for (unsigned int i = 0;i < m_characters.size();i++)
+	{
+		auto player = m_characters.at(i);
+		
+		if (player->getUniqueID() == id)
+			return player;
+	}
+	*/
+	return nullptr;
 }
 
 bool PlayerLayer::isCollidedWithCharacter(const Rect& rect)

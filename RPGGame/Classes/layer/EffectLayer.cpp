@@ -28,6 +28,11 @@ bool EffectLayer::init()
 	AnimationCache::getInstance()->addAnimationsWithFile("data/effect1.plist");
 	AnimationCache::getInstance()->addAnimationsWithFile("data/effect2.plist");
 
+	//创建遮罩层
+	m_pLayerColor = LayerColor::create(Color4B());
+	m_pLayerColor->setVisible(false);
+	this->addChild(m_pLayerColor);
+
 	return true;
 }
 
