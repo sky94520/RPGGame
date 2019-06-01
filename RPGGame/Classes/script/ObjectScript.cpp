@@ -25,10 +25,11 @@ int create_object(lua_State* pL)
 
 	//创建脚本对象
 	auto gameScene = GameScene::getInstance();
+	auto gameState = gameScene->getGameState();
 	auto layer = gameScene->getCollisionLayer();
 	auto scriptLayer = gameScene->getScriptLayer();
 
-	LuaObject* luaObject = scriptLayer->addLuaObject(name, chartletName, layer);
+	LuaObject* luaObject = scriptLayer->addLuaObject(name, chartletName, layer, gameState);
 	luaObject->setTilePosition(tileX, tileY);
 
 	lua_pushboolean(pL, 1);

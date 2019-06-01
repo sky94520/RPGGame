@@ -33,7 +33,7 @@ private:
 public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
 	void update(float dt);
-	Layer* getCollisionLayer() const;
+	Node* getCollisionLayer() const;
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);

@@ -2,7 +2,8 @@
 #include "../GameMacros.h"
 
 LuaObject::LuaObject()
-	:m_triggerType(TriggerType::None)
+	:m_bUsingBox(false)
+	,m_triggerType(TriggerType::None)
 	,m_nPriority(PRIORITY_SAME)
 	,m_bObsolete(false)
 {
@@ -33,4 +34,15 @@ bool LuaObject::init(const string& chartletName)
 	}
 
 	return ret;
+}
+
+bool LuaObject::intersectRect(const Rect& rect)
+{
+	//当为隐藏时，不存在碰撞
+	if (!this->isVisible())
+		return false;
+	else if (m_bUsingBox)
+		return m_boundingBox.intersectRect(rect);
+	else
+		return this->getBoundingBox().intersectRect(rect);
 }

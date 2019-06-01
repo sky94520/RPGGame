@@ -78,24 +78,38 @@ void ScriptLayer::update(float dt, GameState gameState)
 
 		if (script->isObsolete())
 		{
-			script->clear();
-		
+			script->removeFromParent();
+			SDL_SAFE_RELEASE(script);
 			it = m_objects.erase(it);
-			m_toAddedObjects.push_back(script);
 		}
 		else
 			it++;
 	}
+	//把待添加对象添加到m_objects中
+	for (auto it = m_toAddedObjects.begin(); it != m_toAddedObjects.end(); )
+	{
+		LuaObject* luaObject = *it;
+		m_objects.insert(make_pair(luaObject->getLuaName(), luaObject));
+		it = m_toAddedObjects.erase(it);
+	}
 }
 
-LuaObject* ScriptLayer::addLuaObject(const string& name, const string& chartletName, Layer* layer)
+LuaObject* ScriptLayer::addLuaObject(const string& name, const string& chartletName, Node* layer, GameState gameState)
 {
 	LuaObject* luaObject = LuaObject::create(chartletName);
 	luaObject->setLuaName(name);
 	layer->addChild(luaObject);
 	//待添加到容器
 	SDL_SAFE_RETAIN(luaObject);
-	m_toAddedObjects.push_back(luaObject);
+	//根据游戏状态来添加到不同的容器中
+	if (gameState == GameState::Normal)
+	{
+		m_objects.insert(make_pair(name, luaObject));
+	}
+	else
+	{
+		m_toAddedObjects.push_back(luaObject);
+	}
 
 	return luaObject;
 }
@@ -107,9 +121,17 @@ bool ScriptLayer::removeLuaObject(const string& name)
 
 LuaObject* ScriptLayer::getClickedNPC(const Rect& r, int priority) const
 {
-	LuaObject* npc = nullptr;
+	LuaObject* luaObject = nullptr;
 
-	return npc;
+	auto it = find_if(m_objects.begin(), m_objects.end(), [&r, &priority](const pair<string, LuaObject*>& pair)
+	{
+		auto luaObject = pair.second;
+		return luaObject->getPriority() == priority && luaObject->intersectRect(r);
+	});
+	if (it != m_objects.end())
+		luaObject = it->second;
+
+	return luaObject;
 }
 
 void ScriptLayer::clear()

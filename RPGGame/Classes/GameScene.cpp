@@ -110,8 +110,8 @@ bool GameScene::isPassing(const SDL_Point& tilePos)
 	auto tiledMap = m_pMapLayer->getTiledMap();
 	auto mapSize = tiledMap->getMapSize();
 	//不可超出地图
-	if (tilePos.x < 0 || tilePos.x > (mapSize.width - 1)
-		|| tilePos.y > (mapSize.height - 1) || tilePos.y < 0)
+	if (tilePos.x < 0 || tilePos.x > mapSize.width
+		|| tilePos.y > mapSize.height || tilePos.y < 0)
 	{
 		return false;
 	}
@@ -119,6 +119,17 @@ bool GameScene::isPassing(const SDL_Point& tilePos)
 	auto layer = m_pMapLayer->getCollisionLayer();
 	auto gid = layer->getTileGIDAt(tilePos);
 	bool ret = m_pMapLayer->isPassing(gid);
+	//再次检测脚本对象
+	if (ret)
+	{
+		auto tileSize = tiledMap->getTileSize();
+		//获取矩形
+		Rect r;
+		r.origin = Point(tileSize.width * (tilePos.x + 0.5f), tileSize.height * (tilePos.y + 0.5f));
+		r.size = Size(1.f, 1.f);
+		auto npc = m_pScriptLayer->getClickedNPC(r, PRIORITY_SAME);
+		ret = ( npc == nullptr ? true : false);
+	}
 
 	return ret;
 }
@@ -151,9 +162,9 @@ void GameScene::update(float dt)
 	m_pScriptLayer->update(dt, m_gameState);
 }
 
-Layer* GameScene::getCollisionLayer() const
+Node* GameScene::getCollisionLayer() const
 {
-	return m_pMapLayer->getCollisionLayer();
+	return m_pMapLayer->getTiledMap();
 }
 
 void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)

@@ -18,6 +18,7 @@ public:
 
 	static LuaObject* create(const string& chartletName);
 	bool init(const string& chartletName);
+	bool intersectRect(const Rect& rect);
 
 	//脚本对象变量名
 	const string& getLuaName() const { return m_luaName; }
@@ -39,6 +40,7 @@ private:
 	string m_luaName;
 	//包围盒
 	Rect m_boundingBox;
+	bool m_bUsingBox;
 	//触发方式
 	TriggerType m_triggerType;
 	//优先级

@@ -104,8 +104,9 @@ void AStarController::popStepAndAnimate()
 
 	CallFunc* moveCallback = CallFunc::create([this]()
 	{
-		//发送事件
-		//_eventDispatcher->dispatchCustomEvent(CHARACTER_MOVE_TO_TILE, this);
+		//发送角色到达图块事件
+		auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+		eventDispatcher->dispatchCustomEvent(CHARACTER_MOVE_TO_TILE, this);
 		this->popStepAndAnimate();
 	});
 	m_pListener->moveTo(tilePos, m_durationPerGrid, moveCallback);

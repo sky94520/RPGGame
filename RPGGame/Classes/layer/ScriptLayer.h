@@ -29,7 +29,7 @@ public:
 
 	void update(float dt, GameState gameState);
 
-	LuaObject* addLuaObject(const string& name, const string& chartletName, Layer* layer);
+	LuaObject* addLuaObject(const string& name, const string& chartletName, Node* layer, GameState gameState);
 	bool removeLuaObject(const string& name);
 
 	//获取点击了npc
