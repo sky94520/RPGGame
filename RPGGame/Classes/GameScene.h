@@ -11,6 +11,7 @@ USING_NS_SDL;
 class MapLayer;
 class EffectLayer;
 class PlayerLayer;
+class ScriptLayer;
 enum class GameState;
 
 class GameScene : public Scene
@@ -18,7 +19,8 @@ class GameScene : public Scene
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(PlayerLayer*, m_pPlayerLayer, PlayerLayer);//玩家层
-	SDL_SYNTHESIZE_READONLY(GameState, m_gameState, GameState);//游戏状态
+	SDL_SYNTHESIZE_READONLY(ScriptLayer*, m_pScriptLayer, ScriptLayer);//脚本层
+	SDL_SYNTHESIZE(GameState, m_gameState, GameState);//游戏状态
 public:
 	static GameScene* getInstance();
 	static void purge();
@@ -31,6 +33,7 @@ private:
 public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
 	void update(float dt);
+	Layer* getCollisionLayer() const;
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);

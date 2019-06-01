@@ -88,6 +88,18 @@ void Character::setTilePosition(const Point& tileCoordinate)
 	this->setPosition(point);
 }
 
+void Character::setTilePosition(int tileX, int tileY)
+{
+	Point point;
+	//根据锚点来获取真正位置
+	auto anchor = this->getSprite()->getAnchorPoint();
+
+	point.x = (tileX + anchor.x) * TILE_WIDTH;
+	point.y = (tileY + anchor.y) * TILE_HEIGHT;
+
+	this->setPosition(point);
+}
+
 SDL_Point Character::getTilePosition() const
 {
 	SDL_Point tilePos = { 0, 0 };

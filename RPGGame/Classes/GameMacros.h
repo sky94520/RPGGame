@@ -9,12 +9,15 @@ enum class Direction
 	Right,
 	Up,
 };
+
+/*人物行走状态*/
 enum class State
 {
 	None,
 	Idle,
 	Walking,
 };
+
 //游戏状态
 enum class GameState
 {
@@ -22,6 +25,25 @@ enum class GameState
 	Fighting,/*战斗状态*/
 	Script,/*脚本状态*/
 };
+
+/*脚本等待类型*/
+enum class WaitType
+{
+	None,
+	Time, //等待时间
+	Click, //等待点击
+	Button, //等待按钮按下
+};
+
+//脚本触发方式
+enum class TriggerType
+{
+	None,
+	Click,/*点击NPC触发*/
+	Touch,/*触摸触发*/
+	All,
+};
+
 /*优先级 */
 #define PRIORITY_SAME 0 /*与人物能产生碰撞*/
 #define PRIORITY_LOW  1 /*NPC显示在下*/

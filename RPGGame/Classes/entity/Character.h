@@ -28,6 +28,7 @@ public:
 	void sit();
 
 	void setTilePosition(const Point& tileCoordinate);
+	void setTilePosition(int tileX, int tileY);
 	virtual SDL_Point getTilePosition() const;
 	//切换状态
 	virtual void changeState(State state);

@@ -67,5 +67,4 @@ private:
 	static SpritePool* m_pInstance;
 };
 
-SpritePool* SpritePool::m_pInstance = nullptr;
 #endif

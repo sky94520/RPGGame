@@ -1,5 +1,5 @@
 #include "EffectLayer.h"
-#include "../SpritePool.h"
+#include "SpritePool.h"
 
 const int EffectLayer::ANIMATION_TAG = 1;
 
@@ -10,7 +10,6 @@ EffectLayer::EffectLayer()
 
 EffectLayer::~EffectLayer()
 {
-	SpritePool::purge();
 }
 
 bool EffectLayer::init()

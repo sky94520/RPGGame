@@ -5,9 +5,7 @@
 
 using namespace SDL;
 
-class AStarController;
-class MapLayer;
-class Character;
+class Text;
 
 class HelloWorld : public Layer
 {
@@ -24,11 +22,7 @@ public:
     void menuCloseCallback(Object* pSender);
 	bool onTouchBegan(Touch* touch, SDL_Event* event);
 private:
-	bool isPassing(const SDL_Point& tilePos);
-private:
-	MapLayer* m_pMapLayer;
-	AStarController* m_pController;
-	Character* m_pViewpointCharacter;
+	Text* m_pText;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

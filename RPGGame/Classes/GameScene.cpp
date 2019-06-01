@@ -1,12 +1,18 @@
 #include "GameScene.h"
+#include "GameMacros.h"
+
 #include "layer/MapLayer.h"
 #include "layer/EffectLayer.h"
 #include "layer/PlayerLayer.h"
+#include "layer/SpritePool.h"
+#include "layer/ScriptLayer.h"
+
 #include "data/StaticData.h"
 #include "data/DynamicData.h"
-#include "GameMacros.h"
 #include "entity/AStar.h"
 #include "entity/Character.h"
+
+#include "script/LuaStack.h"
 
 //static
 GameScene* GameScene::s_pInstance = nullptr;
@@ -28,12 +34,14 @@ void GameScene::purge()
 	SDL_SAFE_RELEASE_NULL(s_pInstance);
 	StaticData::purge();
 	DynamicData::purge();
+	SpritePool::purge();
 }
 
 GameScene::GameScene()
 	:m_pMapLayer(nullptr)
 	,m_pEffectLayer(nullptr)
 	,m_pPlayerLayer(nullptr)
+	,m_pScriptLayer(nullptr)
 	,m_gameState(GameState::Normal)
 {
 }
@@ -55,7 +63,10 @@ bool GameScene::init()
 	//玩家层
 	m_pPlayerLayer = PlayerLayer::create();
 	this->addChild(m_pPlayerLayer);
-	//事件层
+	//脚本层
+	m_pScriptLayer = ScriptLayer::create();
+	this->addChild(m_pScriptLayer);
+	//事件
 	auto listener = EventListenerTouchOneByOne::create();
 
 	listener->setPriority(1);
@@ -87,7 +98,7 @@ bool GameScene::initializeMap()
 	this->changeMap(mapFilename, tileCoordinate);
 	auto collisionLayer = m_pMapLayer->getCollisionLayer();
 	//初始化角色
-	m_pPlayerLayer->initializePlayers(m_pMapLayer->getTiledMap());
+	m_pPlayerLayer->initializePlayers(collisionLayer);
 	//设置中心点
 	m_pMapLayer->setViewpointFollow(m_pPlayerLayer->getPlayer());
 
@@ -137,6 +148,12 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 void GameScene::update(float dt)
 {
 	m_pMapLayer->update(dt);
+	m_pScriptLayer->update(dt, m_gameState);
+}
+
+Layer* GameScene::getCollisionLayer() const
+{
+	return m_pMapLayer->getCollisionLayer();
 }
 
 void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
@@ -157,4 +174,11 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 		,tileSize.height * (tileCoodinate.y + 0.5f));
 
 	m_pMapLayer->setViewpointCenter(pos);
+	//尝试获取脚本名称，若存在则执行
+	auto scriptName = m_pMapLayer->getTiledMap()->getPropertyForName("script");
+
+	if (scriptName.getType() == Value::Type::STRING)
+	{
+		m_pScriptLayer->getLuaStack()->executeScriptFile(scriptName.asString());
+	}
 }
