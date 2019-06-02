@@ -159,6 +159,10 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 	Point pos((toTile.x + 0.5f) * tileSize.width, (toTile.y + 0.3f) * tileSize.height);
 
 	m_pEffectLayer->showClickAnimation(pos, collisionLayer);
+
+	//只有正常状态下才可以寻路
+	if (m_gameState != GameState::Normal)
+		return true;
 	//是否点击了相同优先级的NPC
 	LuaObject* luaObject = m_pScriptLayer->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
 

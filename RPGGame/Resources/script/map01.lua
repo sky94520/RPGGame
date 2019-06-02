@@ -9,4 +9,9 @@ object.setPriority("door1", Priority.Same);
 function change2map01_01( ... )
 	-- body
 	print("change to map01_01");
+	base.setGameState(GameState.Script);
+	timer.delay(1.5);
+	print("delay 1.5 second");
+	base.setGameState(GameState.Normal);
+	print("script end");
 end

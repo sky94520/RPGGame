@@ -46,7 +46,7 @@ int setViewpointCenter(lua_State* pL)
 {
 	float x = (float)luaL_checknumber(pL, 1);
 	float y = (float)luaL_checknumber(pL, 2);
-	float duration = (float)luaL_checknumber(pL, 3);
+	unsigned duration = (unsigned)luaL_checkinteger(pL, 3);
 	
 	MapLayer* pMapLayer = GameScene::getInstance()->getMapLayer();
 
@@ -86,10 +86,10 @@ int open_movement(lua_State* pL)
 int changeMap(lua_State* pL)
 {
 	const char* mapName = luaL_checkstring(pL, 1);
-	float x = (float)luaL_checknumber(pL, 2);
-	float y = (float)luaL_checknumber(pL, 3);
+	float tileX = (float)luaL_checknumber(pL, 2);
+	float tileY = (float)luaL_checknumber(pL, 3);
 
-	GameScene::getInstance()->changeMap(mapName, Point(x, y));
+	GameScene::getInstance()->changeMap(mapName, Point(tileX, tileY));
 
 	return 0;
 }
