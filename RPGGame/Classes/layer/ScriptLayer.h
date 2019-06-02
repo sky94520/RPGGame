@@ -32,12 +32,16 @@ public:
 
 	LuaObject* addLuaObject(const string& name, const string& chartletName, Node* layer, GameState gameState);
 	bool removeLuaObject(const string& name);
+
 	//A星算法移动到图块回调函数
 	void triggerTouchScript(AStarController* controller, GameState gameState);
 
 	//获取点击了npc
 	LuaObject* getClickedNPC(const Rect& r, int priority) const;
 	LuaObject* getLuaObject(const string& name);
+
+	//恢复协程
+	int resumeCoroutine(WaitType waitType, int nargs);
 
 	//清除全部脚本事件
 	void clear();

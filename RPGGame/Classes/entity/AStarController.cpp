@@ -113,9 +113,10 @@ void AStarController::popStepAndAnimate()
 		this->clearShortestPath();
 		character->changeState(State::Idle);
 
-		//m_pTriggerObject->execute(this->getUniqueID());
+		//触发脚本
+		m_pTriggerObject->execScriptFunc(character->getChartletName());
+		printf("DEBUG:trigger npc\n");
 		SDL_SAFE_RELEASE_NULL(m_pTriggerObject);
-		printf("trigger npc\n");
 		return ;
 	}
 	//存在跟随角色，设置跟随

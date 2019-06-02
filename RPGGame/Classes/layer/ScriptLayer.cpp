@@ -21,7 +21,6 @@ ScriptLayer::~ScriptLayer()
 		auto script = it1->second;
 		it1 = m_objects.erase(it1);
 
-		//script->clean();
 		SDL_SAFE_RELEASE(script);
 	}
 
@@ -33,7 +32,6 @@ ScriptLayer::~ScriptLayer()
 
 		it2 = m_toAddedObjects.erase(it2);
 
-		//script->clean();
 		SDL_SAFE_RELEASE(script);
 	}
 	SDL_SAFE_RELEASE(m_pLuaStack);
@@ -67,7 +65,7 @@ void ScriptLayer::update(float dt, GameState gameState)
 			if (m_duration <= 0.f)
 			{
 				m_duration = 0.f;
-				//GameScene::getInstance()->resumeLuaScript(m_waitType, 0);
+				this->resumeCoroutine(WaitType::Time, 0);
 			}
 		}
 		return;
@@ -99,6 +97,8 @@ LuaObject* ScriptLayer::addLuaObject(const string& name, const string& chartletN
 {
 	LuaObject* luaObject = LuaObject::create(chartletName);
 	luaObject->setLuaName(name);
+	luaObject->setLuaStack(m_pLuaStack);
+
 	layer->addChild(luaObject);
 	//待添加到容器
 	SDL_SAFE_RETAIN(luaObject);
@@ -145,8 +145,8 @@ void ScriptLayer::triggerTouchScript(AStarController* controller, GameState game
 				&& !bSwallowed)
 			{
 				//执行脚本
-				printf("trigger touch script\n");
-				//bSwallowed = script->execute(playerID);
+				printf("DEBUG:trigger touch script\n");
+				bSwallowed = script->execScriptFunc(character->getChartletName());
 			}
 		}
 	}
@@ -176,6 +176,21 @@ LuaObject* ScriptLayer::getLuaObject(const string& name)
 	if (it == m_objects.end())
 		return nullptr;
 	return it->second;
+}
+
+int ScriptLayer::resumeCoroutine(WaitType waitType, int nargs)
+{
+	int ret = LUA_ERRRUN;
+	//当前等待类型为空 或者不同，唤醒失败
+	if (waitType == WaitType::None ||
+		waitType != m_waitType)
+		return ret;
+	//初始化等待类型
+	this->setWaitType(WaitType::None);
+	//恢复协程
+	ret = m_pLuaStack->resumeFunction(nargs);
+
+	return ret;
 }
 
 void ScriptLayer::clear()

@@ -9,6 +9,7 @@
 using namespace std;
 
 enum class TriggerType;
+class LuaStack;
 
 /*
  * LuaObject 脚本类
@@ -25,6 +26,12 @@ public:
 
 	static LuaObject* create(const string& chartletName);
 	bool init(const string& chartletName);
+
+	//设置lua栈
+	void setLuaStack(LuaStack* pLuaStack);
+	//执行脚本函数
+	bool execScriptFunc(const string& playerName);
+	//是否产生了碰撞
 	bool intersectRect(const Rect& rect);
 
 	//脚本对象变量名
@@ -49,6 +56,7 @@ public:
 private:
 	//脚本对象的变量名
 	string m_luaName;
+	LuaStack* m_pLuaStack;
 	//包围盒
 	Rect m_boundingBox;
 	bool m_bUsingBox;
