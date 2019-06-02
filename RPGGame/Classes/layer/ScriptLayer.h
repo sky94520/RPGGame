@@ -13,6 +13,7 @@ using namespace std;
 
 class LuaObject;
 class LuaStack;
+class AStarController;
 enum class WaitType;
 enum class TriggerType;
 struct lua_State;
@@ -31,9 +32,12 @@ public:
 
 	LuaObject* addLuaObject(const string& name, const string& chartletName, Node* layer, GameState gameState);
 	bool removeLuaObject(const string& name);
+	//A星算法移动到图块回调函数
+	void triggerTouchScript(AStarController* controller, GameState gameState);
 
 	//获取点击了npc
 	LuaObject* getClickedNPC(const Rect& r, int priority) const;
+	LuaObject* getLuaObject(const string& name);
 
 	//清除全部脚本事件
 	void clear();

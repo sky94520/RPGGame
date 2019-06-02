@@ -44,5 +44,8 @@ bool LuaObject::intersectRect(const Rect& rect)
 	else if (m_bUsingBox)
 		return m_boundingBox.intersectRect(rect);
 	else
-		return this->getBoundingBox().intersectRect(rect);
+	{
+		auto boundingBox = this->getBoundingBox();
+		return boundingBox.intersectRect(rect);
+	}
 }

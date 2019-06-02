@@ -1,6 +1,7 @@
 #include "ScriptLayer.h"
 #include "../GameMacros.h"
 #include "../entity/LuaObject.h"
+#include "../entity/AStarController.h"
 #include "../script/BaseScript.h"
 #include "../script/ObjectScript.h"
 #include "../script/LuaStack.h"
@@ -119,6 +120,38 @@ bool ScriptLayer::removeLuaObject(const string& name)
 	return false;
 }
 
+void ScriptLayer::triggerTouchScript(AStarController* controller, GameState gameState)
+{
+	Character* character = static_cast<Character*>(controller->getControllerListener());
+	//TODO:只有处于正常状态下才会触发脚本对象
+	if (gameState != GameState::Normal)
+		return;
+	auto rect = Rect(character->getPosition(),Size(1.f,1.f));
+	//是否吞并事件
+	bool bSwallowed = false;
+	//触发高低优先级的脚本事件
+	int priority = PRIORITY_HIGH | PRIORITY_LOW;
+
+	for (auto it = m_objects.begin();it != m_objects.end();it++)
+	{
+		auto script = it->second;
+
+		//发生碰撞 且未废弃
+		if (script->intersectRect(rect) && !script->isObsolete())
+		{
+			//触发条件相同 优先级相同 并且没有吞并事件 调用对应的脚本
+			if (script->getTriggerType() == TriggerType::Touch 
+				&& (script->getPriority() & priority)
+				&& !bSwallowed)
+			{
+				//执行脚本
+				printf("trigger touch script\n");
+				//bSwallowed = script->execute(playerID);
+			}
+		}
+	}
+}
+
 LuaObject* ScriptLayer::getClickedNPC(const Rect& r, int priority) const
 {
 	LuaObject* luaObject = nullptr;
@@ -126,12 +159,23 @@ LuaObject* ScriptLayer::getClickedNPC(const Rect& r, int priority) const
 	auto it = find_if(m_objects.begin(), m_objects.end(), [&r, &priority](const pair<string, LuaObject*>& pair)
 	{
 		auto luaObject = pair.second;
-		return luaObject->getPriority() == priority && luaObject->intersectRect(r);
+
+		return luaObject->getPriority() == priority 
+			&& luaObject->intersectRect(r);
 	});
 	if (it != m_objects.end())
 		luaObject = it->second;
 
 	return luaObject;
+}
+
+LuaObject* ScriptLayer::getLuaObject(const string& name)
+{
+	auto it = m_objects.find(name);
+
+	if (it == m_objects.end())
+		return nullptr;
+	return it->second;
 }
 
 void ScriptLayer::clear()
@@ -161,3 +205,4 @@ void ScriptLayer::registerFuncs(lua_State* pL)
 		lua_pop(pL, 1);
 	}
 }
+

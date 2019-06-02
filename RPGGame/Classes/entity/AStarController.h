@@ -6,6 +6,7 @@
 enum class Direction;
 class ShortestPathStep;
 class AStar;
+class LuaObject;
 
 /*A星算法控制器，通过A星算法获取路径后进行寻路，并带动ControllerListener*/
 class AStarController : public Controller
@@ -16,6 +17,8 @@ public:
 
 	static AStarController* create(AStar* pAStar);
 	bool init(AStar* pAStar);
+
+	void setTriggerObject(LuaObject* luaObject);
 
 	virtual float moveToward(const SDL_Point& tilePos);
 public:
@@ -39,5 +42,7 @@ private:
 	bool m_bPendingMove;
 	//A*算法
 	AStar* m_pAStar;
+	//触发NPC
+	LuaObject* m_pTriggerObject;
 };
 #endif

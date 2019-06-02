@@ -78,6 +78,11 @@ Character* PlayerLayer::getPlayer()const
 	return static_cast<Character*>(player);
 }
 
+AStarController* PlayerLayer::getAStarController()
+{
+	return static_cast<AStarController*>(m_controllers.front());
+}
+
 int PlayerLayer::getIndexOfCharacter(const string& chartletName)
 {
 	int i = -1;

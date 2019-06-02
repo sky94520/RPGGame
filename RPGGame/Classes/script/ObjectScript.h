@@ -28,9 +28,17 @@ extern int create_object(lua_State* pL);
 extern int delete_object(lua_State* pL);
 /*
  * 设置触发
+ * @param name 脚本对象名称
  * @param type 触发类型 int=>TriggerType
  * @param funcName lua函数名
 */
 extern int set_trigger(lua_State* pL);
+
+/*
+ * 设置优先级
+ * @param name 脚本对象名称
+ * @param type 优先级 int
+*/
+extern int set_priority(lua_State* pL);
 
 #endif

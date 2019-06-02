@@ -10,6 +10,7 @@ int open_object(lua_State* pL)
 		{"create", create_object},
 		{"delete", delete_object},
 		{"setTrigger", set_trigger},
+		{"setPriority", set_priority},
 		{NULL, NULL}
 	};
 	luaL_newlib(pL, baselib);
@@ -43,5 +44,34 @@ int delete_object(lua_State* pL)
 
 int set_trigger(lua_State* pL)
 {
+	string name = luaL_checkstring(pL, 1);
+	TriggerType triggerType = static_cast<TriggerType>(luaL_checkinteger(pL, 2));
+	string funcName = luaL_checkstring(pL, 3);
+	//获取对应的脚本对象
+	LuaObject* luaObject = GameScene::getInstance()->getScriptLayer()->getLuaObject(name);
+	if (luaObject == nullptr)
+	{
+		printf("set_trigger: not found the object: %s\n", name.c_str());
+		return 0;
+	}
+	luaObject->setTriggerType(triggerType);
+	luaObject->setFuncName(funcName);
+
+	return 0;
+}
+
+int set_priority(lua_State* pL)
+{
+	string name = luaL_checkstring(pL, 1);
+	int priority = static_cast<int>(luaL_checkinteger(pL, 2));
+
+	//获取对应的脚本对象
+	LuaObject* luaObject = GameScene::getInstance()->getScriptLayer()->getLuaObject(name);
+	if (luaObject == nullptr)
+	{
+		printf("set_priority: not found the object: %s\n", name.c_str());
+		return 0;
+	}
+	luaObject->setPriority(priority);
 	return 0;
 }

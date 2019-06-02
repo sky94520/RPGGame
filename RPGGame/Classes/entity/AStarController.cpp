@@ -2,6 +2,7 @@
 #include "AStar.h"
 #include "ShortestPathStep.h"
 #include "../GameMacros.h"
+#include "LuaObject.h"
 #include "ControllerListener.h"
 
 string const AStarController::CHARACTER_MOVE_TO_TILE = "character move to tile";
@@ -12,6 +13,7 @@ AStarController::AStarController()
 	,m_pendingMove({0,0})
 	,m_bPendingMove(false)
 	,m_pAStar(nullptr)
+	,m_pTriggerObject(nullptr)
 {
 }
 
@@ -20,6 +22,7 @@ AStarController::~AStarController()
 	SDL_SAFE_RELEASE(m_pAStar);
 	this->clearShortestPath();	
 	SDL_SAFE_RELEASE(m_pLastStep);
+	SDL_SAFE_RELEASE(m_pTriggerObject);
 }
 
 AStarController* AStarController::create(AStar* pAStar)
@@ -40,6 +43,13 @@ bool AStarController::init(AStar* pAStar)
 	m_pAStar = pAStar;
 
 	return true;
+}
+
+void AStarController::setTriggerObject(LuaObject* luaObject)
+{
+	SDL_SAFE_RETAIN(luaObject);
+	SDL_SAFE_RELEASE(m_pTriggerObject);
+	m_pTriggerObject = luaObject;
 }
 
 float AStarController::moveToward(const SDL_Point& tilePos)
@@ -89,6 +99,24 @@ void AStarController::popStepAndAnimate()
 			m_pFollowController->moveOneStep(nullptr);
 
 		return ;
+	}//触发NPC
+	else if (m_pTriggerObject != nullptr && m_stepIndex == m_paths.size() - 1)
+	{
+		SDL_Point backTile = m_paths.back()->getTilePos();
+		SDL_Point delta = {backTile.x - m_pLastStep->getTilePos().x, backTile.y - m_pLastStep->getTilePos().y};
+		auto newDir = this->getDirection(delta);
+		auto character = static_cast<Character*>(m_pListener);
+		//改变方向
+		if (newDir != character->getDirection())
+			character->setDirection(newDir);
+		//停止行走
+		this->clearShortestPath();
+		character->changeState(State::Idle);
+
+		//m_pTriggerObject->execute(this->getUniqueID());
+		SDL_SAFE_RELEASE_NULL(m_pTriggerObject);
+		printf("trigger npc\n");
+		return ;
 	}
 	//存在跟随角色，设置跟随
 	if (m_pFollowController != nullptr)
@@ -130,8 +158,7 @@ void AStarController::popStepAndAnimate()
 float AStarController::constructPathAndStartAnimation(ShortestPathStep* pHead)
 {
 	int number = 0;
-	//此时的角色一定不在运动中
-	//构建运动列表
+	//此时的角色一定不在运动中 构建运动列表
 	while (pHead != nullptr && pHead->getParent() != nullptr)
 	{
 		auto it = m_paths.begin();

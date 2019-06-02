@@ -7,6 +7,7 @@ using namespace SDL;
 
 class Character;
 class Controller;
+class AStarController;
 
 class PlayerLayer : public Layer
 {
@@ -22,6 +23,7 @@ public:
 	virtual void update(float dt);
 	//获取主角 默认第一个为主角
 	Character* getPlayer() const;
+	AStarController* getAStarController();
 	//获取角色对应的索引
 	int getIndexOfCharacter(const string& chartletName);
 	Character* getPlayerOfID(int id);

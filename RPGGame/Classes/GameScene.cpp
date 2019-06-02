@@ -11,6 +11,7 @@
 #include "data/DynamicData.h"
 #include "entity/AStar.h"
 #include "entity/Character.h"
+#include "entity/AStarController.h"
 
 #include "script/LuaStack.h"
 
@@ -75,6 +76,9 @@ bool GameScene::init()
 
 	//初始化地图
 	this->initializeMap();
+	//添加角色移动结束触发器
+	_eventDispatcher->addEventCustomListener(AStarController::CHARACTER_MOVE_TO_TILE,
+		SDL_CALLBACK_1(GameScene::moveToTile, this), this);
 
 	this->scheduleUpdate();
 
@@ -134,6 +138,13 @@ bool GameScene::isPassing(const SDL_Point& tilePos)
 	return ret;
 }
 
+void GameScene::moveToTile(EventCustom* eventCustom)
+{
+	AStarController* controller = static_cast<AStarController*>(eventCustom->getUserData());
+
+	m_pScriptLayer->triggerTouchScript(controller, m_gameState);
+}
+
 bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 {
 	//转换成地图坐标
@@ -148,10 +159,20 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 	Point pos((toTile.x + 0.5f) * tileSize.width, (toTile.y + 0.3f) * tileSize.height);
 
 	m_pEffectLayer->showClickAnimation(pos, collisionLayer);
+	//是否点击了相同优先级的NPC
+	LuaObject* luaObject = m_pScriptLayer->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
 
-	//TODO:角色移动
-	if (isPassing(toTile))
-		m_pPlayerLayer->movePlayer(toTile);
+	if (luaObject != nullptr)
+	{
+		auto controller = m_pPlayerLayer->getAStarController();
+		controller->setTriggerObject(luaObject);
+	}
+	//目的地无法移动
+	else if (!isPassing(toTile))
+	{
+		return true;
+	}
+	m_pPlayerLayer->movePlayer(toTile);
 
 	return true;
 }
@@ -164,7 +185,7 @@ void GameScene::update(float dt)
 
 Node* GameScene::getCollisionLayer() const
 {
-	return m_pMapLayer->getTiledMap();
+	return m_pMapLayer->getCollisionLayer();
 }
 
 void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
