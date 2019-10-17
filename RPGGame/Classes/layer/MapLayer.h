@@ -48,6 +48,7 @@ private:
 	FastTiledMap* m_pTiledMap;
 	//地图文件路径
 	string m_filepath;
+	//视角跟随对象
 	Character* m_pViewpointCharacter;
 };
 #endif

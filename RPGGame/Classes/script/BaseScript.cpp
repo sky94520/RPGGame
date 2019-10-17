@@ -98,8 +98,8 @@ int changeMap(lua_State* pL)
 int open_screen(lua_State* pL)
 {
 	const luaL_Reg screenlib[] = {
-		{"fadeInScreen", fadeInScreen},
-		{"fadeOutScreen", fadeOutScreen},
+		{"fadeIn", fadeInScreen},
+		{"fadeOut", fadeOutScreen},
 		{NULL, NULL}
 	};
 	luaL_newlib(pL, screenlib);

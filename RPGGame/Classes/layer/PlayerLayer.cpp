@@ -51,7 +51,7 @@ void PlayerLayer::initializePlayers(Node* layer)
 		else
 			controller = FollowController::create();
 
-		controller->setDurationPerGrid(0.25f);
+		controller->setDurationPerGrid(0.2f);
 		controller->setControllerListener(player);
 		//保存控制器
 		SDL_SAFE_RETAIN(controller);

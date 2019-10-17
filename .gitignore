@@ -1,1 +1,4 @@
 **/Debug
+.idea
+.vs
+Lua5.3**

@@ -22,32 +22,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{BA5C66A1-21AF-473B-B2F0-37DFA94D66A6}</ProjectGuid>
     <RootNamespace>RPGGame</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -76,8 +76,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\SDL;E:\SDL\local\include;E:\SDL\local\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\SDL\common;E:\SDL\common\local\include;E:\SDL\common\zlib\include;E:\SDL\Lua5.3\Lua5.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,25 +121,64 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Classes\data\CharacterData.cpp" />
     <ClCompile Include="Classes\data\DynamicData.cpp" />
     <ClCompile Include="Classes\data\StaticData.cpp" />
     <ClCompile Include="Classes\data\UserRecord.cpp" />
+    <ClCompile Include="Classes\entity\AStar.cpp" />
+    <ClCompile Include="Classes\entity\AStarController.cpp" />
+    <ClCompile Include="Classes\entity\Character.cpp" />
+    <ClCompile Include="Classes\entity\Controller.cpp" />
+    <ClCompile Include="Classes\entity\Entity.cpp" />
+    <ClCompile Include="Classes\entity\FollowController.cpp" />
+    <ClCompile Include="Classes\entity\LuaObject.cpp" />
+    <ClCompile Include="Classes\entity\ShortestPathStep.cpp" />
     <ClCompile Include="Classes\GameScene.cpp" />
     <ClCompile Include="Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="Classes\layer\EffectLayer.cpp" />
     <ClCompile Include="Classes\layer\MapLayer.cpp" />
+    <ClCompile Include="Classes\layer\PlayerLayer.cpp" />
+    <ClCompile Include="Classes\layer\ScriptLayer.cpp" />
+    <ClCompile Include="Classes\layer\SpritePool.cpp" />
+    <ClCompile Include="Classes\layer\Text.cpp" />
     <ClCompile Include="Classes\main.cpp" />
+    <ClCompile Include="Classes\script\BaseScript.cpp" />
+    <ClCompile Include="Classes\script\LuaStack.cpp" />
+    <ClCompile Include="Classes\script\ObjectScript.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Classes\data\CharacterData.h" />
     <ClInclude Include="Classes\data\DynamicData.h" />
     <ClInclude Include="Classes\data\StaticData.h" />
     <ClInclude Include="Classes\data\UserRecord.h" />
+    <ClInclude Include="Classes\entity\AStar.h" />
+    <ClInclude Include="Classes\entity\AStarController.h" />
+    <ClInclude Include="Classes\entity\Character.h" />
+    <ClInclude Include="Classes\entity\Controller.h" />
+    <ClInclude Include="Classes\entity\ControllerListener.h" />
+    <ClInclude Include="Classes\entity\Entity.h" />
+    <ClInclude Include="Classes\entity\FollowController.h" />
+    <ClInclude Include="Classes\entity\LuaObject.h" />
+    <ClInclude Include="Classes\entity\ShortestPathStep.h" />
+    <ClInclude Include="Classes\GameMacros.h" />
     <ClInclude Include="Classes\GameScene.h" />
     <ClInclude Include="Classes\HelloWorldScene.h" />
+    <ClInclude Include="Classes\layer\EffectLayer.h" />
     <ClInclude Include="Classes\layer\MapLayer.h" />
+    <ClInclude Include="Classes\layer\PlayerLayer.h" />
+    <ClInclude Include="Classes\layer\ScriptLayer.h" />
+    <ClInclude Include="Classes\layer\SpritePool.h" />
+    <ClInclude Include="Classes\layer\Text.h" />
+    <ClInclude Include="Classes\script\BaseScript.h" />
+    <ClInclude Include="Classes\script\LuaStack.h" />
+    <ClInclude Include="Classes\script\ObjectScript.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SDL_Engine\SDL_Engine\SDL_Engine.vcxproj">
-      <Project>{be7d4797-c0dc-4388-bb86-dbd74c977d6a}</Project>
+    <ProjectReference Include="..\..\common\SDL_Engine\SDL_Engine\SDL_Engine.vcxproj">
+      <Project>{d44aa05b-9deb-4ce9-971a-c03f2fe88837}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lua5.3\Lua5.3\Lua5.3.vcxproj">
+      <Project>{6be1815f-70fd-4738-88d6-4f40966ec930}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

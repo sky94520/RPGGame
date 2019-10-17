@@ -10,6 +10,12 @@
     <Filter Include="Classes\data">
       <UniqueIdentifier>{387d5645-057a-492a-af81-8d31b4000d0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\entity">
+      <UniqueIdentifier>{96efb805-bd05-43ed-a0df-6984a4a9319b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\script">
+      <UniqueIdentifier>{69110372-bf58-4eb4-849b-187e0b29f17a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\HelloWorldScene.cpp">
@@ -33,6 +39,57 @@
     <ClCompile Include="Classes\data\UserRecord.cpp">
       <Filter>Classes\data</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\data\CharacterData.cpp">
+      <Filter>Classes\data</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\AStar.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\Character.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\Entity.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\ShortestPathStep.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\Controller.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\FollowController.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\AStarController.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\layer\EffectLayer.cpp">
+      <Filter>Classes\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\layer\PlayerLayer.cpp">
+      <Filter>Classes\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\script\LuaStack.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\layer\Text.cpp">
+      <Filter>Classes\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\layer\SpritePool.cpp">
+      <Filter>Classes\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\LuaObject.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\layer\ScriptLayer.cpp">
+      <Filter>Classes\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\script\BaseScript.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\script\ObjectScript.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\HelloWorldScene.h">
@@ -52,6 +109,63 @@
     </ClInclude>
     <ClInclude Include="Classes\data\UserRecord.h">
       <Filter>Classes\data</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\GameMacros.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\data\CharacterData.h">
+      <Filter>Classes\data</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\AStar.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\Character.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\Entity.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\ShortestPathStep.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\Controller.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\ControllerListener.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\FollowController.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\AStarController.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\layer\EffectLayer.h">
+      <Filter>Classes\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\layer\PlayerLayer.h">
+      <Filter>Classes\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\LuaStack.h">
+      <Filter>Classes\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\layer\Text.h">
+      <Filter>Classes\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\layer\SpritePool.h">
+      <Filter>Classes\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\LuaObject.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\layer\ScriptLayer.h">
+      <Filter>Classes\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\BaseScript.h">
+      <Filter>Classes\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\ObjectScript.h">
+      <Filter>Classes\script</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
