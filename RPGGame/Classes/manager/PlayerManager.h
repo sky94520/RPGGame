@@ -31,7 +31,7 @@ public:
 	bool isCollidedWithCharacter(const Rect& rect);
 	void movePlayer(const SDL_Point& toTile);
 	//改变玩家的所在层
-	void changeLayerOfPlayer(Node* layer);
+	void changeLayerOfPlayer(Node* layer, const Point& location);
 private:
 	vector<Controller*> m_controllers;
 };

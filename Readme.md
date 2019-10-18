@@ -17,10 +17,10 @@
 >特效层 显示各种特效。
 >2. MapLayer
 >地图层，整个游戏的载体，负责显示地图，以及各种事件。
->3. PlayerLayer
->主角层管理 在效果上是PlayerManager的功能
->4. ScriptLayer
-> 负责管理脚本对象
+>3. PlayerManager
+>主角层管理 只是负责管理，其角色对象存在MapLayer的碰撞层中
+>4. ScriptManager
+> 负责管理脚本对象，其脚本对象存在MapLayer的碰撞层中
 >5. SpritePool
 >精灵池，负责创建精灵和回收精灵对象
 >6. Text

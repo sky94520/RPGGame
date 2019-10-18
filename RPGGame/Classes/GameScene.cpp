@@ -197,8 +197,6 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 	//改变当前地图
 	m_pMapLayer->clear();
 	m_pMapLayer->init(mapFilename);
-	//更改玩家层的玩家所在的层
-	m_pPlayerManager->changeLayerOfPlayer(m_pMapLayer->getCollisionLayer());
 	//更新A星算法的地图尺寸
 	auto tiledMap = m_pMapLayer->getTiledMap();
 	auto mapSize = tiledMap->getMapSize();
@@ -210,6 +208,9 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 	Character::setTileSize((int)tileSize.width, (int)tileSize.height);
 	auto pos = Point(tileSize.width * (tileCoodinate.x + 0.5f)
 		,tileSize.height * (tileCoodinate.y + 0.5f));
+	//更改玩家层的玩家所在的层
+	auto collisionLayer = m_pMapLayer->getCollisionLayer();
+	m_pPlayerManager->changeLayerOfPlayer(collisionLayer, pos);
 
 	m_pMapLayer->setViewpointCenter(pos);
 	//尝试获取脚本名称，若存在则执行

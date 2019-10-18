@@ -134,7 +134,7 @@ void PlayerManager::movePlayer(const SDL_Point& toTile)
 	controller->moveToward(toTile);
 }
 
-void PlayerManager::changeLayerOfPlayer(Node* layer)
+void PlayerManager::changeLayerOfPlayer(Node* layer, const Point& location)
 {
 	for (auto controller : m_controllers) {
 		auto listener = controller->getControllerListener();
@@ -142,6 +142,7 @@ void PlayerManager::changeLayerOfPlayer(Node* layer)
 		//层和父亲节点相同
 		if (layer == player->getParent())
 			break;
+		player->setPosition(location);
 		player->removeFromParent();
 		layer->addChild(player);
 	}
