@@ -13,7 +13,7 @@ using namespace std;
 extern int open_object(lua_State* pL);
 /*
  * 创建脚本对象
- * @param name 脚本对象的名称
+ * @param name 脚本对象的名称 唯一，可以通过这个name操作该脚本对象
  * @param chartlet 动画名称
  * @param tileX 所在的tileX位置
  * @param tileY 所在的tileY位置
@@ -27,7 +27,7 @@ extern int create_object(lua_State* pL);
 */
 extern int delete_object(lua_State* pL);
 /*
- * 设置触发
+ * 设置脚本对象的触发方式,以及触发后的回调函数
  * @param name 脚本对象名称
  * @param type 触发类型 int=>TriggerType
  * @param funcName lua函数名

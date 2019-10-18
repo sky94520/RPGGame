@@ -117,7 +117,27 @@ LuaObject* ScriptLayer::addLuaObject(const string& name, const string& chartletN
 
 bool ScriptLayer::removeLuaObject(const string& name)
 {
-	return false;
+	//是否删除成功
+	bool ret = false;
+	//在objects中查找
+	auto it = m_objects.find(name);
+	if (it != m_objects.end()) {
+		auto object = it->second;
+		object->setObsolete(true);
+		ret = true;
+	}
+	else {
+		for (auto iter = m_toAddedObjects.begin(); iter != m_toAddedObjects.end(); ) {
+			auto object = *iter;
+			if (object->getLuaName() == name) {
+				SDL_SAFE_RELEASE(object);
+				m_toAddedObjects.erase(iter);
+				ret = true;
+				break;
+			}
+		}
+	}
+	return ret;
 }
 
 void ScriptLayer::triggerTouchScript(AStarController* controller, GameState gameState)

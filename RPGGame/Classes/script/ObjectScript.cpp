@@ -39,7 +39,15 @@ int create_object(lua_State* pL)
 
 int delete_object(lua_State* pL)
 {
-	return 0;
+	string name = luaL_checkstring(pL, 1);
+
+	auto gameScene = GameScene::getInstance();
+	auto scriptLayer = gameScene->getScriptLayer();
+	//尝试删除脚本对象
+	bool ret = scriptLayer->removeLuaObject(name);
+
+	lua_pushboolean(pL, int(ret));
+	return 1;
 }
 
 int set_trigger(lua_State* pL)
