@@ -76,7 +76,7 @@
 >3. ObjectScript
 >注册跟脚本对象相关的函数。
 >
->>1. Object.create_object(name, chartlet, tileX, tileY)
+>>1. object.create(name, chartlet, tileX, tileY)
 >>创建脚本对象
 >>- @param name 脚本对象的名称 唯一，可以通过这个name来操作该脚本对象
 >>- @param chartlet 动画名称
@@ -84,16 +84,16 @@
 >>- @param tileY 所在的tileY位置
 >>- @return 是否创建成功
 >>
->>2. Object.delete_object(name)
+>>2. object.delete(name)
 >>- @param name 要删除的脚本对象名称
 >>
->>3. Object.set_trigger(name, type)
+>>3. object.set_trigger(name, type)
 >>设置脚本对象的触发方式，以及触发后的回调函数
 >>- @param name 脚本对象名称
 >>- @param type 触发类型 int=>TriggerType
 >>- @param funcName lua函数名
 >>
->>4. Object.set_priority(name, type)
+>>4. object.set_priority(name, type)
 >>设置优先级
 >>- @param name 脚本对象名称
 >>- @param type 优先级 int
