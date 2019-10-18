@@ -198,6 +198,24 @@
        <integer>4</integer>
      </dict>
    </dict>
+   <!--传送门1-->
+   <key>Portal_1</key>
+   <dict>
+     <!--行走图-->
+     <key>walk</key>
+     <dict>
+       <key>filename</key>
+       <string>img/characters/Door2.png</string>
+       <key>delay</key>
+       <real>0.03f</real>
+       <key>loops</key>
+       <integer>-1</integer>
+       <key>restoreOriginalFrame</key>
+       <false/>
+       <key>index</key>
+       <integer>4</integer>
+     </dict>
+   </dict>
    <!--带弓骑士-->
    <key>BowKnight</key>
    <dict>

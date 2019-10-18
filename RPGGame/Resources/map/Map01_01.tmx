@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="48" tileheight="48" nextobjectid="4">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="48" tileheight="48" infinite="0" nextlayerid="5" nextobjectid="4">
  <properties>
   <property name="name" value="村长的家"/>
+  <property name="script" value="script/map01_01.lua"/>
  </properties>
  <tileset firstgid="1" source="Inside_B.tsx"/>
  <tileset firstgid="257" source="!Flame.tsx"/>
  <tileset firstgid="353" source="Inside_A4.tsx"/>
  <tileset firstgid="593" source="Inside_A2.tsx"/>
- <layer name="bg layer" width="16" height="14">
+ <layer id="1" name="bg layer" width="16" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBh40MhEPKbEjM04zEoFstOgYjA2NjM3o2EYKAWyy6BqkNnE6ifF/9jcP6qfMv2E0iYlgJB+AMJFR0I=
   </data>
  </layer>
- <layer name="collision layer" width="16" height="14">
+ <layer id="2" name="collision layer" width="16" height="14">
   <data encoding="base64" compression="zlib">
    eJzbzsjAsJ1C/AMJJzNAaHRxGMamfxFQz2IGCCiG0iDxl0D6FRDfBuI7QHySAbtZm4DimxlQAUgcG3gIxI+A+AkDQj828BGHOLoduPQTA4aL/llk6H1Nof7fDNRzPz5MSB22NI6MQQCfPAD6JFMy
   </data>
  </layer>
- <layer name="3" width="16" height="14">
+ <layer id="3" name="3" width="16" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYKA9OA3EZ+hgDzWB50A7YBSMCAAAoccB4Q==
   </data>
  </layer>
- <objectgroup name="script layer">
+ <objectgroup id="4" name="script layer">
   <object id="1" name="Map01_01_Portal" x="383" y="624" width="48" height="48">
    <properties>
     <property name="priority" type="int" value="1"/>
