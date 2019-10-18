@@ -26,7 +26,6 @@
 >6. Text
 >可用于显示对话
 ## 脚本
->1. BaseScript
 >注册基本的脚本函数
 >
 >>1. base.getGameState()
