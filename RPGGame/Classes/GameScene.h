@@ -10,16 +10,16 @@ USING_NS_SDL;
 
 class MapLayer;
 class EffectLayer;
-class PlayerLayer;
-class ScriptLayer;
+class PlayerManager;
+class ScriptManager;
 enum class GameState;
 
 class GameScene : public Scene
 {
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//地图层
-	SDL_SYNTHESIZE_READONLY(PlayerLayer*, m_pPlayerLayer, PlayerLayer);//玩家层
-	SDL_SYNTHESIZE_READONLY(ScriptLayer*, m_pScriptLayer, ScriptLayer);//脚本层
+	SDL_SYNTHESIZE_READONLY(PlayerManager*, m_pPlayerManager, PlayerManager);//玩家层
+	SDL_SYNTHESIZE_READONLY(ScriptManager*, m_pScriptManager, ScriptManager);//脚本层
 	SDL_SYNTHESIZE(GameState, m_gameState, GameState);//游戏状态
 public:
 	static GameScene* getInstance();

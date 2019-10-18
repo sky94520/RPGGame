@@ -3,7 +3,7 @@
 #include "../GameMacros.h"
 
 #include "../layer/MapLayer.h"
-#include "../layer/ScriptLayer.h"
+#include "../manager/ScriptManager.h"
 #include "../layer/EffectLayer.h"
 
 #include "../script/LuaStack.h"
@@ -112,7 +112,7 @@ int fadeInScreen(lua_State* pL)
 	float duration = (float)luaL_checknumber(pL, 1);
 
 	auto gameScene = GameScene::getInstance();
-	auto scriptLayer = gameScene->getScriptLayer();
+	auto scriptLayer = gameScene->getScriptManager();
 	//设置等待时间
 	scriptLayer->setWaitType(WaitType::Time);
 	scriptLayer->setDuration(duration);
@@ -128,7 +128,7 @@ int fadeOutScreen(lua_State* pL)
 	float duration = (float)luaL_checknumber(pL, 1);
 
 	auto gameScene = GameScene::getInstance();
-	auto scriptLayer = gameScene->getScriptLayer();
+	auto scriptLayer = gameScene->getScriptManager();
 	//设置等待时间
 	scriptLayer->setWaitType(WaitType::Time);
 	scriptLayer->setDuration(duration);
@@ -156,7 +156,7 @@ int delay(lua_State* pL)
 	float duration = (float)luaL_checknumber(pL, 1);
 
 	auto gameScene = GameScene::getInstance();
-	auto scriptLayer = gameScene->getScriptLayer();
+	auto scriptLayer = gameScene->getScriptManager();
 	//设置等待时间
 	scriptLayer->setWaitType(WaitType::Time);
 	scriptLayer->setDuration(duration);

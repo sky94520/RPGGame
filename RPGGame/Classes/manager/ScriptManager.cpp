@@ -1,4 +1,4 @@
-#include "ScriptLayer.h"
+#include "ScriptManager.h"
 #include "../GameMacros.h"
 #include "../entity/LuaObject.h"
 #include "../entity/AStarController.h"
@@ -6,14 +6,14 @@
 #include "../script/ObjectScript.h"
 #include "../script/LuaStack.h"
 
-ScriptLayer::ScriptLayer()
+ScriptManager::ScriptManager()
 	:m_waitType(WaitType::None)
 	,m_duration(0.f)
 	,m_pLuaStack(nullptr)
 {
 }
 
-ScriptLayer::~ScriptLayer()
+ScriptManager::~ScriptManager()
 {
 	auto it1 = m_objects.begin();
 	while (it1 != m_objects.end())
@@ -37,7 +37,7 @@ ScriptLayer::~ScriptLayer()
 	SDL_SAFE_RELEASE(m_pLuaStack);
 }
 
-bool ScriptLayer::init()
+bool ScriptManager::init()
 {
 	m_pLuaStack = LuaStack::create();
 	SDL_SAFE_RETAIN(m_pLuaStack);
@@ -53,7 +53,7 @@ bool ScriptLayer::init()
 	return true;
 }
 
-void ScriptLayer::update(float dt, GameState gameState)
+void ScriptManager::update(float dt, GameState gameState)
 {
 	//更新等待时间
 	if (gameState != GameState::Normal)
@@ -93,7 +93,7 @@ void ScriptLayer::update(float dt, GameState gameState)
 	}
 }
 
-LuaObject* ScriptLayer::addLuaObject(const string& name, const string& chartletName, Node* layer, GameState gameState)
+LuaObject* ScriptManager::addLuaObject(const string& name, const string& chartletName, Node* layer, GameState gameState)
 {
 	LuaObject* luaObject = LuaObject::create(chartletName);
 	luaObject->setLuaName(name);
@@ -115,7 +115,7 @@ LuaObject* ScriptLayer::addLuaObject(const string& name, const string& chartletN
 	return luaObject;
 }
 
-bool ScriptLayer::removeLuaObject(const string& name)
+bool ScriptManager::removeLuaObject(const string& name)
 {
 	//是否删除成功
 	bool ret = false;
@@ -140,7 +140,7 @@ bool ScriptLayer::removeLuaObject(const string& name)
 	return ret;
 }
 
-void ScriptLayer::triggerTouchScript(AStarController* controller, GameState gameState)
+void ScriptManager::triggerTouchScript(AStarController* controller, GameState gameState)
 {
 	Character* character = static_cast<Character*>(controller->getControllerListener());
 	//TODO:只有处于正常状态下才会触发脚本对象
@@ -172,7 +172,7 @@ void ScriptLayer::triggerTouchScript(AStarController* controller, GameState game
 	}
 }
 
-LuaObject* ScriptLayer::getClickedNPC(const Rect& r, int priority) const
+LuaObject* ScriptManager::getClickedNPC(const Rect& r, int priority) const
 {
 	LuaObject* luaObject = nullptr;
 
@@ -189,7 +189,7 @@ LuaObject* ScriptLayer::getClickedNPC(const Rect& r, int priority) const
 	return luaObject;
 }
 
-LuaObject* ScriptLayer::getLuaObject(const string& name)
+LuaObject* ScriptManager::getLuaObject(const string& name)
 {
 	auto it = m_objects.find(name);
 
@@ -198,7 +198,7 @@ LuaObject* ScriptLayer::getLuaObject(const string& name)
 	return it->second;
 }
 
-int ScriptLayer::resumeCoroutine(WaitType waitType, int nargs)
+int ScriptManager::resumeCoroutine(WaitType waitType, int nargs)
 {
 	int ret = LUA_ERRRUN;
 	//当前等待类型为空 或者不同，唤醒失败
@@ -213,7 +213,7 @@ int ScriptLayer::resumeCoroutine(WaitType waitType, int nargs)
 	return ret;
 }
 
-void ScriptLayer::clear()
+void ScriptManager::clear()
 {
 	//设置废弃标志 避免脚本对象在切换场景时出错
 	for (auto it = m_objects.begin(); it != m_objects.end();it++)
@@ -223,7 +223,7 @@ void ScriptLayer::clear()
 	}
 }
 
-void ScriptLayer::registerFuncs(lua_State* pL)
+void ScriptManager::registerFuncs(lua_State* pL)
 {
 	static const luaL_Reg cpplibs[] = {
 		{"base", open_base},

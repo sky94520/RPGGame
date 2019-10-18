@@ -1,5 +1,5 @@
-#ifndef __PlayerLayer_H__
-#define __PlayerLayer_H__
+#ifndef __PlayerManager_H__
+#define __PlayerManager_H__
 #include<vector>
 #include "SDL_Engine/SDL_Engine.h"
 using namespace std;
@@ -9,15 +9,15 @@ class Character;
 class Controller;
 class AStarController;
 
-class PlayerLayer : public Layer
+class PlayerManager : public Layer
 {
 public:
-	PlayerLayer();
-	~PlayerLayer();
-	CREATE_FUNC(PlayerLayer);
+	PlayerManager();
+	~PlayerManager();
+	CREATE_FUNC(PlayerManager);
 	bool init();
 
-	//添加角色
+	//添加角色到指定层
 	void initializePlayers(Node* layer);
 
 	virtual void update(float dt);
@@ -30,6 +30,8 @@ public:
 	//是否与角色发生碰撞
 	bool isCollidedWithCharacter(const Rect& rect);
 	void movePlayer(const SDL_Point& toTile);
+	//改变玩家的所在层
+	void changeLayerOfPlayer(Node* layer);
 private:
 	vector<Controller*> m_controllers;
 };

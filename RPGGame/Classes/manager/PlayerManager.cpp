@@ -1,4 +1,4 @@
-#include "PlayerLayer.h"
+#include "PlayerManager.h"
 #include "../entity/Character.h"
 #include "../entity/AStarController.h"
 #include "../entity/FollowController.h"
@@ -6,11 +6,11 @@
 #include "../data/DynamicData.h"
 #include "../GameMacros.h"
 
-PlayerLayer::PlayerLayer()
+PlayerManager::PlayerManager()
 {
 }
 
-PlayerLayer::~PlayerLayer()
+PlayerManager::~PlayerManager()
 {
 	auto it = m_controllers.begin();
 	while (it != m_controllers.end())
@@ -22,12 +22,12 @@ PlayerLayer::~PlayerLayer()
 	}
 }
 
-bool PlayerLayer::init()
+bool PlayerManager::init()
 {
 	return true;
 }
 
-void PlayerLayer::initializePlayers(Node* layer)
+void PlayerManager::initializePlayers(Node* layer)
 {
 	auto dynamicData = DynamicData::getInstance();
 	auto& tileCoordinate = dynamicData->getTileCoordinate();
@@ -68,22 +68,22 @@ void PlayerLayer::initializePlayers(Node* layer)
 	*/
 }
 
-void PlayerLayer::update(float dt)
+void PlayerManager::update(float dt)
 {
 }
 
-Character* PlayerLayer::getPlayer()const
+Character* PlayerManager::getPlayer()const
 {
 	auto player = m_controllers.front()->getControllerListener();
 	return static_cast<Character*>(player);
 }
 
-AStarController* PlayerLayer::getAStarController()
+AStarController* PlayerManager::getAStarController()
 {
 	return static_cast<AStarController*>(m_controllers.front());
 }
 
-int PlayerLayer::getIndexOfCharacter(const string& chartletName)
+int PlayerManager::getIndexOfCharacter(const string& chartletName)
 {
 	int i = -1;
 
@@ -98,7 +98,7 @@ int PlayerLayer::getIndexOfCharacter(const string& chartletName)
 	return i;
 }
 
-Character* PlayerLayer::getPlayerOfID(int id)
+Character* PlayerManager::getPlayerOfID(int id)
 {
 	//遍历寻找
 	/*
@@ -113,7 +113,7 @@ Character* PlayerLayer::getPlayerOfID(int id)
 	return nullptr;
 }
 
-bool PlayerLayer::isCollidedWithCharacter(const Rect& rect)
+bool PlayerManager::isCollidedWithCharacter(const Rect& rect)
 {
 	/*
 	for (unsigned int i = 0;i < m_characters.size();i++)
@@ -127,9 +127,22 @@ bool PlayerLayer::isCollidedWithCharacter(const Rect& rect)
 	return false;
 }
 
-void PlayerLayer::movePlayer(const SDL_Point& toTile)
+void PlayerManager::movePlayer(const SDL_Point& toTile)
 {
 	auto controller = m_controllers.front();
 
 	controller->moveToward(toTile);
+}
+
+void PlayerManager::changeLayerOfPlayer(Node* layer)
+{
+	for (auto controller : m_controllers) {
+		auto listener = controller->getControllerListener();
+		auto player = static_cast<Character*>(listener);
+		//层和父亲节点相同
+		if (layer == player->getParent())
+			break;
+		player->removeFromParent();
+		layer->addChild(player);
+	}
 }

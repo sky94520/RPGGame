@@ -3,9 +3,9 @@
 
 #include "layer/MapLayer.h"
 #include "layer/EffectLayer.h"
-#include "layer/PlayerLayer.h"
+#include "manager/PlayerManager.h"
 #include "layer/SpritePool.h"
-#include "layer/ScriptLayer.h"
+#include "manager/ScriptManager.h"
 
 #include "data/StaticData.h"
 #include "data/DynamicData.h"
@@ -41,8 +41,8 @@ void GameScene::purge()
 GameScene::GameScene()
 	:m_pMapLayer(nullptr)
 	,m_pEffectLayer(nullptr)
-	,m_pPlayerLayer(nullptr)
-	,m_pScriptLayer(nullptr)
+	,m_pPlayerManager(nullptr)
+	,m_pScriptManager(nullptr)
 	,m_gameState(GameState::Normal)
 {
 }
@@ -62,11 +62,11 @@ bool GameScene::init()
 	m_pEffectLayer = EffectLayer::create();
 	this->addChild(m_pEffectLayer);
 	//玩家层
-	m_pPlayerLayer = PlayerLayer::create();
-	this->addChild(m_pPlayerLayer);
+	m_pPlayerManager = PlayerManager::create();
+	this->addChild(m_pPlayerManager);
 	//脚本层
-	m_pScriptLayer = ScriptLayer::create();
-	this->addChild(m_pScriptLayer);
+	m_pScriptManager = ScriptManager::create();
+	this->addChild(m_pScriptManager);
 	//事件
 	auto listener = EventListenerTouchOneByOne::create();
 
@@ -102,9 +102,9 @@ bool GameScene::initializeMap()
 	this->changeMap(mapFilename, tileCoordinate);
 	auto collisionLayer = m_pMapLayer->getCollisionLayer();
 	//初始化角色
-	m_pPlayerLayer->initializePlayers(collisionLayer);
+	m_pPlayerManager->initializePlayers(collisionLayer);
 	//设置中心点
-	m_pMapLayer->setViewpointFollow(m_pPlayerLayer->getPlayer());
+	m_pMapLayer->setViewpointFollow(m_pPlayerManager->getPlayer());
 
 	return true;
 }
@@ -131,7 +131,7 @@ bool GameScene::isPassing(const SDL_Point& tilePos)
 		Rect r;
 		r.origin = Point(tileSize.width * (tilePos.x + 0.5f), tileSize.height * (tilePos.y + 0.5f));
 		r.size = Size(1.f, 1.f);
-		auto npc = m_pScriptLayer->getClickedNPC(r, PRIORITY_SAME);
+		auto npc = m_pScriptManager->getClickedNPC(r, PRIORITY_SAME);
 		ret = ( npc == nullptr ? true : false);
 	}
 
@@ -142,7 +142,7 @@ void GameScene::moveToTile(EventCustom* eventCustom)
 {
 	AStarController* controller = static_cast<AStarController*>(eventCustom->getUserData());
 
-	m_pScriptLayer->triggerTouchScript(controller, m_gameState);
+	m_pScriptManager->triggerTouchScript(controller, m_gameState);
 }
 
 bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
@@ -164,11 +164,11 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 	if (m_gameState != GameState::Normal)
 		return true;
 	//是否点击了相同优先级的NPC
-	LuaObject* luaObject = m_pScriptLayer->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
+	LuaObject* luaObject = m_pScriptManager->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
 
 	if (luaObject != nullptr)
 	{
-		auto controller = m_pPlayerLayer->getAStarController();
+		auto controller = m_pPlayerManager->getAStarController();
 		controller->setTriggerObject(luaObject);
 	}
 	//目的地无法移动
@@ -176,7 +176,7 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 	{
 		return true;
 	}
-	m_pPlayerLayer->movePlayer(toTile);
+	m_pPlayerManager->movePlayer(toTile);
 
 	return true;
 }
@@ -184,7 +184,7 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 void GameScene::update(float dt)
 {
 	m_pMapLayer->update(dt);
-	m_pScriptLayer->update(dt, m_gameState);
+	m_pScriptManager->update(dt, m_gameState);
 }
 
 Node* GameScene::getCollisionLayer() const
@@ -197,6 +197,8 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 	//改变当前地图
 	m_pMapLayer->clear();
 	m_pMapLayer->init(mapFilename);
+	//更改玩家层的玩家所在的层
+	m_pPlayerManager->changeLayerOfPlayer(m_pMapLayer->getCollisionLayer());
 	//更新A星算法的地图尺寸
 	auto tiledMap = m_pMapLayer->getTiledMap();
 	auto mapSize = tiledMap->getMapSize();
@@ -215,6 +217,6 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 
 	if (scriptName.getType() == Value::Type::STRING)
 	{
-		m_pScriptLayer->getLuaStack()->executeScriptFile(scriptName.asString());
+		m_pScriptManager->getLuaStack()->executeScriptFile(scriptName.asString());
 	}
 }

@@ -1,7 +1,7 @@
 #include "ObjectScript.h"
 
 #include "../GameScene.h"
-#include "../layer/ScriptLayer.h"
+#include "../manager/ScriptManager.h"
 #include "../entity/LuaObject.h"
 
 int open_object(lua_State* pL)
@@ -28,7 +28,7 @@ int create_object(lua_State* pL)
 	auto gameScene = GameScene::getInstance();
 	auto gameState = gameScene->getGameState();
 	auto layer = gameScene->getCollisionLayer();
-	auto scriptLayer = gameScene->getScriptLayer();
+	auto scriptLayer = gameScene->getScriptManager();
 
 	LuaObject* luaObject = scriptLayer->addLuaObject(name, chartletName, layer, gameState);
 	luaObject->setTilePosition(tileX, tileY);
@@ -42,7 +42,7 @@ int delete_object(lua_State* pL)
 	string name = luaL_checkstring(pL, 1);
 
 	auto gameScene = GameScene::getInstance();
-	auto scriptLayer = gameScene->getScriptLayer();
+	auto scriptLayer = gameScene->getScriptManager();
 	//尝试删除脚本对象
 	bool ret = scriptLayer->removeLuaObject(name);
 
@@ -56,7 +56,7 @@ int set_trigger(lua_State* pL)
 	TriggerType triggerType = static_cast<TriggerType>(luaL_checkinteger(pL, 2));
 	string funcName = luaL_checkstring(pL, 3);
 	//获取对应的脚本对象
-	LuaObject* luaObject = GameScene::getInstance()->getScriptLayer()->getLuaObject(name);
+	LuaObject* luaObject = GameScene::getInstance()->getScriptManager()->getLuaObject(name);
 	if (luaObject == nullptr)
 	{
 		printf("set_trigger: not found the object: %s\n", name.c_str());
@@ -74,7 +74,7 @@ int set_priority(lua_State* pL)
 	int priority = static_cast<int>(luaL_checkinteger(pL, 2));
 
 	//获取对应的脚本对象
-	LuaObject* luaObject = GameScene::getInstance()->getScriptLayer()->getLuaObject(name);
+	LuaObject* luaObject = GameScene::getInstance()->getScriptManager()->getLuaObject(name);
 	if (luaObject == nullptr)
 	{
 		printf("set_priority: not found the object: %s\n", name.c_str());

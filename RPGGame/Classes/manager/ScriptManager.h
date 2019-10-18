@@ -1,5 +1,5 @@
-#ifndef __ScriptLayer_H__
-#define __ScriptLayer_H__
+#ifndef __ScriptManager_H__
+#define __ScriptManager_H__
 
 #include <vector>
 #include <string>
@@ -19,13 +19,13 @@ enum class TriggerType;
 struct lua_State;
 enum class GameState;
 
-class ScriptLayer : public Layer
+class ScriptManager : public Layer
 {
 public:
-	ScriptLayer();
-	~ScriptLayer();
+	ScriptManager();
+	~ScriptManager();
 
-	CREATE_FUNC(ScriptLayer);
+	CREATE_FUNC(ScriptManager);
 	bool init();
 
 	void update(float dt, GameState gameState);
