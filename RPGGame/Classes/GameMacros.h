@@ -46,8 +46,8 @@ enum class TriggerType
 
 /*优先级 */
 #define PRIORITY_SAME 0 /*与人物能产生碰撞*/
-#define PRIORITY_LOW  1 /*NPC显示在下*/
-#define PRIORITY_HIGH 2 /*NPC显示在上*/
+#define PRIORITY_LOW  -1 /*NPC显示在下*/
+#define PRIORITY_HIGH 1 /*NPC显示在上*/
 
 /*属性类型*/
 enum class PropertyType
