@@ -99,7 +99,7 @@ LuaObject* ScriptManager::addLuaObject(const string& name, const string& chartle
 	luaObject->setLuaName(name);
 	luaObject->setLuaStack(m_pLuaStack);
 
-	layer->addChild(luaObject);
+	layer->addChild(luaObject, PRIORITY_SAME);
 	//待添加到容器
 	SDL_SAFE_RETAIN(luaObject);
 	//根据游戏状态来添加到不同的容器中

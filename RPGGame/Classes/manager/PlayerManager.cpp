@@ -42,7 +42,7 @@ void PlayerManager::initializePlayers(Node* layer)
 		//创建角色
 		Character* player = Character::create(name, direction);
 		player->setTilePosition(tileCoordinate);
-		layer->addChild(player);
+		layer->addChild(player, PRIORITY_SAME);
 		//创建控制器
 		Controller* controller = nullptr;
 		//仅有一个AStar控制器

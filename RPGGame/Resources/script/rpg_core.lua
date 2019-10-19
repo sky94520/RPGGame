@@ -14,8 +14,8 @@ TriggerType.All = 3;
 --优先级
 Priority = {};
 Priority.Same = 0;
-Priority.Low = 1;
-Priority.Hight = 2;
+Priority.Low = -1;
+Priority.High = 1;
 --方向
 Direction = {};
 Direction.Down = 0;

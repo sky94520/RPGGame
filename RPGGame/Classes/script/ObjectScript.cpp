@@ -80,6 +80,8 @@ int set_priority(lua_State* pL)
 		printf("set_priority: not found the object: %s\n", name.c_str());
 		return 0;
 	}
+	//设置优先级，就是设置的localZOrder
 	luaObject->setPriority(priority);
+	luaObject->setLocalZOrder(priority);
 	return 0;
 }
