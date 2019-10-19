@@ -1,0 +1,66 @@
+[
+  {
+    "name": "sky",
+    "face": {
+      "filename": "img/faces/Actor1.png",
+      "index": 0
+    },
+    "walk": {
+      "filename": "img/characters/Actor1.png",
+      "delay": 0.15,
+      "loops": -1,
+      "restoreOriginalFrame": true,
+      "index": 0
+    },
+    "sv": "img/sv_actors/Actor1_1.png",
+    "turn_name": "Actor01_turn.png",
+    "level_up_filename": "data/sky.csv"
+  },
+  {
+    "name": "moon",
+    "face": {
+      "filename": "img/faces/Actor1.png",
+      "index": 1
+    },
+    "walk": {
+      "filename": "img/characters/Actor1.png",
+      "delay": 0.15,
+      "loops": -1,
+      "restoreOriginalFrame": true,
+      "index": 1
+    },
+    "sv": "img/sv_actors/Actor1_2.png",
+    "turn_name": "Actor02_turn.png",
+    "level_up_filename": "data/moon.csv"
+  },
+  {
+    "name": "Door_1",
+    "walk": {
+      "filename": "img/characters/Door1.png",
+      "delay": 0.03,
+      "loops": 1,
+      "restoreOriginalFrame": false,
+      "index": 0
+    }
+  },
+  {
+    "name": "Door_4",
+    "walk": {
+      "filename": "img/characters/Door1.png",
+      "delay": 0.03,
+      "loops": 1,
+      "restoreOriginalFrame": false,
+      "index": 4
+    }
+  },
+  {
+    "name": "Portal_5",
+    "walk": {
+      "filename": "img/characters/Door2.png",
+      "delay": 0.03,
+      "loops": 1,
+      "restoreOriginalFrame": false,
+      "index": 4
+    }
+  }
+]
