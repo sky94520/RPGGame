@@ -1,6 +1,8 @@
 # RPG游戏开发
 
 >旨在开发2D回合制游戏。
+>本项目依赖于[SDL_Engine](https://github.com/sky94520/SDL_Engine)、lua5.3
+
 ## 数据
 >### 静态数据
 >1. StaticData 
@@ -17,10 +19,19 @@
 >特效层 显示各种特效。
 >2. MapLayer
 >地图层，整个游戏的载体，负责显示地图，以及各种事件。
+>MapLayer中的一个TiledMap对象内的collision layer为本项目的主要层，
+>大部分精灵都依附于碰撞层。
+>
 >3. PlayerManager
 >主角层管理 只是负责管理，其角色对象存在MapLayer的碰撞层中
+>主要有两个函数需要碰撞层的参与：
+>>1. initializePlayers() 从存档中读取数据并生成玩家对象时，需要把对象添加到对象层中
+>>2. changeLayerOfPlayers() 改变玩家所在的层 这个主要在GameScene::changeMap内调用来改变所属层
+>
 >4. ScriptManager
 > 负责管理脚本对象，其脚本对象存在MapLayer的碰撞层中
+> 在addLuaObject中需要碰撞层
+>
 >5. SpritePool
 >精灵池，负责创建精灵和回收精灵对象
 >6. Text
@@ -109,6 +120,12 @@
 
 ## 待更新
 >1. character.xml => json格式
+>XML格式不适用于当前的应用场景，目前计划使用cJsonObject代替SDL_Engine ValueMap的使用
+>需要解决的问题有：
+>>1. 对数组进行遍历
+>>2. key在dict中是否存在
 >2. 脚本对象的动画显示（依然采用v1版本）
->3. 脚本对象和玩家的遮挡问题
+>~~3. 脚本对象和玩家的遮挡问题~~
+>该问题已经解决，不过目前需要考虑碰撞层的问题。碰撞层是存在于MapLayer::TiledMap下的一个TMXLayer，
+>目前的所有精灵都是依附于这个层的，EffectLayer、PlayerManager、ScriptManager、GameScene
 >4. 玩家触碰到脚本时的暂停问题 在触发脚本时，如果玩家在行走，则先暂停；也可以在脚本中停止运动

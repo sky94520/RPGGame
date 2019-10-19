@@ -194,30 +194,31 @@ Node* GameScene::getCollisionLayer() const
 
 void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 {
-	//改变当前地图
+	//MapLayer 改变当前地图
 	m_pMapLayer->clear();
 	m_pMapLayer->init(mapFilename);
-	//清除脚本事件
-	m_pScriptManager->clear();
-	//更新A星算法的地图尺寸
+
+	//AStar 更新A星算法的地图尺寸
 	auto tiledMap = m_pMapLayer->getTiledMap();
 	auto mapSize = tiledMap->getMapSize();
 	StaticData::getInstance()->getAStar()->setMapSize(int(mapSize.width), int(mapSize.height));
 
-	//改变当前中心点
+	//MapLayer 改变当前中心点
 	auto tileSize = tiledMap->getTileSize();
 	//设置瓦片大小
 	Character::setTileSize((int)tileSize.width, (int)tileSize.height);
 	auto pos = Point(tileSize.width * (tileCoodinate.x + 0.5f)
 		,tileSize.height * (tileCoodinate.y + 0.5f));
-	//更改玩家层的玩家所在的层
+	m_pMapLayer->setViewpointCenter(pos);
+
+	//PlayerManager 更改玩家层的玩家所在的层
 	auto collisionLayer = m_pMapLayer->getCollisionLayer();
 	m_pPlayerManager->changeLayerOfPlayer(collisionLayer, pos);
 
-	m_pMapLayer->setViewpointCenter(pos);
+	//ScriptManager 清除脚本事件
+	m_pScriptManager->clear();
 	//尝试获取脚本名称，若存在则执行
 	auto scriptName = m_pMapLayer->getTiledMap()->getPropertyForName("script");
-
 	if (scriptName.getType() == Value::Type::STRING)
 	{
 		m_pScriptManager->getLuaStack()->executeScriptFile(scriptName.asString(), true);
