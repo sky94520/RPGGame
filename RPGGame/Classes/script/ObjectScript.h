@@ -41,4 +41,11 @@ extern int set_trigger(lua_State* pL);
 */
 extern int set_priority(lua_State* pL);
 
+/*
+ * 脚本对象显示行走动画
+ * @param name 脚本对象名称
+ * @param direction 方向
+*/
+extern int show_walking_animation(lua_State* pL);
+
 #endif

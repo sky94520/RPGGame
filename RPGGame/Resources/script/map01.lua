@@ -10,6 +10,11 @@ function change2map01_01( ... )
 	-- body
 	print("change to map01_01");
 	base.setGameState(GameState.Script);
+	--显示开门动画
+	for k, dir in pairs(Direction:toArray()) do
+		local duration = object.showWalkingAnimation("door1", dir);
+		timer.delay(duration);
+	end
 	--fadeIn
 	screen.fadeIn(1.5);
 	--跳转地图

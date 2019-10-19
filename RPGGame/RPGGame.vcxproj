@@ -137,11 +137,11 @@
     <ClCompile Include="Classes\HelloWorldScene.cpp" />
     <ClCompile Include="Classes\layer\EffectLayer.cpp" />
     <ClCompile Include="Classes\layer\MapLayer.cpp" />
-    <ClCompile Include="Classes\layer\PlayerLayer.cpp" />
-    <ClCompile Include="Classes\layer\ScriptLayer.cpp" />
     <ClCompile Include="Classes\layer\SpritePool.cpp" />
     <ClCompile Include="Classes\layer\Text.cpp" />
     <ClCompile Include="Classes\main.cpp" />
+    <ClCompile Include="Classes\manager\PlayerManager.cpp" />
+    <ClCompile Include="Classes\manager\ScriptManager.cpp" />
     <ClCompile Include="Classes\script\BaseScript.cpp" />
     <ClCompile Include="Classes\script\LuaStack.cpp" />
     <ClCompile Include="Classes\script\ObjectScript.cpp" />
@@ -165,10 +165,10 @@
     <ClInclude Include="Classes\HelloWorldScene.h" />
     <ClInclude Include="Classes\layer\EffectLayer.h" />
     <ClInclude Include="Classes\layer\MapLayer.h" />
-    <ClInclude Include="Classes\layer\PlayerLayer.h" />
-    <ClInclude Include="Classes\layer\ScriptLayer.h" />
     <ClInclude Include="Classes\layer\SpritePool.h" />
     <ClInclude Include="Classes\layer\Text.h" />
+    <ClInclude Include="Classes\manager\PlayerManager.h" />
+    <ClInclude Include="Classes\manager\ScriptManager.h" />
     <ClInclude Include="Classes\script\BaseScript.h" />
     <ClInclude Include="Classes\script\LuaStack.h" />
     <ClInclude Include="Classes\script\ObjectScript.h" />

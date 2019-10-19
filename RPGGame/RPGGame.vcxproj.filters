@@ -16,6 +16,9 @@
     <Filter Include="Classes\script">
       <UniqueIdentifier>{69110372-bf58-4eb4-849b-187e0b29f17a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\manager">
+      <UniqueIdentifier>{a8bb7a15-82e8-4313-9e2c-78d1e97bb62b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\HelloWorldScene.cpp">
@@ -66,9 +69,6 @@
     <ClCompile Include="Classes\layer\EffectLayer.cpp">
       <Filter>Classes\layer</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\layer\PlayerLayer.cpp">
-      <Filter>Classes\layer</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\script\LuaStack.cpp">
       <Filter>Classes\script</Filter>
     </ClCompile>
@@ -81,14 +81,17 @@
     <ClCompile Include="Classes\entity\LuaObject.cpp">
       <Filter>Classes\entity</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\layer\ScriptLayer.cpp">
-      <Filter>Classes\layer</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\script\BaseScript.cpp">
       <Filter>Classes\script</Filter>
     </ClCompile>
     <ClCompile Include="Classes\script\ObjectScript.cpp">
       <Filter>Classes\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\manager\PlayerManager.cpp">
+      <Filter>Classes\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\manager\ScriptManager.cpp">
+      <Filter>Classes\manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +146,6 @@
     <ClInclude Include="Classes\layer\EffectLayer.h">
       <Filter>Classes\layer</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\layer\PlayerLayer.h">
-      <Filter>Classes\layer</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\script\LuaStack.h">
       <Filter>Classes\script</Filter>
     </ClInclude>
@@ -158,14 +158,17 @@
     <ClInclude Include="Classes\entity\LuaObject.h">
       <Filter>Classes\entity</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\layer\ScriptLayer.h">
-      <Filter>Classes\layer</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\script\BaseScript.h">
       <Filter>Classes\script</Filter>
     </ClInclude>
     <ClInclude Include="Classes\script\ObjectScript.h">
       <Filter>Classes\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\manager\PlayerManager.h">
+      <Filter>Classes\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\manager\ScriptManager.h">
+      <Filter>Classes\manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

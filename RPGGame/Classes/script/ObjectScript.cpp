@@ -3,6 +3,8 @@
 #include "../GameScene.h"
 #include "../manager/ScriptManager.h"
 #include "../entity/LuaObject.h"
+#include "../data/StaticData.h"
+#include "../data/CharacterData.h"
 
 int open_object(lua_State* pL)
 {
@@ -11,6 +13,7 @@ int open_object(lua_State* pL)
 		{"delete", delete_object},
 		{"setTrigger", set_trigger},
 		{"setPriority", set_priority},
+		{"showWalkingAnimation", show_walking_animation},
 		{NULL, NULL}
 	};
 	luaL_newlib(pL, baselib);
@@ -84,4 +87,31 @@ int set_priority(lua_State* pL)
 	luaObject->setPriority(priority);
 	luaObject->setLocalZOrder(priority);
 	return 0;
+}
+
+int show_walking_animation(lua_State* pL)
+{
+	string name = luaL_checkstring(pL, 1);
+	Direction direction = static_cast<Direction>(luaL_checkinteger(pL, 2));
+
+	//获取对应的脚本对象
+	auto gameScene = GameScene::getInstance();
+	LuaObject* luaObject = gameScene->getScriptManager()->getLuaObject(name);
+	if (luaObject == nullptr)
+	{
+		printf("show_walking_animation: not found the object: %s\n", name.c_str());
+		return 0;
+	}
+	//获取动画并运行
+	auto chartletName = luaObject->getChartletName();
+	auto animation = StaticData::getInstance()->getCharacterData()->getWalkingAnimation(chartletName, direction);
+	auto animate = Animate::create(animation);
+	animate->setTag(Entity::ANIMATION_TAG);
+
+	luaObject->getSprite()->stopActionByTag(Entity::ANIMATION_TAG);
+	luaObject->getSprite()->runAction(animate);
+
+	lua_Number duration = (lua_Number)animation->getDuration();
+	lua_pushnumber(pL, duration);
+	return 1;
 }
