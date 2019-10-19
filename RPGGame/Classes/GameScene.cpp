@@ -197,6 +197,8 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 	//改变当前地图
 	m_pMapLayer->clear();
 	m_pMapLayer->init(mapFilename);
+	//清除脚本事件
+	m_pScriptManager->clear();
 	//更新A星算法的地图尺寸
 	auto tiledMap = m_pMapLayer->getTiledMap();
 	auto mapSize = tiledMap->getMapSize();
@@ -218,6 +220,6 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 
 	if (scriptName.getType() == Value::Type::STRING)
 	{
-		m_pScriptManager->getLuaStack()->executeScriptFile(scriptName.asString());
+		m_pScriptManager->getLuaStack()->executeScriptFile(scriptName.asString(), true);
 	}
 }
