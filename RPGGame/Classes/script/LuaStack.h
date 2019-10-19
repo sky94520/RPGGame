@@ -47,8 +47,9 @@ public:
 	 * 执行脚本文件 force是否强制执行该文件
      * 
      * @param filename 文件名称
+	 * @param force 强制加载脚本文件
      */
-	int executeScriptFile(const string& filename);
+	int executeScriptFile(const string& filename, bool force=false);
 
 	/**
 	 * 执行字符串

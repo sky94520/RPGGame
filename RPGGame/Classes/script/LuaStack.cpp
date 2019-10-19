@@ -75,10 +75,8 @@ bool LuaStack::isLoadedScriptFile(const char* filename) const
 	return type != LUA_TNIL;
 }
 
-int LuaStack::executeScriptFile(const string& filename)
+int LuaStack::executeScriptFile(const string& filename, bool force)
 {
-	bool bShouldLoad = false;
-
 	FileUtils* utils = FileUtils::getInstance();
 	string fullpath = utils->fullPathForFilename(filename);
 	//仅保留文件名
@@ -89,7 +87,7 @@ int LuaStack::executeScriptFile(const string& filename)
 	//是否已经加载
 	bool loaded = this->isLoadedScriptFile(name.c_str());
 
-	if (!bShouldLoad && loaded)
+	if (!force && loaded)
 		return LUA_OK;
 	//获取lua的LOADED
 	lua_getfield(m_pLuaState, LUA_REGISTRYINDEX, "_LOADED");
