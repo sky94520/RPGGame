@@ -191,11 +191,21 @@ LuaObject* ScriptManager::getClickedNPC(const Rect& r, int priority) const
 
 LuaObject* ScriptManager::getLuaObject(const string& name)
 {
+	LuaObject* object = nullptr;
 	auto it = m_objects.find(name);
 
-	if (it == m_objects.end())
-		return nullptr;
-	return it->second;
+	if (it == m_objects.end()) {
+		for (auto iter = m_toAddedObjects.begin(); iter != m_toAddedObjects.end(); ) {
+			if ((*iter)->getLuaName() == name) {
+				object = *iter;
+				break;
+			}
+		}
+	}
+	else
+		object = it->second;
+
+	return object;
 }
 
 int ScriptManager::resumeCoroutine(WaitType waitType, int nargs)
