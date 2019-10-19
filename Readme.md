@@ -106,3 +106,9 @@
 >5. FollowController
 >6. AStarController
 >7. ControllerListener
+
+## 待更新
+>1. character.xml => json格式
+>2. 脚本对象的动画显示（依然采用v1版本）
+>3. 脚本对象和玩家的遮挡问题
+>4. 玩家触碰到脚本时的暂停问题 在触发脚本时，如果玩家在行走，则先暂停；也可以在脚本中停止运动
