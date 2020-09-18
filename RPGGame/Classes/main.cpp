@@ -23,7 +23,7 @@ int main(int argv,char**argc)
 		}
 		else//设置鼠标和触碰事件分离
 		{
-			SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH,"1");
+			//SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH,"1");
 		}
 		//开启垂直同步
 		SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");

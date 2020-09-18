@@ -148,8 +148,10 @@ int LuaStack::executeFunction(int nargs, int nresults)
 int LuaStack::resumeFunction(int nargs)
 {
 	int ret = LUA_ERRRUN;
+	//TODO:result为返回值，目前未用到
+	int result = 0;
 	//执行
-	ret = lua_resume(m_pLuaState, nullptr, nargs);
+	ret = lua_resume(m_pLuaState, nullptr, nargs, &result);
 	m_nCoroutineRet = ret;
 
 	if (ret != LUA_OK && ret != LUA_YIELD)
