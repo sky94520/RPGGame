@@ -43,8 +43,6 @@ public:
 	const TMXObjectGroup* getScriptObjectGroup() const;
 	FastTiledMap* getTiledMap() const;
 private:
-	void resetLocalZOrderOfTile();
-private:
 	FastTiledMap* m_pTiledMap;
 	//地图文件路径
 	string m_filepath;

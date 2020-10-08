@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Outside_B" tilewidth="48" tileheight="48" tilecount="256" columns="16">
+<tileset version="1.4" tiledversion="1.4.2" name="Outside_B" tilewidth="48" tileheight="48" tilecount="256" columns="16">
  <image source="Outside_B.png" width="768" height="768"/>
  <tile id="149">
   <properties>
@@ -13,32 +13,27 @@
  </tile>
  <tile id="168">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="169">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="170">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="171">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="181">
   <properties>
-   <property name="priority" type="int" value="2"/>
-  </properties>
- </tile>
- <tile id="182">
-  <properties>
-   <property name="priority" type="int" value="0"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="184">
@@ -58,7 +53,7 @@
  </tile>
  <tile id="187">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="197">
@@ -83,12 +78,12 @@
  </tile>
  <tile id="224">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="225">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="226">

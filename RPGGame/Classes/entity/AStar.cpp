@@ -85,7 +85,7 @@ PathStep* AStar::step(const SDL_Point& toTile)
 		if (it == m_openSteps.end())
 		{
 			//目标合法才添加
-			if (m_pDelegate->isPassing(tilePos) //1 可通过
+			if (((tilePos.x == toTile.x && tilePos.y == toTile.y) || m_pDelegate->isPassing(tilePos)) //1 可通过
 					&& m_pDelegate->isPassing4(currentStep->getTilePos(), dir) //2 当前所在侧边可通过
 					&& m_pDelegate->isPassing4(tilePos, oppositeDir) //3 下一个图块对立侧边可通过
 				)

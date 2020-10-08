@@ -67,9 +67,8 @@ bool GameScene::init()
 	//脚本层
 	m_pScriptManager = ScriptManager::create();
 	this->addChild(m_pScriptManager);
-	//事件
+	//点击事件
 	auto listener = EventListenerTouchOneByOne::create();
-
 	listener->setPriority(1);
 	listener->onTouchBegan = SDL_CALLBACK_2(GameScene::onTouchBegan,this);
 	_eventDispatcher->addEventListener(listener,this);

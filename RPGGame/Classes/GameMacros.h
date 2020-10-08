@@ -49,6 +49,8 @@ enum class TriggerType
 #define PRIORITY_LOW  -1 /*NPC显示在下*/
 #define PRIORITY_HIGH 1 /*NPC显示在上*/
 
+const int CHARACTER_LOCAL_Z_ORDER = 999;
+
 /*属性类型*/
 enum class PropertyType
 {

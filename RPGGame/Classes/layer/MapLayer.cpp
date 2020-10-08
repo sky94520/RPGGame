@@ -37,8 +37,6 @@ bool MapLayer::init(const string& filepath)
 	m_pTiledMap = FastTiledMap::create(filepath);
 	this->addChild(m_pTiledMap);
 
-	//this->resetLocalZOrderOfTile();
-
 	return true;
 }
 
@@ -210,43 +208,3 @@ FastTiledMap* MapLayer::getTiledMap() const
 	return m_pTiledMap;
 }
 
-void MapLayer::resetLocalZOrderOfTile()
-{
-	//保存所有优先级为PRIORITY_HIGH的图块
-	vector<int> tileIds;
-	auto tilesets = m_pTiledMap->getTilesets();
-
-	for (auto tileset : tilesets)
-	{
-		auto& properties = tileset->getProperties();
-		
-		for(auto itMap = properties.cbegin(); itMap != properties.cend(); itMap++)
-		{
-			auto id = itMap->first;
-			auto& valueMap= itMap->second;
-
-			auto it = valueMap.find("priority");
-
-			//if (it != valueMap.cend() && it->second.asInt() == PRIORITY_HIGH)
-			//	tileIds.push_back(id + tileset->firstGrid);
-		}
-	}
-	//设置 优先级为PRIORITY_HIGH即为2 的图块localZOrder
-	auto& children = this->getCollisionLayer()->getChildren();
-
-	for (auto child : children)
-	{
-		//获取名字
-		auto name = child->getName();
-
-		if (name.empty())
-			continue;
-		
-		int id = SDL_atoi(name.c_str());
-		//设置localZOrder
-		if (find(tileIds.begin(),tileIds.end(),id) != tileIds.end())
-		{
-			child->setLocalZOrder(child->getLocalZOrder() /*+ GameScene::CHARACTER_LOCAL_Z_ORDER*/);
-		}
-	}
-}
