@@ -54,9 +54,6 @@
     <ClCompile Include="Classes\entity\Entity.cpp">
       <Filter>Classes\entity</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\entity\ShortestPathStep.cpp">
-      <Filter>Classes\entity</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\entity\Controller.cpp">
       <Filter>Classes\entity</Filter>
     </ClCompile>
@@ -93,6 +90,9 @@
     <ClCompile Include="Classes\manager\ScriptManager.cpp">
       <Filter>Classes\manager</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\entity\PathStep.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\HelloWorldScene.h">
@@ -126,9 +126,6 @@
       <Filter>Classes\entity</Filter>
     </ClInclude>
     <ClInclude Include="Classes\entity\Entity.h">
-      <Filter>Classes\entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\entity\ShortestPathStep.h">
       <Filter>Classes\entity</Filter>
     </ClInclude>
     <ClInclude Include="Classes\entity\Controller.h">
@@ -169,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Classes\manager\ScriptManager.h">
       <Filter>Classes\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\PathStep.h">
+      <Filter>Classes\entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

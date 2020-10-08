@@ -23,11 +23,11 @@ public:
 	~AStar();
 	CREATE_FUNC(AStar);
 	bool init();
-
-	PathStep* parse(const SDL_Point& fromTile, const SDL_Point& toTile);
+	//获取fromTile=>toTile的路径，若无则返回NULL
+	PathStep* parse(const SDL_Point& fromTile, const SDL_Point& toTile, unsigned maxCount=100);
 	//模拟使用
 	void startStep(const SDL_Point& fromTile, const SDL_Point& toTile);
-	PathStep* step();
+	PathStep* step(const SDL_Point& toTile);
 	void stopStep();
 	vector<PathStep*>* getOpenSteps() { return &m_openSteps; }
 	void setMapSize(unsigned int rowTileNum, unsigned int colTileNum);
@@ -40,9 +40,8 @@ private:
 	bool isValid(const SDL_Point& tilePos)const;
 
 	vector<PathStep*>::const_iterator containsTilePos(const vector<PathStep*>& vec, const SDL_Point& tilePos);
-	bool equal(const SDL_Point& p1, const SDL_Point& p2) const;
 private:
-	static bool direction(Direction dir,string* sDir,SDL_Point* delta,Direction* oppsite);
+	static bool getNextTilePos(Direction dir, PathStep* step,string* sDir,SDL_Point* nextPos,Direction* oppsite);
 public:
 	std::function<bool (const SDL_Point& tilePos)> isPassing;
 private:

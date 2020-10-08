@@ -24,23 +24,18 @@ bool AStar::init()
 	return true;
 }
 
-PathStep* AStar::parse(const SDL_Point& fromTile,const SDL_Point& toTile)
+PathStep* AStar::parse(const SDL_Point& fromTile,const SDL_Point& toTile, unsigned maxCount)
 {
 	PathStep* pTail = nullptr;
-	//设置开始和结束位置
-	PathStep::fromTile = fromTile;
-	PathStep::toTile = toTile;
 	//把开始位置插入到开始列表中
 	auto from = PathStep::create(fromTile);
 	m_openSteps.push_back(from);
-	//记录循环次数
+	//循环次数不超过最大循环次数
 	unsigned int count = 0;
-	//TODO:假定最大循环次数
-	unsigned int maxCount = 100;
-
+	//步进
 	do
 	{
-		pTail = this->step();
+		pTail = this->step(toTile);
 		count++;
 
 	}while( !m_openSteps.empty() && count < maxCount);
@@ -51,64 +46,52 @@ PathStep* AStar::parse(const SDL_Point& fromTile,const SDL_Point& toTile)
 
 void AStar::startStep(const SDL_Point& fromTile, const SDL_Point& toTile)
 {
-	//设置开始和结束位置
-	PathStep::fromTile = fromTile;
-	PathStep::toTile = toTile;
 	//把开始位置插入到开始列表中
 	auto from = PathStep::create(fromTile);
 	SDL_SAFE_RETAIN(from);
 	m_openSteps.push_back(from);
 }
 
-PathStep* AStar::step()
+PathStep* AStar::step(const SDL_Point& toTile)
 {
 	if (m_openSteps.empty())
 		return nullptr;
-
-	PathStep* currentStep = m_openSteps.front();
-	m_openSteps.erase(m_openSteps.begin());
+	//获取数组首个元素
+	PathStep* currentStep = m_openSteps.back();
+	m_openSteps.pop_back();
 	//添加到封闭列表
 	m_closeSteps.push_back(currentStep);
 	//如果当前路径就是目的点，搜索完成，退出循环
-	if (equal(currentStep->getTilePos(), PathStep::toTile))
+	if (currentStep->equals(toTile))
 	{
 		//清除列表
 		m_openSteps.clear();
 		m_closeSteps.clear();
-
 		return currentStep;
 	}
 	//对四方向进行遍历
+	SDL_Point tilePos = { 0, 0 };
+	Direction oppositeDir;
 	for (const auto& dir : m_dirs)
 	{
-		SDL_Point tilePos = { 0, 0 };
-		Direction oppositeDir;
-
-		AStar::direction(dir, nullptr, &tilePos, &oppositeDir);
-
-		tilePos.x += currentStep->getTilePos().x;
-		tilePos.y += currentStep->getTilePos().y;
-		//避免出界
-		if (!this->isValid(tilePos))
+		//获取下一个方向和对应的方向
+		AStar::getNextTilePos(dir, currentStep, nullptr, &tilePos, &oppositeDir);
+		//出界或者已经访问过
+		if (!this->isValid(tilePos) || containsTilePos(m_closeSteps,tilePos) != m_closeSteps.end())
 			continue;
-		//在闭合列表已经存在该位置 跳过本方向
-		if (containsTilePos(m_closeSteps,tilePos) != m_closeSteps.end())
-		{
-			continue;
-		}
 		int moveCost = calculateCost(tilePos);
-		//如果该位置不在开放列表中，添加
+		//在列表中，尝试更新 否则，直接添加
 		auto it = containsTilePos(m_openSteps, tilePos);
 		if (it == m_openSteps.end())
 		{
 			//目标合法才添加 目标为toTile时，不进行通过检测
-			if (equal(tilePos, PathStep::toTile) || isPassing(tilePos))
+			if ((tilePos.x == toTile.x && tilePos.y == toTile.y) || isPassing(tilePos))
 			{
 				PathStep* step = PathStep::create(tilePos);
 
 				step->setParent(currentStep);
 				step->setGScore(currentStep->getGScore() + moveCost);
-				step->setHScore(computeHScoreFromCoord(tilePos, PathStep::toTile));
+				step->setHScore(computeHScoreFromCoord(tilePos, toTile));
 				//插入到开放列表中
 				insertToOpenSteps(step);
 			}
@@ -124,7 +107,6 @@ PathStep* AStar::step()
 				//移除后重新添加
 				m_openSteps.erase(it);
 				insertToOpenSteps(step);
-				
 			}
 		}
 	}
@@ -162,17 +144,14 @@ int AStar::computeHScoreFromCoord(const SDL_Point& fromTileCoord, const SDL_Poin
 
 void AStar::insertToOpenSteps(PathStep* step)
 {
-	int stepFScore = step->getFScore();
-
-	auto it = m_openSteps.begin();
 	//找到合适的插入位置
-	for (;it != m_openSteps.end();it++)
+	int score = step->getFScore();
+	auto it = m_openSteps.begin();
+	while (it != m_openSteps.end())
 	{
-		auto temp = *it;
-		if (stepFScore < temp->getFScore())
-		{
+		if (score > (*it)->getFScore())
 			break;
-		}
+		it++;
 	}
 	//插入
 	m_openSteps.insert(it, step);
@@ -196,23 +175,22 @@ vector<PathStep*>::const_iterator AStar::containsTilePos(const vector<PathStep*>
 {
 	auto it = find_if(vec.cbegin(), vec.cend(), [&tilePos, this](PathStep* step)
 	{
-		return equal(step->getTilePos(), tilePos);
+		return step->equals(tilePos);
 	});
 
 	return it;
 }
 
-bool AStar::equal(const SDL_Point& p1, const SDL_Point& p2) const
+bool AStar::getNextTilePos(Direction dir, PathStep* step, string* sDir,SDL_Point* nextPos,Direction* oppsite)
 {
-	return p1.x == p2.x && p1.y == p2.y;
-}
-
-bool AStar::direction(Direction dir,string* sDir,SDL_Point* delta,Direction* oppsite)
-{
-	if (sDir == nullptr && delta == nullptr && oppsite == nullptr)
+	if (sDir == nullptr && nextPos == nullptr && oppsite == nullptr)
 		return false;
 
 	SDL_Point temp = { 0,0 };
+	if (step != nullptr)
+	{
+		temp = step->getTilePos();
+	}
 	Direction oppsiteDir = dir;
 	string text;
 
@@ -220,22 +198,22 @@ bool AStar::direction(Direction dir,string* sDir,SDL_Point* delta,Direction* opp
 	{
 	case Direction::Down:
 		text = "down";
-		temp.y = 1;
+		temp.y += 1;
 		oppsiteDir = Direction::Up;
 		break;
 	case Direction::Left:
 		text = "left";
-		temp.x = -1;
+		temp.x -= 1;
 		oppsiteDir = Direction::Right;
 		break;
 	case Direction::Right:
 		text = "right";
-		temp.x = 1;
+		temp.x += 1;
 		oppsiteDir = Direction::Left;
 		break;
 	case Direction::Up:
 		text = "up";
-		temp.y = -1;
+		temp.y -= 1;
 		oppsiteDir = Direction::Down;
 		break;
 	default:
@@ -244,8 +222,10 @@ bool AStar::direction(Direction dir,string* sDir,SDL_Point* delta,Direction* opp
 
 	if (sDir != nullptr)
 		*sDir = text;
-	if (delta != nullptr)
-		*delta = temp;
+	if (nextPos != nullptr)
+	{
+		*nextPos = temp;
+	}
 	if (oppsite != nullptr)
 		*oppsite = oppsiteDir;
 

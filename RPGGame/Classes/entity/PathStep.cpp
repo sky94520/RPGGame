@@ -1,8 +1,5 @@
 #include "PathStep.h"
 
-SDL_Point PathStep::fromTile = { 0, 0 };
-SDL_Point PathStep::toTile = { 0, 0 };
-
 PathStep::PathStep()
 	:m_nGScore(0)
 	,m_nHScore(0)
@@ -27,8 +24,7 @@ PathStep* PathStep::create(const SDL_Point& tilePos)
 
 bool PathStep::init(const SDL_Point& tilePos)
 {
-	this->setTilePos(tilePos);
-
+	m_tilePos = tilePos;
 	return true;
 }
 
@@ -36,6 +32,12 @@ bool PathStep::equals(const PathStep& other) const
 {
 	return m_tilePos.x == other.m_tilePos.x &&
 		m_tilePos.y == other.m_tilePos.y;
+}
+
+bool PathStep::equals(const SDL_Point& other) const 
+{
+	return m_tilePos.x == other.x
+		&& m_tilePos.y == other.y;
 }
 
 int PathStep::getFScore() const
