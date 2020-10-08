@@ -3,7 +3,7 @@
 
 #include "Controller.h"
 
-class ShortestPathStep;
+class PathStep;
 /*
  跟随控制器
  负责跟随其他控制器的行动，并带动ControllerListener
@@ -18,15 +18,15 @@ public:
 	bool init();
 
 	virtual float moveToward(const SDL_Point& tilePos);
-	virtual void moveOneStep(ShortestPathStep* step);
+	virtual void moveOneStep(PathStep* step);
 private:
 	void popStepAndAnimate();
 private:
 	//上一步
-	ShortestPathStep* m_pLastStep;
+	PathStep* m_pLastStep;
 	//当前行走步数
-	ShortestPathStep* m_pCurStep;
+	PathStep* m_pCurStep;
 	//待行走步
-	ShortestPathStep* m_pPendingStep;
+	PathStep* m_pPendingStep;
 };
 #endif

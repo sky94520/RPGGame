@@ -1,5 +1,5 @@
 #include "FollowController.h"
-#include "ShortestPathStep.h"
+#include "PathStep.h"
 #include "AStarController.h"
 #include "../GameMacros.h"
 #include "ControllerListener.h"
@@ -30,7 +30,7 @@ float FollowController::moveToward(const SDL_Point& tilePos)
 	{
 		SDL_SAFE_RELEASE_NULL(m_pCurStep);
 	}
-	m_pCurStep = ShortestPathStep::create(tilePos);
+	m_pCurStep = PathStep::create(tilePos);
 	SDL_SAFE_RETAIN(m_pCurStep);
 	//开始运动
 	this->popStepAndAnimate();
@@ -38,7 +38,7 @@ float FollowController::moveToward(const SDL_Point& tilePos)
 	return true;
 }
 
-void FollowController::moveOneStep(ShortestPathStep* step)
+void FollowController::moveOneStep(PathStep* step)
 {
 	if (step == nullptr)
 	{

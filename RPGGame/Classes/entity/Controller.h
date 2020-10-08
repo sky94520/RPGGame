@@ -8,7 +8,7 @@
 USING_NS_SDL;
 using namespace std;
 
-class ShortestPathStep;
+class PathStep;
 class ControllerListener;
 
 class Controller: public Object
@@ -20,7 +20,7 @@ public:
 	ControllerListener* getControllerListener() const;
 	void setControllerListener(ControllerListener* pListener);
 	virtual float moveToward(const SDL_Point& tilePos) = 0;
-	virtual void moveOneStep(ShortestPathStep* step){}
+	virtual void moveOneStep(PathStep* step){}
 
 	float getDurationPerGrid() const 
 	{ 

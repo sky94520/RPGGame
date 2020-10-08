@@ -8,7 +8,7 @@
 using namespace std;
 using namespace SDL;
 
-class ShortestPathStep;
+class PathStep;
 enum class Direction;
 
 /*
@@ -24,32 +24,32 @@ public:
 	CREATE_FUNC(AStar);
 	bool init();
 
-	ShortestPathStep* parse(const SDL_Point& fromTile, const SDL_Point& toTile);
+	PathStep* parse(const SDL_Point& fromTile, const SDL_Point& toTile);
 	//模拟使用
 	void startStep(const SDL_Point& fromTile, const SDL_Point& toTile);
-	ShortestPathStep* step();
+	PathStep* step();
 	void stopStep();
-	vector<ShortestPathStep*>* getOpenSteps() { return &m_openSteps; }
+	vector<PathStep*>* getOpenSteps() { return &m_openSteps; }
 	void setMapSize(unsigned int rowTileNum, unsigned int colTileNum);
 public:
 	static int computeHScoreFromCoord(const SDL_Point& fromTileCoord, const SDL_Point& toTileCoord);
 private:
-	void insertToOpenSteps(ShortestPathStep* step);
+	void insertToOpenSteps(PathStep* step);
 	//根据对应位置获取代价
 	int calculateCost(const SDL_Point& tilePos);
 	bool isValid(const SDL_Point& tilePos)const;
 
-	vector<ShortestPathStep*>::const_iterator containsTilePos(const vector<ShortestPathStep*>& vec, const SDL_Point& tilePos);
+	vector<PathStep*>::const_iterator containsTilePos(const vector<PathStep*>& vec, const SDL_Point& tilePos);
 	bool equal(const SDL_Point& p1, const SDL_Point& p2) const;
 private:
 	static bool direction(Direction dir,string* sDir,SDL_Point* delta,Direction* oppsite);
 public:
 	std::function<bool (const SDL_Point& tilePos)> isPassing;
 private:
-	vector<ShortestPathStep*> m_openSteps;
-	vector<ShortestPathStep*> m_closeSteps;
+	vector<PathStep*> m_openSteps;
+	vector<PathStep*> m_closeSteps;
 	vector<Direction> m_dirs;
-	//地图宽|高图块个数
+	//地图宽、高的图块个数
 	unsigned int m_mapRowTileNum;
 	unsigned int m_mapColTileNum;
 };

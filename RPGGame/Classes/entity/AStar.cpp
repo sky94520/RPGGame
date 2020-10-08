@@ -1,5 +1,5 @@
 #include "AStar.h"
-#include "ShortestPathStep.h"
+#include "PathStep.h"
 #include "../GameMacros.h"
 
 AStar::AStar()
@@ -24,14 +24,14 @@ bool AStar::init()
 	return true;
 }
 
-ShortestPathStep* AStar::parse(const SDL_Point& fromTile,const SDL_Point& toTile)
+PathStep* AStar::parse(const SDL_Point& fromTile,const SDL_Point& toTile)
 {
-	ShortestPathStep* pTail = nullptr;
+	PathStep* pTail = nullptr;
 	//设置开始和结束位置
-	ShortestPathStep::fromTile = fromTile;
-	ShortestPathStep::toTile = toTile;
+	PathStep::fromTile = fromTile;
+	PathStep::toTile = toTile;
 	//把开始位置插入到开始列表中
-	auto from = ShortestPathStep::create(fromTile);
+	auto from = PathStep::create(fromTile);
 	m_openSteps.push_back(from);
 	//记录循环次数
 	unsigned int count = 0;
@@ -52,25 +52,25 @@ ShortestPathStep* AStar::parse(const SDL_Point& fromTile,const SDL_Point& toTile
 void AStar::startStep(const SDL_Point& fromTile, const SDL_Point& toTile)
 {
 	//设置开始和结束位置
-	ShortestPathStep::fromTile = fromTile;
-	ShortestPathStep::toTile = toTile;
+	PathStep::fromTile = fromTile;
+	PathStep::toTile = toTile;
 	//把开始位置插入到开始列表中
-	auto from = ShortestPathStep::create(fromTile);
+	auto from = PathStep::create(fromTile);
 	SDL_SAFE_RETAIN(from);
 	m_openSteps.push_back(from);
 }
 
-ShortestPathStep* AStar::step()
+PathStep* AStar::step()
 {
 	if (m_openSteps.empty())
 		return nullptr;
 
-	ShortestPathStep* currentStep = m_openSteps.front();
+	PathStep* currentStep = m_openSteps.front();
 	m_openSteps.erase(m_openSteps.begin());
 	//添加到封闭列表
 	m_closeSteps.push_back(currentStep);
 	//如果当前路径就是目的点，搜索完成，退出循环
-	if (equal(currentStep->getTilePos(), ShortestPathStep::toTile))
+	if (equal(currentStep->getTilePos(), PathStep::toTile))
 	{
 		//清除列表
 		m_openSteps.clear();
@@ -102,13 +102,13 @@ ShortestPathStep* AStar::step()
 		if (it == m_openSteps.end())
 		{
 			//目标合法才添加 目标为toTile时，不进行通过检测
-			if (equal(tilePos, ShortestPathStep::toTile) || isPassing(tilePos))
+			if (equal(tilePos, PathStep::toTile) || isPassing(tilePos))
 			{
-				ShortestPathStep* step = ShortestPathStep::create(tilePos);
+				PathStep* step = PathStep::create(tilePos);
 
 				step->setParent(currentStep);
 				step->setGScore(currentStep->getGScore() + moveCost);
-				step->setHScore(computeHScoreFromCoord(tilePos, ShortestPathStep::toTile));
+				step->setHScore(computeHScoreFromCoord(tilePos, PathStep::toTile));
 				//插入到开放列表中
 				insertToOpenSteps(step);
 			}
@@ -160,7 +160,7 @@ int AStar::computeHScoreFromCoord(const SDL_Point& fromTileCoord, const SDL_Poin
 	return abs(fromTileCoord.x - toTileCoord.x ) + abs(fromTileCoord.y - toTileCoord.y);
 }
 
-void AStar::insertToOpenSteps(ShortestPathStep* step)
+void AStar::insertToOpenSteps(PathStep* step)
 {
 	int stepFScore = step->getFScore();
 
@@ -192,9 +192,9 @@ bool AStar::isValid(const SDL_Point& tilePos) const
 	return true;
 }
 
-vector<ShortestPathStep*>::const_iterator AStar::containsTilePos(const vector<ShortestPathStep*>& vec,const SDL_Point& tilePos)
+vector<PathStep*>::const_iterator AStar::containsTilePos(const vector<PathStep*>& vec,const SDL_Point& tilePos)
 {
-	auto it = find_if(vec.cbegin(), vec.cend(), [&tilePos, this](ShortestPathStep* step)
+	auto it = find_if(vec.cbegin(), vec.cend(), [&tilePos, this](PathStep* step)
 	{
 		return equal(step->getTilePos(), tilePos);
 	});

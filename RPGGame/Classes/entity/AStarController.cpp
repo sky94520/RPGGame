@@ -1,6 +1,6 @@
 #include "AStarController.h"
 #include "AStar.h"
-#include "ShortestPathStep.h"
+#include "PathStep.h"
 #include "../GameMacros.h"
 #include "LuaObject.h"
 #include "ControllerListener.h"
@@ -156,7 +156,7 @@ void AStarController::popStepAndAnimate()
 	m_pListener->setMoving(true);
 }
 
-float AStarController::constructPathAndStartAnimation(ShortestPathStep* pHead)
+float AStarController::constructPathAndStartAnimation(PathStep* pHead)
 {
 	int number = 0;
 	//此时的角色一定不在运动中 构建运动列表
