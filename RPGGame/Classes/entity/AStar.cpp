@@ -3,9 +3,9 @@
 #include "../GameMacros.h"
 
 AStar::AStar()
-	:isPassing(nullptr)
-	,m_mapRowTileNum(0)
+	:m_mapRowTileNum(0)
 	,m_mapColTileNum(0)
+	,m_pDelegate(nullptr)
 {
 	//方向数组
 	m_dirs.push_back(Direction::Down);
@@ -84,8 +84,11 @@ PathStep* AStar::step(const SDL_Point& toTile)
 		auto it = containsTilePos(m_openSteps, tilePos);
 		if (it == m_openSteps.end())
 		{
-			//目标合法才添加 目标为toTile时，不进行通过检测
-			if ((tilePos.x == toTile.x && tilePos.y == toTile.y) || isPassing(tilePos))
+			//目标合法才添加
+			if (m_pDelegate->isPassing(tilePos) //1 可通过
+					&& m_pDelegate->isPassing4(currentStep->getTilePos(), dir) //2 当前所在侧边可通过
+					&& m_pDelegate->isPassing4(tilePos, oppositeDir) //3 下一个图块对立侧边可通过
+				)
 			{
 				PathStep* step = PathStep::create(tilePos);
 

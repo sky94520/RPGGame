@@ -89,7 +89,7 @@ bool GameScene::initializeMap()
 {
 	//创建A星算法实例,并存入StaticData中
 	AStar* pAStar = AStar::create();
-	pAStar->isPassing = SDL_CALLBACK_1(GameScene::isPassing, this);
+	pAStar->setDelegate(this);
 	StaticData::getInstance()->setAStar(pAStar);
 
 	//默认使用第一个存档
@@ -109,7 +109,7 @@ bool GameScene::initializeMap()
 	return true;
 }
 
-bool GameScene::isPassing(const SDL_Point& tilePos)
+bool GameScene::isPassing(const SDL_Point& tilePos) const
 {
 	auto tiledMap = m_pMapLayer->getTiledMap();
 	auto mapSize = tiledMap->getMapSize();
@@ -134,7 +134,14 @@ bool GameScene::isPassing(const SDL_Point& tilePos)
 		auto npc = m_pScriptManager->getClickedNPC(r, PRIORITY_SAME);
 		ret = ( npc == nullptr ? true : false);
 	}
+	return ret;
+}
 
+bool GameScene::isPassing4(const SDL_Point& tilePos, Direction direction) const
+{
+	auto layer = m_pMapLayer->getCollisionLayer();
+	auto gid = layer->getTileGIDAt(tilePos);
+	bool ret = m_pMapLayer->isPassing(gid, direction);
 	return ret;
 }
 

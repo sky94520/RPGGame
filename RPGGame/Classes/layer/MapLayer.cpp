@@ -1,4 +1,5 @@
 #include "MapLayer.h"
+#include "../GameMacros.h"
 #include "../entity/Character.h"
 
 MapLayer::MapLayer()
@@ -136,7 +137,7 @@ bool MapLayer::isPassing(int gid)
 	return priority != 0;
 }
 
-bool MapLayer::isPassing(int gid,Direction direction)
+bool MapLayer::isPassing(int gid, Direction direction)
 {
 	//获取对应属性
 	ValueMap* properties = nullptr;
@@ -144,22 +145,18 @@ bool MapLayer::isPassing(int gid,Direction direction)
 		return true;
 	//获取对应的键
 	string key;
-
-	/*
 	switch (direction)
 	{
-	case Direction::Down: key = "pass_down"; break;
-	case Direction::Left: key = "pass_left"; break;
-	case Direction::Right: key = "pass_right"; break;
-	case Direction::Up: key = "pass_up"; break;
+		case Direction::Down: key = "pass_down"; break;
+		case Direction::Left: key = "pass_left"; break;
+		case Direction::Right: key = "pass_right"; break;
+		case Direction::Up: key = "pass_up"; break;
 	}
-	*/
 	auto it = properties->find(key);
 	//获取对应值并返回
 	if (it != properties->end())
 	{
 		bool ret = it->second.asBool();
-
 		return ret;
 	}
 	else//默认为可通过

@@ -4,6 +4,7 @@
 #include <string>
 
 #include "SDL_Engine/SDL_Engine.h"
+#include "entity/AStar.h"
 
 using namespace std;
 USING_NS_SDL;
@@ -14,7 +15,7 @@ class PlayerManager;
 class ScriptManager;
 enum class GameState;
 
-class GameScene : public Scene
+class GameScene : public Scene, public AStartDelegate
 {
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//地图层
@@ -29,7 +30,8 @@ private:
 	~GameScene();
 	bool init();
 	bool initializeMap();
-	bool isPassing(const SDL_Point& tilePos);
+	bool isPassing(const SDL_Point& tilePos) const;
+	bool isPassing4(const SDL_Point& tilePos, Direction direction) const;
 	void moveToTile(EventCustom* eventCustom);
 public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);

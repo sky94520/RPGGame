@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Outside_A3" tilewidth="48" tileheight="48" tilecount="128" columns="16">
+<tileset version="1.4" tiledversion="1.4.2" name="Outside_A3" tilewidth="48" tileheight="48" tilecount="128" columns="16">
  <image source="Outside_A3.png" width="768" height="384"/>
  <tile id="68">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="69">
   <properties>
-   <property name="priority" type="int" value="2"/>
+   <property name="priority" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="84">

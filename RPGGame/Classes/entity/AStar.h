@@ -11,8 +11,16 @@ using namespace SDL;
 class PathStep;
 enum class Direction;
 
+//抽象类，使用A星算法必须要实现该方法
+class AStartDelegate
+{
+public:
+	virtual bool isPassing(const SDL_Point& tilePos) const=0; //tilePos是否可通过
+	virtual bool isPassing4(const SDL_Point& tilePos, Direction direction) const=0;
+};
+
 /*
-	A*算法
+	A星算法
 	需要预先获取地图图块个数和赋值isPassing函数
 	为了扩展性，本算法认为目的地一定可以达到
 */
@@ -31,6 +39,7 @@ public:
 	void stopStep();
 	vector<PathStep*>* getOpenSteps() { return &m_openSteps; }
 	void setMapSize(unsigned int rowTileNum, unsigned int colTileNum);
+	void setDelegate(AStartDelegate* pDelegate) { m_pDelegate = pDelegate; }
 public:
 	static int computeHScoreFromCoord(const SDL_Point& fromTileCoord, const SDL_Point& toTileCoord);
 private:
@@ -42,8 +51,6 @@ private:
 	vector<PathStep*>::const_iterator containsTilePos(const vector<PathStep*>& vec, const SDL_Point& tilePos);
 private:
 	static bool getNextTilePos(Direction dir, PathStep* step,string* sDir,SDL_Point* nextPos,Direction* oppsite);
-public:
-	std::function<bool (const SDL_Point& tilePos)> isPassing;
 private:
 	vector<PathStep*> m_openSteps;
 	vector<PathStep*> m_closeSteps;
@@ -51,5 +58,7 @@ private:
 	//地图宽、高的图块个数
 	unsigned int m_mapRowTileNum;
 	unsigned int m_mapColTileNum;
+	//委托者
+	AStartDelegate* m_pDelegate;
 };
 #endif
