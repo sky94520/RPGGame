@@ -19,6 +19,9 @@
     <Filter Include="Classes\manager">
       <UniqueIdentifier>{a8bb7a15-82e8-4313-9e2c-78d1e97bb62b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ui">
+      <UniqueIdentifier>{c74e9704-d42b-4fd8-b8ac-acbb7ca504c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\HelloWorldScene.cpp">
@@ -92,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="Classes\entity\PathStep.cpp">
       <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\ui\OperationLayer.cpp">
+      <Filter>Classes\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="Classes\entity\PathStep.h">
       <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\ui\OperationLayer.h">
+      <Filter>Classes\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

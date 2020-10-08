@@ -1,7 +1,7 @@
 # RPG游戏开发
 
 >旨在开发2D回合制游戏。
->本项目依赖于[SDL_Engine](https://github.com/sky94520/SDL_Engine)、lua5.3
+>本项目依赖于[SDL_Engine](https://github.com/sky94520/SDL_Engine)、lua5.4
 
 ## 数据
 >### 静态数据
@@ -21,14 +21,14 @@
 >地图层，整个游戏的载体，负责显示地图，以及各种事件。
 >MapLayer中的一个TiledMap对象内的collision layer为本项目的主要层，
 >大部分精灵都依附于碰撞层。
->
->3. PlayerManager
+## 管理器
+>1. PlayerManager  
 >主角层管理 只是负责管理，其角色对象存在MapLayer的碰撞层中
 >主要有两个函数需要碰撞层的参与：
 >>1. initializePlayers() 从存档中读取数据并生成玩家对象时，需要把对象添加到对象层中
 >>2. changeLayerOfPlayers() 改变玩家所在的层 这个主要在GameScene::changeMap内调用来改变所属层
 >
->4. ScriptManager
+>2. ScriptManager  
 > 负责管理脚本对象，其脚本对象存在MapLayer的碰撞层中
 > 在addLuaObject中需要碰撞层
 >

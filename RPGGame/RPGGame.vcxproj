@@ -151,6 +151,7 @@
     <ClCompile Include="Classes\script\BaseScript.cpp" />
     <ClCompile Include="Classes\script\LuaStack.cpp" />
     <ClCompile Include="Classes\script\ObjectScript.cpp" />
+    <ClCompile Include="Classes\ui\OperationLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\data\CharacterData.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Classes\script\BaseScript.h" />
     <ClInclude Include="Classes\script\LuaStack.h" />
     <ClInclude Include="Classes\script\ObjectScript.h" />
+    <ClInclude Include="Classes\ui\OperationLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\Lua5.4\Lua5.4\Lua5.4.vcxproj">

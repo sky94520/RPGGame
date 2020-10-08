@@ -7,6 +7,8 @@
 #include "layer/SpritePool.h"
 #include "manager/ScriptManager.h"
 
+#include "ui/OperationLayer.h"
+
 #include "data/StaticData.h"
 #include "data/DynamicData.h"
 #include "entity/AStar.h"
@@ -41,6 +43,7 @@ void GameScene::purge()
 GameScene::GameScene()
 	:m_pMapLayer(nullptr)
 	,m_pEffectLayer(nullptr)
+	,m_pOperationLayer(nullptr)
 	,m_pPlayerManager(nullptr)
 	,m_pScriptManager(nullptr)
 	,m_gameState(GameState::Normal)
@@ -55,12 +58,18 @@ bool GameScene::init()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
+	//加载资源
+	this->preloadResources();
+
 	//地图层
 	m_pMapLayer = MapLayer::create();
 	this->addChild(m_pMapLayer);
 	//特效层
 	m_pEffectLayer = EffectLayer::create();
 	this->addChild(m_pEffectLayer);
+	//ui/展示层
+	m_pOperationLayer = OperationLayer::create();
+	this->addChild(m_pOperationLayer);
 	//玩家层
 	m_pPlayerManager = PlayerManager::create();
 	this->addChild(m_pPlayerManager);
@@ -106,6 +115,30 @@ bool GameScene::initializeMap()
 	m_pMapLayer->setViewpointFollow(m_pPlayerManager->getPlayer());
 
 	return true;
+}
+
+void GameScene::preloadResources()
+{
+	//StaticData::getInstance()->loadCharacterFile("data/character.plist");
+	//加载SpriteFrame
+	auto frameCache = Director::getInstance()->getSpriteFrameCache();
+	auto& framePathArray = STATIC_DATA_ARRAY("sprite_frame_array");
+	for (auto& value : framePathArray)
+	{
+		auto filepath = value.asString();
+		frameCache->addSpriteFramesWithFile(filepath);
+	}
+	//加载Animation动画
+	auto animationCache = AnimationCache::getInstance();
+	auto& aniPathArray = STATIC_DATA_ARRAY("animation_array");
+
+	for (auto& value : aniPathArray)
+	{
+		auto filepath = value.asString();
+		animationCache->addAnimationsWithFile(filepath);
+	}
+	//加载纹理
+	Director::getInstance()->getTextureCache()->addImage("img/system/IconSet.png");
 }
 
 bool GameScene::isPassing(const SDL_Point& tilePos) const
