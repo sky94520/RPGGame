@@ -31,7 +31,8 @@ public:
 	//获取角色的位置
 	const Point& getTileCoordinate() const;
 	//获取角色属性结构体
-	const unordered_map<string, PlayerData*>& getPlayerData() const;
+	const unordered_map<string, PlayerData*>& getTotalPlayerData() const;
+	PlayerData* getPlayerData(const string& name) const;
 private:
 	DynamicData();
 	~DynamicData();

@@ -1,4 +1,5 @@
 #include "StaticData.h"
+#include "../GameMacros.h"
 #include "CharacterData.h"
 
 StaticData* StaticData::s_pInstance = nullptr;
@@ -40,6 +41,15 @@ bool StaticData::init()
 	m_pCharacterData->loadCharacterFile("data/character.plist");
 	
 	return true;
+}
+
+string StaticData::toString(PropertyType type) const
+{
+	//根据属性的名称获取属性的字符串
+	auto array = STATIC_DATA_ARRAY("prop_array");
+	int index = static_cast<int>(type);
+
+	return array.at(index).asString();
 }
 
 Value* StaticData::getValueForKey(const string& key)

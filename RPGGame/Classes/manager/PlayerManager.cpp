@@ -35,7 +35,7 @@ void PlayerManager::initializePlayers(Node* layer)
 
 	//获取角色数据
 	Controller* last = nullptr;
-	const unordered_map<string, PlayerData*>& data = dynamicData->getPlayerData();
+	const unordered_map<string, PlayerData*>& data = dynamicData->getTotalPlayerData();
 	for (auto it = data.begin(); it != data.end(); it++)
 	{
 		string name = it->first;

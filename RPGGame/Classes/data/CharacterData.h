@@ -29,7 +29,7 @@ public:
 	SpriteFrame* getFaceSpriteFrame(const string& filename, int index);
 	SpriteFrame* getFaceSpriteFrame(const string& chartletName);
 	//获取sv 战斗图
-	//Animation* getSVAnimation(const string& chartletName,FightState fightState);
+	Animation* getSVAnimation(const string& chartletName,FightState fightState);
 	//获取turn name
 	string getTurnFilename(const string& chartletName) const;
 	//获取升级数据

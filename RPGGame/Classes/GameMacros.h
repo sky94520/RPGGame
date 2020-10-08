@@ -51,6 +51,8 @@ enum class TriggerType
 
 const int CHARACTER_LOCAL_Z_ORDER = 999;
 
+const string BATTLE_FIGHTER_DEAD_EVENT = "fighter dead";
+
 /*属性类型*/
 enum class PropertyType
 {

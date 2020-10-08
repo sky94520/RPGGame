@@ -36,6 +36,28 @@
 >精灵池，负责创建精灵和回收精灵对象
 >6. Text
 >可用于显示对话
+## 脚本对象 Good[该对象由c++的Good类和lua的Good类组成]
+>c++的Good类提供了一个接口，真正的操作是在lua脚本中  
+以下为公共函数
+>>1. Good:execute(userId, targetId)
+>>- 物品的执行函数
+>>- @param userId 使用者的id
+>>- @param targetId 目标id
+>>2. Good:clean()
+>>- 析构函数，c++的Good对象在调用析构函数的时候会调用该函数
+>>3. Good:setIconID(iconId) 图标id
+>>4. Good:setName(name) 设置物品名称
+>>5. Good:setDescription(desc) 设置描述
+>>6. Good:setDeleption(ret) 设置是否是消耗品
+>>7. Good:setNumber(num) 设置本物品个数
+>>8. Good:setCost(cost) 设置价格（不包括技能）
+>>9. Good:setGoodType(type) 设置物品类型(Item、Equipment、Skill、Seed)
+>>10. Good:setUsageRange(ur) 设置使用范围(Self、SingleAlly、TotalAlly、SingleEnemy、TotalEnemy)
+>  
+>以下为装备特有函数
+>>1. equip
+>>2. unequip
+>>3. 等等
 ## 脚本
 >注册基本的脚本函数
 >

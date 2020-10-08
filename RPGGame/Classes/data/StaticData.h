@@ -12,6 +12,7 @@ using namespace std;
 USING_NS_SDL;
 
 class CharacterData;
+enum class PropertyType;
 
 //定义一些常用的宏
 #define STATIC_DATA_PATH "data/static_data.plist"
@@ -39,6 +40,8 @@ public:
 	Value* getValueForKey(const string& key);
 	Point getPointForKey(const string& key);
 	Size getSizeForKey(const string& key);
+
+	string toString(PropertyType type) const;
 private:
 	StaticData();
 	~StaticData();

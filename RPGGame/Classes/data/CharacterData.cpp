@@ -1,4 +1,5 @@
 #include "CharacterData.h"
+#include "../data/StaticData.h"
 
 CharacterData::CharacterData()
 {
@@ -43,7 +44,6 @@ bool CharacterData::loadCharacterFile(const string& filename)
 			}
 		}
 	}
-
 	return true;
 }
 
@@ -133,10 +133,9 @@ SpriteFrame* CharacterData::getFaceSpriteFrame(const string& chartletName)
 	return this->getFaceSpriteFrame(filename, index);
 }
 
-/*
 Animation* CharacterData::getSVAnimation(const string&chartletName, FightState fightState)
 {
-	auto& vec = this->getValueForKey("sv")->asValueVector();
+	auto& vec = StaticData::getInstance()->getValueForKey("sv")->asValueVector();
 	int index = static_cast<int>(fightState);
 	//获取对应状态的字符串
 	auto& valueMap = vec.at(index).asValueMap();
@@ -149,7 +148,6 @@ Animation* CharacterData::getSVAnimation(const string&chartletName, FightState f
 
 	return animation;
 }
-*/
 
 string CharacterData::getTurnFilename(const string& chartletName) const
 {
@@ -169,7 +167,6 @@ LevelUpCsv& CharacterData::getDataByLevel(const string& chartletName,int level)
 
 bool CharacterData::addSVAnimation(const string& chartletName, const string& filename)
 {
-	/*
 	//加载对应贴图
 	auto texture = Director::getInstance()->getTextureCache()->addImage(filename);
 	//获取对应贴图的大小
@@ -180,7 +177,7 @@ bool CharacterData::addSVAnimation(const string& chartletName, const string& fil
 	int height = h / 6;
 
 	//获取预定的贴图
-	auto &vec = this->getValueForKey("sv")->asValueVector();
+	auto& vec = StaticData::getInstance()->getValueForKey("sv")->asValueVector();
 	vector<SpriteFrame*> frames;
 	string animationName;
 
@@ -225,7 +222,6 @@ bool CharacterData::addSVAnimation(const string& chartletName, const string& fil
 		frames.clear();
 		animationName.clear();
 	}
-	*/
 	return true;
 }
 
@@ -250,4 +246,3 @@ void CharacterData::splitTexture(Texture* texture, const Rect& rect,float width,
 		frames.push_back(frame);
 	}
 }
-

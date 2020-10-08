@@ -76,7 +76,16 @@ const Point& DynamicData::getTileCoordinate() const
 {
 	return m_pUserRecord->tileCoordinate;
 }
-const unordered_map<string, PlayerData*>&  DynamicData::getPlayerData() const
+const unordered_map<string, PlayerData*>&  DynamicData::getTotalPlayerData() const
 {
 	return m_pUserRecord->players;
+}
+
+PlayerData* DynamicData::getPlayerData(const string& name) const
+{
+	auto iter = m_pUserRecord->players.find(name);
+	if (iter == m_pUserRecord->players.cend())
+		return nullptr;
+	else
+		return iter->second;
 }

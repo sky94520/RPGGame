@@ -22,6 +22,9 @@
     <Filter Include="Classes\ui">
       <UniqueIdentifier>{c74e9704-d42b-4fd8-b8ac-acbb7ca504c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\entity\战斗">
+      <UniqueIdentifier>{896ebc22-fe3a-4eee-a8b8-2a04bdcb2ccf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\HelloWorldScene.cpp">
@@ -98,6 +101,15 @@
     </ClCompile>
     <ClCompile Include="Classes\ui\OperationLayer.cpp">
       <Filter>Classes\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\Good.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\Fighter.cpp">
+      <Filter>Classes\entity\战斗</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\Actor.cpp">
+      <Filter>Classes\entity\战斗</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="Classes\ui\OperationLayer.h">
       <Filter>Classes\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\Good.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\Fighter.h">
+      <Filter>Classes\entity\战斗</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\Actor.h">
+      <Filter>Classes\entity\战斗</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
