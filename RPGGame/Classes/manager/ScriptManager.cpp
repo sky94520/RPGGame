@@ -41,7 +41,7 @@ bool ScriptManager::init()
 {
 	m_pLuaStack = LuaStack::create();
 	SDL_SAFE_RETAIN(m_pLuaStack);
-	//根据平台来添加路径
+	//根据平台来添加脚本路径
 	auto platform = Director::getInstance()->getPlatform();
 	if (platform == "Windows" || platform == "Linux")
 		m_pLuaStack->addLuaSearchPath("Resources/script");

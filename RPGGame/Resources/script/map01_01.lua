@@ -11,9 +11,9 @@ function change2map01( ... )
 	print("change to map01");
 	base.setGameState(GameState.Script);
 	--fadeIn
-	screen.fadeIn(1.5);
+	screen.fadeIn(1);
 	--Ìø×ªµØÍ¼
 	movement.changeMap("map/Map01.tmx", 6, 6);
-	screen.fadeOut(1.5);
+	screen.fadeOut(1);
 	base.setGameState(GameState.Normal);
 end

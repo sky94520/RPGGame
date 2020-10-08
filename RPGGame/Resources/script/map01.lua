@@ -16,9 +16,9 @@ function change2map01_01( ... )
 		timer.delay(duration);
 	end
 	--fadeIn
-	screen.fadeIn(1.5);
+	screen.fadeIn(1.0);
 	--Ìø×ªµØÍ¼
 	movement.changeMap("map/Map01_01.tmx", 8, 12);
-	screen.fadeOut(1.5);
+	screen.fadeOut(1.0);
 	base.setGameState(GameState.Normal);
 end
