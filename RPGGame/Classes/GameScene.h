@@ -15,7 +15,6 @@ class PlayerManager;
 class ScriptManager;
 class OperationLayer;
 class BagLayer;
-class GoodLayer;
 enum class GameState;
 
 class GameScene : public Scene, public AStartDelegate
@@ -23,7 +22,7 @@ class GameScene : public Scene, public AStartDelegate
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//特效层
 	SDL_SYNTHESIZE_READONLY(OperationLayer*, m_pOperationLayer, OperationLayer);//操作层
-	SDL_SYNTHESIZE_READONLY(GoodLayer*, m_pGoodLayer, GoodLayer);//物品层
+	SDL_SYNTHESIZE_READONLY(BagLayer*, m_pBagLayer, BagLayer);//物品层
 
 	SDL_SYNTHESIZE_READONLY(PlayerManager*, m_pPlayerManager, PlayerManager);//玩家层
 	SDL_SYNTHESIZE_READONLY(ScriptManager*, m_pScriptManager, ScriptManager);//脚本层

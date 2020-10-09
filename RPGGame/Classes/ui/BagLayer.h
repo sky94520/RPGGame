@@ -23,7 +23,6 @@ public:
 	BagLayer();
 	virtual ~BagLayer();
 	CREATE_FUNC(BagLayer);
-
 	bool init();
 public:
 	/**
@@ -56,6 +55,7 @@ public:
 private:
 	Type m_type;//类型(玩家背包、商店等)
 	unsigned int m_nCurPage;//当前页
+	GoodLayer* m_pGoodLayer;
 };
 
 #endif

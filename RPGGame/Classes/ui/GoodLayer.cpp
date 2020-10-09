@@ -290,6 +290,10 @@ void GoodLayer::selectGoodCallback(RadioButton* radioBtn, int index, RadioButton
 {
 	//获取该按钮对应的good
 	auto good = static_cast<GoodInterface*>(radioBtn->getUserData());
+	if (good == nullptr) {
+		LOG("selectGoodCallback: good=nullptr\n");
+		return;
+	}
 	//获取物品描述
 	auto desc = good->getDescription();
 	//设置文本

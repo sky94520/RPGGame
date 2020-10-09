@@ -8,6 +8,7 @@
 BagLayer::BagLayer()
 	:m_type(Type::None)
 	,m_nCurPage(1)
+	,m_pGoodLayer(nullptr)
 {
 }
 
@@ -17,6 +18,9 @@ BagLayer::~BagLayer()
 
 bool BagLayer::init()
 {
+	m_pGoodLayer = GoodLayer::create();
+	this->addChild(m_pGoodLayer);
+
 	return true;
 }
 
