@@ -44,12 +44,16 @@ bool ScriptManager::init()
 	//根据平台来添加脚本路径
 	auto platform = Director::getInstance()->getPlatform();
 	if (platform == "Windows" || platform == "Linux")
+	{
 		m_pLuaStack->addLuaSearchPath("Resources/script");
+		FileUtils::getInstance()->addSearchPath("Resources/script");
+	}
 	else
 		m_pLuaStack->addLuaSearchPath("script");
 	//注册c函数给lua
 	this->registerFuncs(m_pLuaStack->getLuaState());
-
+	//加载必要的脚本
+	m_pLuaStack->executeScriptFile("item.lua");
 	return true;
 }
 

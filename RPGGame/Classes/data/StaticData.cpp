@@ -52,6 +52,25 @@ string StaticData::toString(PropertyType type) const
 	return array.at(index).asString();
 }
 
+SpriteFrame* StaticData::getIconSpriteFrame(int id) const
+{
+	//获取IconSet
+	Texture*texture = Director::getInstance()->getTextureCache()->getTextureForKey("img/system/IconSet.png");
+
+	int width = 32;
+	int height = 32;
+	//row cols
+	int row = id / 16;
+	int col = id % 16;
+
+	int x = width * col;
+	int y = height * row;
+
+	Rect rect = Rect(x, y, width, height);
+
+	return SpriteFrame::createWithTexture(texture, rect);
+}
+
 Value* StaticData::getValueForKey(const string& key)
 {
 	auto iter = m_valueMap.find(key);

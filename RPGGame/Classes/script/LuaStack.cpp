@@ -98,6 +98,7 @@ int LuaStack::executeScriptFile(const string& filename, bool force)
 	//加载并执行
 	if (chunk != nullptr)
 	{
+		//TODO: empty检测
 		const char* data = chunk.get();
 
 		ret = luaL_loadbuffer(m_pLuaState, data, size, nullptr);

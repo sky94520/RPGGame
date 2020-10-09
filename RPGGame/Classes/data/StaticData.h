@@ -42,6 +42,8 @@ public:
 	Size getSizeForKey(const string& key);
 
 	string toString(PropertyType type) const;
+	//icon
+	SpriteFrame* getIconSpriteFrame(int iconId)const;
 private:
 	StaticData();
 	~StaticData();

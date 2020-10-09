@@ -1,5 +1,6 @@
 ﻿#include "UserRecord.h"
 #include "../GameMacros.h"
+#include "../entity/Good.h"
 
 UserRecord::UserRecord()
 	:goldNumber(0)
@@ -16,6 +17,14 @@ UserRecord::~UserRecord()
 		PlayerData* data = it->second;
 		delete data;
 		it = players.erase(it);
+	}
+	//释放背包物品
+	for (auto it = m_bagGoodList.begin(); it != m_bagGoodList.end();)
+	{
+		auto good = *it;
+		it = m_bagGoodList.erase(it);
+
+		SDL_SAFE_RELEASE(good);
 	}
 }
 
@@ -92,4 +101,22 @@ void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
 
 void UserRecord::parseBag(rapidxml::xml_node<>* root)
 {
+	//遍历背包
+	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
+	{
+		//<good name="Herbs" number="2">
+		//获取attribute
+		auto nameAttr = node->first_attribute("name");
+		auto numberAttr = node->first_attribute("number");
+		//获取物品的名称和数量
+		string name = nameAttr->value();
+		int number = 1;
+		if (numberAttr != nullptr) {
+			number = SDL_atoi(numberAttr->value());
+		}
+		//创建物品
+		Good* good = Good::create(name, number);
+		SDL_SAFE_RETAIN(good);
+		m_bagGoodList.push_back(good);
+	}
 }

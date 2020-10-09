@@ -5,14 +5,15 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <SDL_Engine/SDL_Engine.h>
 
-#include "SDL_Engine/SDL_Engine.h"
+#include "UserRecord.h"
 
 USING_NS_SDL;
 using namespace std;
 
-class UserRecord;
 struct PlayerData;
+class Good;
 
 //--------------------------------------------DynamicData---------------------------------------
 class DynamicData : public Object
@@ -33,6 +34,8 @@ public:
 	//获取角色属性结构体
 	const unordered_map<string, PlayerData*>& getTotalPlayerData() const;
 	PlayerData* getPlayerData(const string& name) const;
+	//获取背包物品
+	vector<Good*>* getBagGoodList() const { return &m_pUserRecord->m_bagGoodList; }
 private:
 	DynamicData();
 	~DynamicData();

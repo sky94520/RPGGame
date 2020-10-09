@@ -2,8 +2,8 @@
 #define __Good_H__
 
 #include <string>
-
 #include "SDL_Engine/SDL_Engine.h"
+#include "GoodInterface.h"
 
 using namespace std;
 USING_NS_SDL;
@@ -66,7 +66,7 @@ enum class UsageOccasion
 	All,/*随时可用*/
 };
 
-class Good : public Object
+class Good : public Object, public GoodInterface
 {
 	//一个Good对象对应一个lua脚本对象
 	SDL_SYNTHESIZE_READONLY(string, m_tableName, TableName);//本物品所对应的table名
@@ -85,11 +85,12 @@ public:
 	//清除函数
 	void clean();
 	//获取物品对应的图标ID
-	int getIconID() const;
+	virtual SpriteFrame* getIcon() const;
 	//获取物品名称
 	string getName() const;
 	//获取物品描述
 	string getDescription() const;
+	string getType() const { return "null"; }
 	//是否是消耗品
 	bool isDeleption() const;
 	//获取/设置个数

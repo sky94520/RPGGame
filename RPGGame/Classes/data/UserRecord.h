@@ -1,6 +1,7 @@
 ﻿#ifndef __UserRecord_H__
 #define __UserRecord_H__
 
+#include <vector>
 #include <string>
 #include <cstring>
 #include <unordered_map>
@@ -11,6 +12,7 @@ USING_NS_SDL;
 using namespace std;
 
 struct PlayerData;
+class Good;
 
 class UserRecord : public Object
 {
@@ -37,5 +39,7 @@ public:
 	Point tileCoordinate;
 	//玩家数据
 	unordered_map<string, PlayerData*> players;
+	//玩家背包物品
+	vector<Good*> m_bagGoodList;
 };
 #endif

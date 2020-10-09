@@ -91,10 +91,13 @@ void Good::clean()
 	luaStack->executeFunction(2, 0);
 }
 
-int Good::getIconID() const
+SpriteFrame* Good::getIcon() const
 {
 	Value value = this->getValueForKey("iconID", Value::Type::INTEGER);
-	return value.asInt();
+	int iconId = value.asInt();
+	//获取frame
+	SpriteFrame* frame = StaticData::getInstance()->getIconSpriteFrame(iconId);
+	return frame;
 }
 
 string Good::getName() const

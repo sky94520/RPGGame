@@ -3,11 +3,14 @@
 
 #include "layer/MapLayer.h"
 #include "layer/EffectLayer.h"
-#include "manager/PlayerManager.h"
 #include "layer/SpritePool.h"
+
+#include "manager/PlayerManager.h"
 #include "manager/ScriptManager.h"
 
 #include "ui/OperationLayer.h"
+#include "ui/GoodLayer.h"
+#include "ui/BagLayer.h"
 
 #include "data/StaticData.h"
 #include "data/DynamicData.h"
@@ -44,6 +47,7 @@ GameScene::GameScene()
 	:m_pMapLayer(nullptr)
 	,m_pEffectLayer(nullptr)
 	,m_pOperationLayer(nullptr)
+	,m_pGoodLayer(nullptr)
 	,m_pPlayerManager(nullptr)
 	,m_pScriptManager(nullptr)
 	,m_gameState(GameState::Normal)
@@ -70,6 +74,9 @@ bool GameScene::init()
 	//ui/展示层
 	m_pOperationLayer = OperationLayer::create();
 	this->addChild(m_pOperationLayer);
+	//ui/背包层
+	m_pGoodLayer = GoodLayer::create();
+	this->addChild(m_pGoodLayer);
 	//玩家层
 	m_pPlayerManager = PlayerManager::create();
 	this->addChild(m_pPlayerManager);

@@ -111,6 +111,15 @@
     <ClCompile Include="Classes\entity\Actor.cpp">
       <Filter>Classes\entity\战斗</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\entity\Enemy.cpp">
+      <Filter>Classes\entity\战斗</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\ui\GoodLayer.cpp">
+      <Filter>Classes\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\ui\BagLayer.cpp">
+      <Filter>Classes\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\HelloWorldScene.h">
@@ -199,6 +208,18 @@
     </ClInclude>
     <ClInclude Include="Classes\entity\Actor.h">
       <Filter>Classes\entity\战斗</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\Enemy.h">
+      <Filter>Classes\entity\战斗</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\GoodInterface.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\ui\GoodLayer.h">
+      <Filter>Classes\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\ui\BagLayer.h">
+      <Filter>Classes\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
