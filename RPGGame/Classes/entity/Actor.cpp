@@ -35,13 +35,12 @@ bool Actor::init(const string& chartletName, int uniqueID)
 {
 	m_chartletName = chartletName;
 	m_nUniqueID = uniqueID;
-	m_fightState = FightState::Walk;
+	m_fightState = FightState::Idle;
 	//获取动画
-	auto characterData = StaticData::getInstance()->getCharacterData();
+	CharacterData* characterData = StaticData::getInstance()->getCharacterData();
 	auto animation = characterData->getSVAnimation(chartletName, m_fightState);
 	auto animate = Animate::create(animation);
 	animate->setTag(ANIMATION_TAG);
-
 	this->bindSpriteWithAnimate(animate);
 
 	return true;
@@ -53,7 +52,7 @@ void Actor::updateSelf()
 	//当前血量比例
 	PlayerData* data = DynamicData::getInstance()->getPlayerData(m_chartletName);
 	auto ratio = (float)hp / data->maxHp;
-	FightState state = FightState::Walk;
+	FightState state = FightState::Idle;
 	//血量为0且还没死亡=》 死亡
 	if (m_bDead || hp == 0)
 	{
@@ -71,7 +70,7 @@ void Actor::updateSelf()
 	}
 	else
 	{
-		state = FightState::Walk;
+		state = FightState::Idle;
 	}
 	//改变状态
 	this->changeFightState(state);
@@ -79,7 +78,7 @@ void Actor::updateSelf()
 
 void Actor::ready()
 {
-	m_lastFightState = FightState::Walk;
+	m_lastFightState = FightState::Idle;
 
 	this->changeFightState(FightState::Wait);
 }
@@ -109,7 +108,7 @@ string Actor::getFighterName() const
 	//return DynamicData::getInstance()->getName(m_chartletName);
 }
 
-string Actor::getTurnFilename() const
+string Actor::getThumbnail() const
 {
 	CharacterData* characterData = StaticData::getInstance()->getCharacterData();
 	return characterData->getTurnFilename(m_chartletName);
@@ -149,7 +148,7 @@ void Actor::execute(Fighter* fighter)
 	//this->changeFightState(fightState);
 }
 
-void Actor::good(Good* good)
+void Actor::useItem(Good* good)
 {
 	//对应的物品是否有getFightState函数，有，则获取
 	FightState fightState = good->getFightState();

@@ -1,8 +1,9 @@
 #ifndef __Fighter_H__
 #define __Fighter_H__
-#include "Entity.h"
 
-enum class PropertyType;
+#include "Entity.h"
+#include "../GameMacros.h"
+
 struct Properties;
 class Good;
 
@@ -10,7 +11,7 @@ class Good;
 enum class FightState
 {
 	None = -1,
-	Walk,
+	Idle,
 	Thrust,
 	Escape,
 	Wait,
@@ -44,22 +45,22 @@ enum class HurtType
 	CriticalAttack,/*暴击物理伤害*/
 };
 
+/*基类，主要用于派生出Actor（主角团）和Enemy（敌人）*/
 class Fighter : public Entity
 {
 	SDL_SYNTHESIZE(float, m_attackScale, AttackScale);//攻击系数
 	SDL_SYNTHESIZE(float, m_defenseRate, DefenseRate);//防御倍率
 	SDL_SYNTHESIZE(string, m_chartletName, ChartletName);
 protected:
-	//是否防御
-	bool m_bGuarding;
-	bool m_bDead;
-	int m_nUniqueID;
-	//战斗状态
+	bool m_bGuarding;//是否防御
+	bool m_bDead;//是否死亡
+	int m_nUniqueID;//唯一ID
+	//战斗动画状态
 	FightState m_fightState;
 	FightState m_lastFightState;
 private:
-	Point m_lastPos;//上一个位置，用于返回
-	static const float SPEED;
+	Point m_lastPos;//上一个位置，用于近战攻击后的返回
+	static const float SPEED; //移动速度(近战靠近)
 public:
 	Fighter();
 	virtual ~Fighter();
@@ -70,18 +71,17 @@ public:
 	* @param hurtType 受伤类型（无属性、物理攻击、魔法攻击、暴击物理攻击）
 	*/
 	int hurt(int attack, AttributeType attrType, HurtType hurtType);
-	//移动至目标
+	//移动至目标 and 返回
 	float moveToTarget(Fighter* fighter);
-	//返回
 	float backTo();
 	//死亡，一般不主动调用
 	virtual void dead();
 	//获取速度 = 敏捷*常量
-	int getSpeed() const;
+	int getSpeed() const { return getProperty(PropertyType::Agility) * 5; }
 	//是否将要死亡
-	bool isDying() const;
+	bool isDying() const { return getProperty(PropertyType::Hp) <= 0; }
 	//是否死亡
-	bool isDead() const;
+	bool isDead() const { return m_bDead; }
 	//切换状态
 	virtual FiniteTimeAction* changeFightState(FightState state);
 	//更新状态
@@ -92,14 +92,14 @@ public:
 	virtual void guard();
 	//获取战斗唯一id 如果是主角，则与character对应
 	virtual int getFighterID() const = 0;
-	//名称生成
+	//名称(战斗时所显示的名称)
 	virtual string getFighterName() const = 0;
-	//出手顺序图
-	virtual string getTurnFilename() const = 0;
+	//缩略图(用于出手顺序的展示)
+	virtual string getThumbnail() const = 0;
 	//脚本执行时调用
 	virtual void execute(Fighter* fighter) = 0;
 	//使用道具
-	virtual void good(Good* good) = 0;
+	virtual void useItem(Good* good) = 0;
 	//胜利
 	virtual void victory() = 0;
 	//清除对应的table
@@ -122,6 +122,7 @@ public:
 	//获取暴击几率
 	virtual float getCriticalRate() const = 0;
 protected:
+	//受伤后回调函数
 	virtual void onHurt(int afterDamage) = 0;
 };
 #endif

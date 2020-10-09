@@ -158,7 +158,9 @@ public:
 
 struct PlayerData
 {
+	//装备
 	//map<EquipmentType, Good*> equipments;
+	//技能
 	//vector<Good*> skills;
 	//属性
 	Properties properties;

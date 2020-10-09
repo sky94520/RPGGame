@@ -87,7 +87,6 @@ void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
 			data->exp = SDL_atoi(value);
 		//TODO:后续数据
 	}
-	//保存数据
 	players.insert(make_pair(playerName, data));
 }
 

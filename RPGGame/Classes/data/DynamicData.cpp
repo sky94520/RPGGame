@@ -1,7 +1,6 @@
 #include "DynamicData.h"
 #include "UserRecord.h"
 
-//--------------------------------------------DynamicData---------------------------------------
 DynamicData* DynamicData::s_pInstance = nullptr;
 
 DynamicData* DynamicData::getInstance()
@@ -41,10 +40,9 @@ bool DynamicData::init()
 
 bool DynamicData::initializeSaveData(int idx)
 {
-	auto fileUtil = FileUtils::getInstance();
 	//获取存档路径
+	auto fileUtil = FileUtils::getInstance();
 	string path = fileUtil->getWritablePath();
-	//对应的存档完整路径
 	string filepath = m_filename = StringUtils::format("%ssave%d.xml", path.c_str(), idx);
 	//不存在对应存档，则使用默认存档
 	if ( !fileUtil->isFileExist(m_filename))

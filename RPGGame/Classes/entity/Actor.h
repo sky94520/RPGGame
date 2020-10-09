@@ -4,6 +4,7 @@
 
 class Good;
 
+/*主角团 玩家所操作的战斗角色类*/
 class Actor : public Fighter
 {
 public:
@@ -25,11 +26,11 @@ public:
 	//名称生成
 	virtual string getFighterName() const;
 	//出手顺序图
-	virtual string getTurnFilename() const;
+	virtual string getThumbnail() const;
 	//脚本执行时调用
 	virtual void execute(Fighter* fighter);
 	//使用道具
-	virtual void good(Good* good);
+	virtual void useItem(Good* good);
 	//胜利
 	virtual void victory();
 	virtual void clean();

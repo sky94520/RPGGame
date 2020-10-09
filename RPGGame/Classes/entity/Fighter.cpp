@@ -2,7 +2,6 @@
 #include "../data/DynamicData.h"
 #include "../data/StaticData.h"
 #include "../data/CharacterData.h"
-#include "../GameMacros.h"
 //#include "BattleLayer.h"
 
 const float Fighter::SPEED = 550.f;
@@ -68,7 +67,7 @@ int Fighter::hurt(int attack, AttributeType attrType = AttributeType::None, Hurt
 	}
 	//设置血量
 	setProperty(PropertyType::Hp, afterHp);
-	//回调受伤函数
+	//受伤回调函数
 	onHurt(afterAttack);
 	//返回实际的受伤值
 	return afterAttack;
@@ -129,21 +128,6 @@ float Fighter::backTo()
 	this->runAction(move);
 
 	return duration;
-}
-
-int Fighter::getSpeed() const
-{
-	return getProperty(PropertyType::Agility) * 5;
-}
-
-bool Fighter::isDying() const
-{
-	return getProperty(PropertyType::Hp) <= 0;
-}
-
-bool Fighter::isDead() const
-{
-	return m_bDead;
 }
 
 FiniteTimeAction* Fighter::changeFightState(FightState state)
