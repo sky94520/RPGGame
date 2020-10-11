@@ -31,9 +31,8 @@ bool BagLayer::init()
 
 void BagLayer::setVisibleofBagLayer(bool visible)
 {
-	//动画tag
+	//显示动作
 	const int tag = 1;
-	//动作显示
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	ActionInterval* action = nullptr;
 	//出现
@@ -59,21 +58,24 @@ void BagLayer::setType(Type type)
 	if (m_type == type)
 		return;
 	m_type = type;
+	//切换，则从第一页开始展示
+	m_nCurPage = 1;
+	this->pageBtnCallback(m_pGoodLayer, 0);
+}
+
+void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
+{
 	switch (m_type)
 	{
 		case Type::Warehouse:
 		{
 			const vector<Good*>& goodList = DynamicData::getInstance()->getBagGoodList();
-			this->showGoodLayer("bag_title_txt1.png", "sell_text.png", goodList, m_nCurPage);
+			this->showGoodLayer("bag_title_txt1.png", "use_text.png", goodList, m_nCurPage+delta);
 		}
 		break;
 		default:
 			LOG("BagLayer::setType the type has not handled\n");
 	}
-}
-
-void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int value)
-{
 }
 
 void BagLayer::useBtnCallback(GoodLayer* goodLayer)

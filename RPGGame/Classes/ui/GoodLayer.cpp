@@ -180,17 +180,14 @@ bool GoodLayer::onTouchBegan(Touch* touch, SDL_Event* event)
 	//容错机制
 	size.width += 20.f;
 	size.height += 20.f;
-
 	Rect rect = Rect(pos2, size);
-
-	//点击了
-	if (rect.containsPoint(pos1))
-		return true;
-	else
+	//点击了外部
+	if (!rect.containsPoint(pos1))
 	{
 		m_pDelegate->touchOutsideCallback(this);
 		return true;
 	}
+	return false;
 }
 
 void GoodLayer::onTouchMoved(Touch* touch, SDL_Event* event)
