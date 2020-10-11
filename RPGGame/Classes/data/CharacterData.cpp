@@ -12,57 +12,61 @@ bool CharacterData::init()
 
 bool CharacterData::loadCharacterFile(const string& filename)
 {
-	//获取键值对
-	m_characterMap = FileUtils::getInstance()->getValueMapFromFile(filename);
-	//遍历
-	for (auto it1 = m_characterMap.begin(); it1 != m_characterMap.end(); it1++)
-	{
-		//角色名
-		auto& chartletName = it1->first;
-		auto& valueMap = it1->second.asValueMap();
-		//角色相关 如行走图 战斗图等 以下属性全部可选
-		for (auto value : valueMap)
-		{
-			auto key = value.first;
+	Json::CharReaderBuilder readerBuilder;
+	unique_ptr<Json::CharReader>const jsonReader(readerBuilder.newCharReader());
+
+	unique_ptr<char> uniqueStr = std::move(FileUtils::getInstance()->getUniqueDataFromFile("data/character.json"));
+	const char* text = uniqueStr.get();
+
+	Json::String errorMsg;
+	//解析失败
+	if (!jsonReader->parse(text, text + strlen(text), &m_jsonData, &errorMsg)) {
+		LOG(errorMsg.c_str());
+		return false;
+	}
+	auto members = m_jsonData.getMemberNames();
+	//角色名
+	for (auto chartletName: members) {
+		//dict 再次遍历 角色相关 如行走图 战斗图等 以下属性全部可选
+		auto keys = m_jsonData[chartletName].getMemberNames();
+		for (auto key : keys) {
+			Json::Value value = m_jsonData[chartletName][key];
 			//加载对应资源
 			if (key == "face" || key == "walk")
 			{
-				auto& map = value.second.asValueMap();
-				auto filename = map.at("filename").asString();
-				//加载并返回
+				auto filename = value["filename"].asString();
 				Director::getInstance()->getTextureCache()->addImage(filename);
 			}
 			else if (key == "sv")
 			{
-				string filename = value.second.asString();
+				string filename = value.asString();
 				this->addSVAnimation(chartletName, filename);
 			}
 			else if (key == "level_up_filename") 
 			{
-				string filename = value.second.asString();
+				string filename = value.asString();
 				this->addLevelUpData(chartletName, filename);
 			}
 		}
 	}
+	uniqueStr.reset();
 	return true;
 }
 
 Animation* CharacterData::getWalkingAnimation(const string& chartletName, Direction direction)
 {
 	//获取角色map
-	auto it = m_characterMap.find(chartletName);
-
-	if (it == m_characterMap.end())
+	Json::Value data = m_jsonData[chartletName];
+	if (data.isNull())
 		return nullptr;
 
-	auto& valueMap = it->second.asValueMap();
-	auto& walkMap = valueMap.at("walk").asValueMap();
+	Json::Value value = data["walk"];
 	//获取文件名 等各种属性
-	auto filename = walkMap.at("filename").asString();
-	int index = walkMap.at("index").asInt();
-	float delay = walkMap.at("delay").asFloat();
-	int loops = walkMap.at("loops").asInt();
-	bool restoreOriginalFrame = walkMap.at("restoreOriginalFrame").asBool();
+	auto filename = value["filename"].asString();
+	int index = value["index"].asInt();
+	float delay = value["delay"].asFloat();
+	int loops = value["loops"].asInt();
+	bool restoreOriginalFrame = value["restoreOriginalFrame"].asBool();
 
 	return this->getWalkingAnimation(filename,index,direction,delay,loops,restoreOriginalFrame);
 }
@@ -70,7 +74,6 @@ Animation* CharacterData::getWalkingAnimation(const string& chartletName, Direct
 Animation* CharacterData::getWalkingAnimation(const string& filename, int index, Direction dir, float delay, int loops, bool restoreOriginalFrame)
 {
 	auto texture = Director::getInstance()->getTextureCache()->getTextureForKey(filename);
-
 	if (texture == nullptr)
 		return nullptr;
 
@@ -110,7 +113,6 @@ SpriteFrame* CharacterData::getFaceSpriteFrame(const string& filename, int index
 	col = index % 4;
 	//获取对应矩形
 	rect = Rect(col * width, row * width, width, width);
-
 	spriteFrame = SpriteFrame::createWithTexture(texture, rect);
 
 	return spriteFrame;
@@ -119,16 +121,14 @@ SpriteFrame* CharacterData::getFaceSpriteFrame(const string& filename, int index
 SpriteFrame* CharacterData::getFaceSpriteFrame(const string& chartletName)
 {
 	//获取角色map
-	auto it = m_characterMap.find(chartletName);
-
-	if (it == m_characterMap.end())
+	Json::Value data = m_jsonData[chartletName];
+	if (data.isNull())
 		return nullptr;
 
-	auto& valueMap = it->second.asValueMap();
-	auto& faceMap = valueMap.at("face").asValueMap();
+	Json::Value value = data["face"];
 	//获取文件名 等各种属性
-	auto filename = faceMap.at("filename").asString();
-	int index = faceMap.at("index").asInt();
+	auto filename = value["filename"].asString();
+	int index = value["index"].asInt();
 
 	return this->getFaceSpriteFrame(filename, index);
 }
@@ -141,9 +141,8 @@ Animation* CharacterData::getSVAnimation(const string&chartletName, FightState f
 	auto& valueMap = vec.at(index).asValueMap();
 
 	auto sState = valueMap.at("name").asString();
-	//获取动画名称
-	auto animationName = StringUtils::format("%s_%s",chartletName.c_str(),sState.c_str());
 	//获取动画
+	auto animationName = StringUtils::format("%s_%s",chartletName.c_str(),sState.c_str());
 	auto animation = AnimationCache::getInstance()->getAnimation(animationName);
 
 	return animation;
@@ -151,19 +150,19 @@ Animation* CharacterData::getSVAnimation(const string&chartletName, FightState f
 
 string CharacterData::getTurnFilename(const string& chartletName) const
 {
-	auto& valueMap = m_characterMap.at(chartletName).asValueMap();
-
-	return valueMap.at("turn_name").asString();
+	Json::Value data = m_jsonData[chartletName];
+	//TODO: 使用默认图片
+	if (data.isNull())
+		return "";
+	
+	return data["turn_name"].asString();
 }
 
-/*
-LevelUpCsv& CharacterData::getDataByLevel(const string& chartletName,int level)
+LevelUp& CharacterData::getDataByLevel(const string& chartletName,int level)
 {
-	auto& list = m_levelUpCsvMap[chartletName];
-
+	auto& list = m_levelUpData[chartletName];
 	return list.at(level - 1);
 }
-*/
 
 bool CharacterData::addSVAnimation(const string& chartletName, const string& filename)
 {
@@ -227,6 +226,44 @@ bool CharacterData::addSVAnimation(const string& chartletName, const string& fil
 
 bool CharacterData::addLevelUpData(const string& chartletName, const string& filename)
 {
+	vector<LevelUp>& list = m_levelUpData[chartletName];
+	LevelUp st;
+	//加载数据
+	istringstream in(FileUtils::getInstance()->getDataFromFile(filename));
+	string line;
+	//不解析第一行
+	bool bFirstLine = true;
+
+	auto callback = [&st](int col, Value value)
+	{
+		switch (col)
+		{
+		case 0:st.lv = value.asInt(); break;
+		case 1:st.properties.attack = value.asInt(); break;
+		case 2:st.properties.agility = value.asInt(); break;
+		case 3:st.properties.defense = value.asInt(); break;
+		case 4:st.properties.magicAttack = value.asInt(); break;
+		case 5:st.properties.luck = value.asInt(); break;
+		case 6:st.properties.hp = value.asInt(); break;
+		case 7:st.properties.mp = value.asInt(); break;
+		case 8:st.exp = value.asInt(); break;
+		case 9:st.skill = value.asString(); break;
+		default:
+			break;
+		}
+	};
+	while (getline(in, line))
+	{
+		if (bFirstLine)
+		{
+			bFirstLine = false;
+			continue;
+		}
+		//解析数据
+		StringUtils::split(line, ",", callback);
+		//存入数据
+		list.push_back(st);
+	}
 	return true; 
 }
 

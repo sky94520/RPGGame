@@ -25,6 +25,9 @@
     <Filter Include="Classes\entity\战斗">
       <UniqueIdentifier>{896ebc22-fe3a-4eee-a8b8-2a04bdcb2ccf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\dist">
+      <UniqueIdentifier>{b9472b9f-1c46-46bc-9739-1f8c8a58c099}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Classes\HelloWorldScene.cpp">
@@ -119,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="Classes\ui\BagLayer.cpp">
       <Filter>Classes\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\dist\jsoncpp.cpp">
+      <Filter>Classes\dist</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="Classes\ui\BagLayer.h">
       <Filter>Classes\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\dist\json\json.h">
+      <Filter>Classes\dist</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\dist\json\json-forwards.h">
+      <Filter>Classes\dist</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

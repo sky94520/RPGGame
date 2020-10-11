@@ -38,7 +38,7 @@ bool StaticData::init()
 
 	m_pCharacterData = CharacterData::create();
 	SDL_SAFE_RETAIN(m_pCharacterData);
-	m_pCharacterData->loadCharacterFile("data/character.plist");
+	m_pCharacterData->loadCharacterFile("data/character.json");
 	
 	return true;
 }

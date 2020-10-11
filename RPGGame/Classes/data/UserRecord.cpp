@@ -1,4 +1,4 @@
-﻿#include "UserRecord.h"
+#include "UserRecord.h"
 #include "../GameMacros.h"
 #include "../entity/Good.h"
 
@@ -23,7 +23,6 @@ UserRecord::~UserRecord()
 	{
 		auto good = *it;
 		it = m_bagGoodList.erase(it);
-
 		SDL_SAFE_RELEASE(good);
 	}
 }

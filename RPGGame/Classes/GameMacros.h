@@ -1,6 +1,10 @@
 #ifndef __GameMacros_H__
 #define __GameMacros_H__
 
+#include <string>
+
+using namespace std;
+
 /*方向,跟贴图有关*/
 enum class Direction
 {
@@ -155,6 +159,17 @@ public:
 		return st;
 	}
 }Properties;
+
+struct LevelUp
+{
+	int lv;
+	int exp;
+	Properties properties;
+	string skill;
+public:
+	LevelUp():lv(0), exp(0) {}
+};
+
 
 struct PlayerData
 {

@@ -1,137 +1,137 @@
-# RPGÓÎÏ·¿ª·¢
+# RPGæ¸¸æˆå¼€å‘
 
->Ö¼ÔÚ¿ª·¢2D»ØºÏÖÆÓÎÏ·¡£
->±¾ÏîÄ¿ÒÀÀµÓÚ[SDL_Engine](https://github.com/sky94520/SDL_Engine)¡¢lua5.4
+>æ—¨åœ¨å¼€å‘2Då›žåˆåˆ¶æ¸¸æˆã€‚
+>æœ¬é¡¹ç›®ä¾èµ–äºŽ[SDL_Engine](https://github.com/sky94520/SDL_Engine)ã€lua5.4
 
-## Êý¾Ý
->### ¾²Ì¬Êý¾Ý
+## æ•°æ®
+>### é™æ€æ•°æ®
 >1. StaticData 
->Ö÷ÒªÓÃÓÚ´¦Àí"data/static_data.plist"£¬²¢ÏòÓÎÏ·ÖÐÌá¹©¼üÖµ¶Ô
+>ä¸»è¦ç”¨äºŽå¤„ç†"data/static_data.plist"ï¼Œå¹¶å‘æ¸¸æˆä¸­æä¾›é”®å€¼å¯¹
 >2. CharacterData
->´¦Àí½ÇÉ«Ïà¹ØµÄÊý¾Ý£¬±ÈÈç½ÇÉ«µÄÐÐ×ß¶¯»­¡¢Á¢»æ¡¢Õ½¶·¶¯»­ÒÔ¼°Éý¼¶ÊôÐÔÖµ¡£
->### ¶¯Ì¬Êý¾Ý
+>å¤„ç†è§’è‰²ç›¸å…³çš„æ•°æ®ï¼Œæ¯”å¦‚è§’è‰²çš„è¡Œèµ°åŠ¨ç”»ã€ç«‹ç»˜ã€æˆ˜æ–—åŠ¨ç”»ä»¥åŠå‡çº§å±žæ€§å€¼ã€‚
+>### åŠ¨æ€æ•°æ®
 >1. UserRecord
-> ÓÃ»§¼ÇÂ¼£¬ÓÃÓÚ¶ÁÈ¡/Ð´ÈëXMLÎÄ¼þ¡£±ÈÈç½ð±ÒÊýÁ¿¡¢µ±Ç°Ëù´¦µÄµØÍ¼ºÍÎ»ÖÃÒÔ¼°Íæ¼ÒÊý¾ÝµÈ¡£
+> ç”¨æˆ·è®°å½•ï¼Œç”¨äºŽè¯»å–/å†™å…¥XMLæ–‡ä»¶ã€‚æ¯”å¦‚é‡‘å¸æ•°é‡ã€å½“å‰æ‰€å¤„çš„åœ°å›¾å’Œä½ç½®ä»¥åŠçŽ©å®¶æ•°æ®ç­‰ã€‚
 >2. DynamicData
->ÄÚº¬ÓÐUserRecord¶ÔÏó£¬¸ºÔð¹ÜÀí´æµµ¶ÔÏó¡£
-## ÏÔÊ¾²ã
+>å†…å«æœ‰UserRecordå¯¹è±¡ï¼Œè´Ÿè´£ç®¡ç†å­˜æ¡£å¯¹è±¡ã€‚
+## æ˜¾ç¤ºå±‚
 >1. EffectLayer
->ÌØÐ§²ã ÏÔÊ¾¸÷ÖÖÌØÐ§¡£
+>ç‰¹æ•ˆå±‚ æ˜¾ç¤ºå„ç§ç‰¹æ•ˆã€‚
 >2. MapLayer
->µØÍ¼²ã£¬Õû¸öÓÎÏ·µÄÔØÌå£¬¸ºÔðÏÔÊ¾µØÍ¼£¬ÒÔ¼°¸÷ÖÖÊÂ¼þ¡£
->MapLayerÖÐµÄÒ»¸öTiledMap¶ÔÏóÄÚµÄcollision layerÎª±¾ÏîÄ¿µÄÖ÷Òª²ã£¬
->´ó²¿·Ö¾«Áé¶¼ÒÀ¸½ÓÚÅö×²²ã¡£
-## ¹ÜÀíÆ÷
+>åœ°å›¾å±‚ï¼Œæ•´ä¸ªæ¸¸æˆçš„è½½ä½“ï¼Œè´Ÿè´£æ˜¾ç¤ºåœ°å›¾ï¼Œä»¥åŠå„ç§äº‹ä»¶ã€‚
+>MapLayerä¸­çš„ä¸€ä¸ªTiledMapå¯¹è±¡å†…çš„collision layerä¸ºæœ¬é¡¹ç›®çš„ä¸»è¦å±‚ï¼Œ
+>å¤§éƒ¨åˆ†ç²¾çµéƒ½ä¾é™„äºŽç¢°æ’žå±‚ã€‚
+## ç®¡ç†å™¨
 >1. PlayerManager  
->Ö÷½Ç²ã¹ÜÀí Ö»ÊÇ¸ºÔð¹ÜÀí£¬Æä½ÇÉ«¶ÔÏó´æÔÚMapLayerµÄÅö×²²ãÖÐ
->Ö÷ÒªÓÐÁ½¸öº¯ÊýÐèÒªÅö×²²ãµÄ²ÎÓë£º
->>1. initializePlayers() ´Ó´æµµÖÐ¶ÁÈ¡Êý¾Ý²¢Éú³ÉÍæ¼Ò¶ÔÏóÊ±£¬ÐèÒª°Ñ¶ÔÏóÌí¼Óµ½¶ÔÏó²ãÖÐ
->>2. changeLayerOfPlayers() ¸Ä±äÍæ¼ÒËùÔÚµÄ²ã Õâ¸öÖ÷ÒªÔÚGameScene::changeMapÄÚµ÷ÓÃÀ´¸Ä±äËùÊô²ã
+>ä¸»è§’å±‚ç®¡ç† åªæ˜¯è´Ÿè´£ç®¡ç†ï¼Œå…¶è§’è‰²å¯¹è±¡å­˜åœ¨MapLayerçš„ç¢°æ’žå±‚ä¸­
+>ä¸»è¦æœ‰ä¸¤ä¸ªå‡½æ•°éœ€è¦ç¢°æ’žå±‚çš„å‚ä¸Žï¼š
+>>1. initializePlayers() ä»Žå­˜æ¡£ä¸­è¯»å–æ•°æ®å¹¶ç”ŸæˆçŽ©å®¶å¯¹è±¡æ—¶ï¼Œéœ€è¦æŠŠå¯¹è±¡æ·»åŠ åˆ°å¯¹è±¡å±‚ä¸­
+>>2. changeLayerOfPlayers() æ”¹å˜çŽ©å®¶æ‰€åœ¨çš„å±‚ è¿™ä¸ªä¸»è¦åœ¨GameScene::changeMapå†…è°ƒç”¨æ¥æ”¹å˜æ‰€å±žå±‚
 >
 >2. ScriptManager  
-> ¸ºÔð¹ÜÀí½Å±¾¶ÔÏó£¬Æä½Å±¾¶ÔÏó´æÔÚMapLayerµÄÅö×²²ãÖÐ
-> ÔÚaddLuaObjectÖÐÐèÒªÅö×²²ã
+> è´Ÿè´£ç®¡ç†è„šæœ¬å¯¹è±¡ï¼Œå…¶è„šæœ¬å¯¹è±¡å­˜åœ¨MapLayerçš„ç¢°æ’žå±‚ä¸­
+> åœ¨addLuaObjectä¸­éœ€è¦ç¢°æ’žå±‚
 >
 >5. SpritePool
->¾«Áé³Ø£¬¸ºÔð´´½¨¾«ÁéºÍ»ØÊÕ¾«Áé¶ÔÏó
+>ç²¾çµæ± ï¼Œè´Ÿè´£åˆ›å»ºç²¾çµå’Œå›žæ”¶ç²¾çµå¯¹è±¡
 >6. Text
->¿ÉÓÃÓÚÏÔÊ¾¶Ô»°
-## ½Å±¾¶ÔÏó Good[¸Ã¶ÔÏóÓÉc++µÄGoodÀàºÍluaµÄGoodÀà×é³É]
->c++µÄGoodÀàÌá¹©ÁËÒ»¸ö½Ó¿Ú£¬ÕæÕýµÄ²Ù×÷ÊÇÔÚlua½Å±¾ÖÐ  
-ÒÔÏÂÎª¹«¹²º¯Êý
+>å¯ç”¨äºŽæ˜¾ç¤ºå¯¹è¯
+## è„šæœ¬å¯¹è±¡ Good[è¯¥å¯¹è±¡ç”±c++çš„Goodç±»å’Œluaçš„Goodç±»ç»„æˆ]
+>c++çš„Goodç±»æä¾›äº†ä¸€ä¸ªæŽ¥å£ï¼ŒçœŸæ­£çš„æ“ä½œæ˜¯åœ¨luaè„šæœ¬ä¸­  
+ä»¥ä¸‹ä¸ºå…¬å…±å‡½æ•°
 >>1. Good:execute(userId, targetId)
->>- ÎïÆ·µÄÖ´ÐÐº¯Êý
->>- @param userId Ê¹ÓÃÕßµÄid
->>- @param targetId Ä¿±êid
+>>- ç‰©å“çš„æ‰§è¡Œå‡½æ•°
+>>- @param userId ä½¿ç”¨è€…çš„id
+>>- @param targetId ç›®æ ‡id
 >>2. Good:clean()
->>- Îö¹¹º¯Êý£¬c++µÄGood¶ÔÏóÔÚµ÷ÓÃÎö¹¹º¯ÊýµÄÊ±ºò»áµ÷ÓÃ¸Ãº¯Êý
->>3. Good:setIconID(iconId) Í¼±êid
->>4. Good:setName(name) ÉèÖÃÎïÆ·Ãû³Æ
->>5. Good:setDescription(desc) ÉèÖÃÃèÊö
->>6. Good:setDeleption(ret) ÉèÖÃÊÇ·ñÊÇÏûºÄÆ·
->>7. Good:setNumber(num) ÉèÖÃ±¾ÎïÆ·¸öÊý
->>8. Good:setCost(cost) ÉèÖÃ¼Û¸ñ£¨²»°üÀ¨¼¼ÄÜ£©
->>9. Good:setGoodType(type) ÉèÖÃÎïÆ·ÀàÐÍ(Item¡¢Equipment¡¢Skill¡¢Seed)
->>10. Good:setUsageRange(ur) ÉèÖÃÊ¹ÓÃ·¶Î§(Self¡¢SingleAlly¡¢TotalAlly¡¢SingleEnemy¡¢TotalEnemy)
+>>- æžæž„å‡½æ•°ï¼Œc++çš„Goodå¯¹è±¡åœ¨è°ƒç”¨æžæž„å‡½æ•°çš„æ—¶å€™ä¼šè°ƒç”¨è¯¥å‡½æ•°
+>>3. Good:setIconID(iconId) å›¾æ ‡id
+>>4. Good:setName(name) è®¾ç½®ç‰©å“åç§°
+>>5. Good:setDescription(desc) è®¾ç½®æè¿°
+>>6. Good:setDeleption(ret) è®¾ç½®æ˜¯å¦æ˜¯æ¶ˆè€—å“
+>>7. Good:setNumber(num) è®¾ç½®æœ¬ç‰©å“ä¸ªæ•°
+>>8. Good:setCost(cost) è®¾ç½®ä»·æ ¼ï¼ˆä¸åŒ…æ‹¬æŠ€èƒ½ï¼‰
+>>9. Good:setGoodType(type) è®¾ç½®ç‰©å“ç±»åž‹(Itemã€Equipmentã€Skillã€Seed)
+>>10. Good:setUsageRange(ur) è®¾ç½®ä½¿ç”¨èŒƒå›´(Selfã€SingleAllyã€TotalAllyã€SingleEnemyã€TotalEnemy)
 >  
->ÒÔÏÂÎª×°±¸ÌØÓÐº¯Êý
+>ä»¥ä¸‹ä¸ºè£…å¤‡ç‰¹æœ‰å‡½æ•°
 >>1. equip
 >>2. unequip
->>3. µÈµÈ
-## ½Å±¾
->×¢²á»ù±¾µÄ½Å±¾º¯Êý
+>>3. ç­‰ç­‰
+## è„šæœ¬
+>æ³¨å†ŒåŸºæœ¬çš„è„šæœ¬å‡½æ•°
 >
 >>1. base.getGameState()
->>- »ñÈ¡µ±Ç°µÄÓÎÏ·×´Ì¬
->>- @return ·µ»ØÓÎÏ·×´Ì¬
+>>- èŽ·å–å½“å‰çš„æ¸¸æˆçŠ¶æ€
+>>- @return è¿”å›žæ¸¸æˆçŠ¶æ€
 >>
 >>2. base.setGameState(gameState)
->>- ÉèÖÃµ±Ç°µÄÓÎÏ·×´Ì¬
->>- @param gameState ÓÎÏ·×´Ì¬GameState{Normal, Fighting, Script} ÉèÖÃÔÚrpg_core.luaÖÐ
+>>- è®¾ç½®å½“å‰çš„æ¸¸æˆçŠ¶æ€
+>>- @param gameState æ¸¸æˆçŠ¶æ€GameState{Normal, Fighting, Script} è®¾ç½®åœ¨rpg_core.luaä¸­
 >>- @return
 >>
 >>3. base.setViewpointCenter(x, y, duration)
->>- ¸Ä±äÖÐÐÄµã
->>- @param x x×ø±ê
->>- @param y y×ø±ê
->>- @param duration ³ÖÐøÊ±¼ä ÒÔºÁÃëÎªµ¥Î»
+>>- æ”¹å˜ä¸­å¿ƒç‚¹
+>>- @param x xåæ ‡
+>>- @param y yåæ ‡
+>>- @param duration æŒç»­æ—¶é—´ ä»¥æ¯«ç§’ä¸ºå•ä½
 >>- @return
 >>
 >>4. base.setViewpointFollow()
->>- ÉèÖÃÊÓ½Ç¸úËæTODO
+>>- è®¾ç½®è§†è§’è·ŸéšTODO
 >>- @return
 >>
 >>5. movement.changeMap(mapName, tileX, tileY)
->>- ÇÐ»»µØÍ¼£¬(tileX, tileY)ÎªÖÐÐÄÄ¿±ê
->>- @param mapName µØÍ¼Ãû³Æ
->>- @param tileX ºáÖáÍ¼¿é×ø±ê
->>- @param tileY ×ÝÖáÍ¼¿é×ø±ê
+>>- åˆ‡æ¢åœ°å›¾ï¼Œ(tileX, tileY)ä¸ºä¸­å¿ƒç›®æ ‡
+>>- @param mapName åœ°å›¾åç§°
+>>- @param tileX æ¨ªè½´å›¾å—åæ ‡
+>>- @param tileY çºµè½´å›¾å—åæ ‡
 >>- @return
 >>
 >>6. screen.fadeInScreen(duration)
->>- µ­Èë³¡¾°
->>- @param duration ³ÖÐøÊ±¼ä
+>>- æ·¡å…¥åœºæ™¯
+>>- @param duration æŒç»­æ—¶é—´
 >>- @return
 >>
 >>7. screen.fadeOutScreen(duration)
->>- µ­³ö³¡¾°
->>- @param duration ³ÖÐøÊ±¼ä
+>>- æ·¡å‡ºåœºæ™¯
+>>- @param duration æŒç»­æ—¶é—´
 >>- @return
 >>
 >>8. timer.delay(duration)
->>- ½Å±¾µÈ´ýÒ»¶ÎÊ±¼ä
->>- @param duration ³ÖÐøÊ±¼ä
+>>- è„šæœ¬ç­‰å¾…ä¸€æ®µæ—¶é—´
+>>- @param duration æŒç»­æ—¶é—´
 >>- @return
 >
 >2. LuaStack
->¶ÔluaµÄÀà»¯
+>å¯¹luaçš„ç±»åŒ–
 >
 >3. ObjectScript
->×¢²á¸ú½Å±¾¶ÔÏóÏà¹ØµÄº¯Êý¡£
+>æ³¨å†Œè·Ÿè„šæœ¬å¯¹è±¡ç›¸å…³çš„å‡½æ•°ã€‚
 >
 >>1. object.create(name, chartlet, tileX, tileY)
->>´´½¨½Å±¾¶ÔÏó
->>- @param name ½Å±¾¶ÔÏóµÄÃû³Æ Î¨Ò»£¬¿ÉÒÔÍ¨¹ýÕâ¸önameÀ´²Ù×÷¸Ã½Å±¾¶ÔÏó
->>- @param chartlet ¶¯»­Ãû³Æ
->>- @param tileX ËùÔÚµÄtileXÎ»ÖÃ
->>- @param tileY ËùÔÚµÄtileYÎ»ÖÃ
->>- @return ÊÇ·ñ´´½¨³É¹¦
+>>åˆ›å»ºè„šæœ¬å¯¹è±¡
+>>- @param name è„šæœ¬å¯¹è±¡çš„åç§° å”¯ä¸€ï¼Œå¯ä»¥é€šè¿‡è¿™ä¸ªnameæ¥æ“ä½œè¯¥è„šæœ¬å¯¹è±¡
+>>- @param chartlet åŠ¨ç”»åç§°
+>>- @param tileX æ‰€åœ¨çš„tileXä½ç½®
+>>- @param tileY æ‰€åœ¨çš„tileYä½ç½®
+>>- @return æ˜¯å¦åˆ›å»ºæˆåŠŸ
 >>
 >>2. object.delete(name)
->>- @param name ÒªÉ¾³ýµÄ½Å±¾¶ÔÏóÃû³Æ
+>>- @param name è¦åˆ é™¤çš„è„šæœ¬å¯¹è±¡åç§°
 >>
 >>3. object.set_trigger(name, type)
->>ÉèÖÃ½Å±¾¶ÔÏóµÄ´¥·¢·½Ê½£¬ÒÔ¼°´¥·¢ºóµÄ»Øµ÷º¯Êý
->>- @param name ½Å±¾¶ÔÏóÃû³Æ
->>- @param type ´¥·¢ÀàÐÍ int=>TriggerType
->>- @param funcName luaº¯ÊýÃû
+>>è®¾ç½®è„šæœ¬å¯¹è±¡çš„è§¦å‘æ–¹å¼ï¼Œä»¥åŠè§¦å‘åŽçš„å›žè°ƒå‡½æ•°
+>>- @param name è„šæœ¬å¯¹è±¡åç§°
+>>- @param type è§¦å‘ç±»åž‹ int=>TriggerType
+>>- @param funcName luaå‡½æ•°å
 >>
 >>4. object.set_priority(name, type)
->>ÉèÖÃÓÅÏÈ¼¶
->>- @param name ½Å±¾¶ÔÏóÃû³Æ
->>- @param type ÓÅÏÈ¼¶ int
-## ÊµÌå
->1. Entity ÊµÌåÀà£¬ÊÇ½ÇÉ«ÀàµÄ»ùÀà
+>>è®¾ç½®ä¼˜å…ˆçº§
+>>- @param name è„šæœ¬å¯¹è±¡åç§°
+>>- @param type ä¼˜å…ˆçº§ int
+## å®žä½“
+>1. Entity å®žä½“ç±»ï¼Œæ˜¯è§’è‰²ç±»çš„åŸºç±»
 >2. Character
 >3. LuaObject
 >
@@ -140,14 +140,14 @@
 >6. AStarController
 >7. ControllerListener
 
-## ´ý¸üÐÂ
->1. character.xml => json¸ñÊ½
->XML¸ñÊ½²»ÊÊÓÃÓÚµ±Ç°µÄÓ¦ÓÃ³¡¾°£¬Ä¿Ç°¼Æ»®Ê¹ÓÃcJsonObject´úÌæSDL_Engine ValueMapµÄÊ¹ÓÃ
->ÐèÒª½â¾öµÄÎÊÌâÓÐ£º
->>1. ¶ÔÊý×é½øÐÐ±éÀú
->>2. keyÔÚdictÖÐÊÇ·ñ´æÔÚ
->2. ½Å±¾¶ÔÏóµÄ¶¯»­ÏÔÊ¾£¨ÒÀÈ»²ÉÓÃv1°æ±¾£©
->~~3. ½Å±¾¶ÔÏóºÍÍæ¼ÒµÄÕÚµ²ÎÊÌâ~~
->¸ÃÎÊÌâÒÑ¾­½â¾ö£¬²»¹ýÄ¿Ç°ÐèÒª¿¼ÂÇÅö×²²ãµÄÎÊÌâ¡£Åö×²²ãÊÇ´æÔÚÓÚMapLayer::TiledMapÏÂµÄÒ»¸öTMXLayer£¬
->Ä¿Ç°µÄËùÓÐ¾«Áé¶¼ÊÇÒÀ¸½ÓÚÕâ¸ö²ãµÄ£¬EffectLayer¡¢PlayerManager¡¢ScriptManager¡¢GameScene
->4. Íæ¼Ò´¥Åöµ½½Å±¾Ê±µÄÔÝÍ£ÎÊÌâ ÔÚ´¥·¢½Å±¾Ê±£¬Èç¹ûÍæ¼ÒÔÚÐÐ×ß£¬ÔòÏÈÔÝÍ££»Ò²¿ÉÒÔÔÚ½Å±¾ÖÐÍ£Ö¹ÔË¶¯
+## å¾…æ›´æ–°
+>1. character.xml => jsonæ ¼å¼
+>XMLæ ¼å¼ä¸é€‚ç”¨äºŽå½“å‰çš„åº”ç”¨åœºæ™¯ï¼Œç›®å‰è®¡åˆ’ä½¿ç”¨jsoncppä»£æ›¿SDL_Engine ValueMapçš„ä½¿ç”¨ï¼ˆä½¿ç”¨python amalgamate.pyï¼‰
+>éœ€è¦è§£å†³çš„é—®é¢˜æœ‰ï¼š
+>>1. å¯¹æ•°ç»„è¿›è¡ŒéåŽ†
+>>2. keyåœ¨dictä¸­æ˜¯å¦å­˜åœ¨
+>2. è„šæœ¬å¯¹è±¡çš„åŠ¨ç”»æ˜¾ç¤ºï¼ˆä¾ç„¶é‡‡ç”¨v1ç‰ˆæœ¬ï¼‰
+>~~3. è„šæœ¬å¯¹è±¡å’ŒçŽ©å®¶çš„é®æŒ¡é—®é¢˜~~
+>è¯¥é—®é¢˜å·²ç»è§£å†³ï¼Œä¸è¿‡ç›®å‰éœ€è¦è€ƒè™‘ç¢°æ’žå±‚çš„é—®é¢˜ã€‚ç¢°æ’žå±‚æ˜¯å­˜åœ¨äºŽMapLayer::TiledMapä¸‹çš„ä¸€ä¸ªTMXLayerï¼Œ
+>ç›®å‰çš„æ‰€æœ‰ç²¾çµéƒ½æ˜¯ä¾é™„äºŽè¿™ä¸ªå±‚çš„ï¼ŒEffectLayerã€PlayerManagerã€ScriptManagerã€GameScene
+>4. çŽ©å®¶è§¦ç¢°åˆ°è„šæœ¬æ—¶çš„æš‚åœé—®é¢˜ åœ¨è§¦å‘è„šæœ¬æ—¶ï¼Œå¦‚æžœçŽ©å®¶åœ¨è¡Œèµ°ï¼Œåˆ™å…ˆæš‚åœï¼›ä¹Ÿå¯ä»¥åœ¨è„šæœ¬ä¸­åœæ­¢è¿åŠ¨

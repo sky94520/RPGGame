@@ -1,9 +1,13 @@
 #ifndef __CharacterData_H__
 #define __CharacterData_H__
 
+#include <map>
 #include <string>
+#include <vector>
+#include <SDL_Engine/SDL_Engine.h>
 
-#include "SDL_Engine/SDL_Engine.h"
+#include "../GameMacros.h"
+#include "../dist/json/json.h"
 
 USING_NS_SDL;
 using namespace std;
@@ -13,9 +17,6 @@ enum class FightState;
 
 class CharacterData : public Object
 {
-private:
-	//角色键值对
-	ValueMap m_characterMap;
 public:
 	CharacterData();
 	CREATE_FUNC(CharacterData);
@@ -33,7 +34,7 @@ public:
 	//获取turn name
 	string getTurnFilename(const string& chartletName) const;
 	//获取升级数据
-	//LevelUpCsv& getDataByLevel(const string& chartletName,int level);
+	LevelUp& getDataByLevel(const string& chartletName,int level);
 private:
 	//添加角色战斗图并生成16状态动画
 	bool addSVAnimation(const string& chartletName, const string& filename);
@@ -41,5 +42,9 @@ private:
 	bool addLevelUpData(const string& chartletName, const string& filename);
 	/*在纹理指定区域rect按照宽度切割,并返回*/
 	void splitTexture(Texture* texture, const Rect& rect ,float width, vector<SpriteFrame*>& frames);
+private:
+	//角色键值对
+	Json::Value m_jsonData;
+	map<string,vector<LevelUp>> m_levelUpData;
 };
 #endif
