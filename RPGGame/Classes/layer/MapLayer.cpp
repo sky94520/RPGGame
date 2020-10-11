@@ -50,18 +50,20 @@ void MapLayer::update(float dt)
 	}
 }
 
-void MapLayer::setViewpointCenter(const Point& position, unsigned millisecond)
+void MapLayer::setViewpointCenter(const Point& pos, unsigned millisecond, bool isTilePos)
 {
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Size halfOfVisibleSize = visibleSize / 2.f;
-	const int tag = 10;
-	//如果主角坐标小于屏幕的一半，则取屏幕中心的坐标，否则取主角的坐标
-	float x = max(position.x, halfOfVisibleSize.width);
-	float y = max(position.y, halfOfVisibleSize.height);
 	//获取地图大小
 	auto tileSize = m_pTiledMap->getTileSize();
 	auto mapSize = m_pTiledMap->getMapSize();
 	auto mapSizePixel = Size(tileSize.width * mapSize.width, tileSize.height * mapSize.height);
+
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	Size halfOfVisibleSize = visibleSize / 2.f;
+
+	Point position = isTilePos ? Point(pos.x * tileSize.width, pos.y*tileSize.height) : pos;
+	//如果主角坐标小于屏幕的一半，则取屏幕中心的坐标，否则取主角的坐标
+	float x = max(position.x, halfOfVisibleSize.width);
+	float y = max(position.y, halfOfVisibleSize.height);
 	//显示区域不超过地图边界
 	x = min(x, (mapSizePixel.width - halfOfVisibleSize.width));
 	y = min(y, (mapSizePixel.height - halfOfVisibleSize.height));
@@ -73,7 +75,7 @@ void MapLayer::setViewpointCenter(const Point& position, unsigned millisecond)
 	Point delta = centerOfView - actualPosition;
 	if (delta.equals(Point::ZERO))
 		return;
-
+	//移动动作
 	FiniteTimeAction* action = nullptr;
 	if (millisecond == 0)
 	{
@@ -84,8 +86,8 @@ void MapLayer::setViewpointCenter(const Point& position, unsigned millisecond)
 		float duration = millisecond / 1000.f;
 		action = MoveTo::create(duration, delta);
 	}
+	const int tag = 10;
 	action->setTag(tag);
-
 	if (m_pTiledMap->getActionByTag(tag) != nullptr)
 	{
 		m_pTiledMap->stopActionByTag(tag);

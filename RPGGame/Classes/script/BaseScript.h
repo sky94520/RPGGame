@@ -32,9 +32,9 @@ extern int getGameState(lua_State* pL);
 extern int setGameState(lua_State* pL);
 
 /*
- * 改变中心点
- * @param x x坐标
- * @param y y坐标
+ * 改变中心点 tilePos
+ * @param x x坐标 int
+ * @param y y坐标 int
  * @param duration 持续时间 以毫秒为单位
  * @return
 */

@@ -22,7 +22,7 @@ public:
 	void update(float dt);
 
 	//设置视图中心点
-	void setViewpointCenter(const Point& position, unsigned millisecond = 0);
+	void setViewpointCenter(const Point& position, unsigned millisecond = 0, bool isTilePos=false);
 	//设置视角跟随
 	void setViewpointFollow(Character* character);
 	//清除地图层

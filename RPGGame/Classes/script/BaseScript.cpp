@@ -44,13 +44,13 @@ int setGameState(lua_State* pL)
 
 int setViewpointCenter(lua_State* pL)
 {
-	float x = (float)luaL_checknumber(pL, 1);
-	float y = (float)luaL_checknumber(pL, 2);
+	int x = luaL_checkinteger(pL, 1);
+	int y = luaL_checkinteger(pL, 2);
 	unsigned duration = (unsigned)luaL_checkinteger(pL, 3);
 	
 	MapLayer* pMapLayer = GameScene::getInstance()->getMapLayer();
-
-	pMapLayer->setViewpointCenter(Point(x, y), duration);
+	//默认使用tilePos
+	pMapLayer->setViewpointCenter(Point(x + 0.5f, y + 0.5f), duration, true);
 	return 0;
 }
 

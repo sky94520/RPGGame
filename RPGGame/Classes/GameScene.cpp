@@ -301,9 +301,9 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 
 	auto tileSize = tiledMap->getTileSize();
 	Character::setTileSize((int)tileSize.width, (int)tileSize.height);
-	auto pos = Point(tileSize.width * (tileCoodinate.x + 0.5f),tileSize.height * (tileCoodinate.y + 0.5f));
+	Point pos = Point(tileSize.width * (tileCoodinate.x + 0.5f),tileSize.height * (tileCoodinate.y + 0.5f));
 	//MapLayer 改变当前中心点
-	m_pMapLayer->setViewpointCenter(pos, 2000);
+	m_pMapLayer->setViewpointCenter(pos);
 
 	//PlayerManager 更改玩家层的玩家所在的层
 	auto collisionLayer = m_pMapLayer->getCollisionLayer();

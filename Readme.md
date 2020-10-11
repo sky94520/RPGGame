@@ -151,3 +151,5 @@
 >该问题已经解决，不过目前需要考虑碰撞层的问题。碰撞层是存在于MapLayer::TiledMap下的一个TMXLayer，
 >目前的所有精灵都是依附于这个层的，EffectLayer、PlayerManager、ScriptManager、GameScene
 >4. 玩家触碰到脚本时的暂停问题 在触发脚本时，如果玩家在行走，则先暂停；也可以在脚本中停止运动
+>5. 切换场景时，changeMap设置中心存在问题（初步认为，该算法在跳跃时存在问题，主角移动时不存在这个问题）
+>6. 确定函数，要么都使用像素点，要么都使用tile pos
