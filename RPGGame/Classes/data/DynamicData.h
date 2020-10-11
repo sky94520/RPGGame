@@ -35,7 +35,7 @@ public:
 	const unordered_map<string, PlayerData*>& getTotalPlayerData() const;
 	PlayerData* getPlayerData(const string& name) const;
 	//获取背包物品
-	vector<Good*>* getBagGoodList() const { return &m_pUserRecord->m_bagGoodList; }
+	const vector<Good*>& getBagGoodList() const { return m_pUserRecord->m_bagGoodList; }
 private:
 	DynamicData();
 	~DynamicData();

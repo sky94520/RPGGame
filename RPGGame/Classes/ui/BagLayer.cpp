@@ -1,8 +1,9 @@
 #include "BagLayer.h"
 #include "GoodLayer.h"
 
-#include "../entity/GoodInterface.h"
+#include "../entity/Good.h"
 #include "../data/DynamicData.h"
+
 
 
 BagLayer::BagLayer()
@@ -20,12 +21,10 @@ bool BagLayer::init()
 {
 	//物品层
 	m_pGoodLayer = GoodLayer::create();
-	//m_pGoodLayer->setDelegate(this);
 	this->addChild(m_pGoodLayer);
 	//隐藏GoodLayer
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	m_pGoodLayer->setPositionY(-visibleSize.height);
-	m_pGoodLayer->setShowing(false);
 
 	return true;
 }
@@ -55,42 +54,26 @@ void BagLayer::setVisibleofBagLayer(bool visible)
 	m_pGoodLayer->runAction(action);
 }
 
+void BagLayer::setType(Type type)
+{
+	if (m_type == type)
+		return;
+	m_type = type;
+	switch (m_type)
+	{
+		case Type::Warehouse:
+		{
+			const vector<Good*>& goodList = DynamicData::getInstance()->getBagGoodList();
+			this->showGoodLayer("bag_title_txt1.png", "sell_text.png", goodList, m_nCurPage);
+		}
+		break;
+		default:
+			LOG("BagLayer::setType the type has not handled\n");
+	}
+}
+
 void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int value)
 {
-	vector<Good*>* pBagGoodList = nullptr;
-	/*
-	if (m_type == Type::Shop)
-		pBagGoodList = &m_shopList;
-	else*/
-	if (m_type == Type::Warehouse)
-		pBagGoodList = DynamicData::getInstance()->getBagGoodList();
-
-	//总页码
-	int size = 0;
-	size = pBagGoodList->size();
-	int totalPage = size / 4;
-	if (size % 4 != 0)
-		totalPage += 1;
-
-	m_nCurPage += value;
-	//越界处理
-	if (m_nCurPage <= 0)
-		m_nCurPage = totalPage;
-	else if (m_nCurPage > totalPage)
-		m_nCurPage = 1;
-	//切片处理
-	vector<GoodInterface*> content;
-	for (int i = 0; i < 4; i++)
-	{
-		int index = (m_nCurPage - 1) * 4 + i;
-
-		if (index >= size)
-			break;
-		content.push_back((GoodInterface*)pBagGoodList->at(index));
-	}
-	//更新页码和物品填充
-	pGoodLayer->updateShowingPage(m_nCurPage, totalPage);
-	pGoodLayer->updateShowingGoods(content);
 }
 
 void BagLayer::useBtnCallback(GoodLayer* goodLayer)
@@ -111,3 +94,44 @@ void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good)
 {
 }
 
+void BagLayer::showGoodLayer(const string& titleFrameName, const string& btnFrameName
+	, const vector<Good*>& vec, int curPage)
+{
+	this->setVisibleofBagLayer(true);
+	//设置title
+	m_pGoodLayer->updateShowingTitle(titleFrameName);
+	//设置使用按钮
+	m_pGoodLayer->updateShowingBtn(BtnType::Use, BtnParamSt(true, true, btnFrameName));
+	//隐藏装备按钮
+	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(false, false));
+	//更新页码
+	int size = vec.size();
+	unsigned int totalPage = size / 4;
+	if (size % 4 != 0)
+		totalPage += 1;
+
+	if (totalPage == 0)
+		totalPage = 1;
+
+	//保证页面合法
+	m_nCurPage = curPage;
+	if (m_nCurPage > totalPage)
+		m_nCurPage--;
+	if (m_nCurPage <= 0)
+		m_nCurPage = 1;
+
+	//切片处理
+	vector<GoodInterface*> content;
+	for (int i = 0; i < 4; i++)
+	{
+		int index = (m_nCurPage - 1) * 4 + i;
+
+		if (index >= size)
+			break;
+		Good* good = vec.at(index);
+		content.push_back(dynamic_cast<GoodInterface*>(good));
+	}
+	//更新页码并填充物品
+	m_pGoodLayer->updateShowingPage(m_nCurPage, totalPage);
+	m_pGoodLayer->updateShowingGoods(content);
+}

@@ -1,12 +1,12 @@
 require "rpg_core"
 
---ÎïÆ·table Æä×ÓÀà°üÀ¨
---Item µÀ¾ß
---Equipment ×°±¸
---Skill ¼¼ÄÜ
---Seed ÖÖ×Ó
+--ç‰©å“table å…¶å­ç±»åŒ…æ‹¬
+--Item é“å…·
+--Equipment è£…å¤‡
+--Skill æŠ€èƒ½
+--Seed ç§å­
 Good = {};
---¹¹Ôìº¯Êı
+--æ„é€ å‡½æ•°
 function Good:new(o)
 	-- body
 	o = o or {};
@@ -16,43 +16,43 @@ function Good:new(o)
 
 	return o;
 end
---ÎïÆ·µÄÖ´ĞĞº¯Êı
---userId Ê¹ÓÃµÄÈËµÄid
---targetId Ä¿±êÈËµÄid
+--ç‰©å“çš„æ‰§è¡Œå‡½æ•°
+--userId ä½¿ç”¨çš„äººçš„id
+--targetId ç›®æ ‡äººçš„id
 function Good:execute(userID,targetID)
 	-- body
 end
---Çå³ıº¯Êı
+--æ¸…é™¤å‡½æ•°
 function Good:clean()
 	-- body
 	self = nil;
 end
-------------------------------ÓÃÓÚÕ¹Ê¾------------------------------
---ÉèÖÃÍ¼±ê
+------------------------------ç”¨äºå±•ç¤º------------------------------
+--è®¾ç½®å›¾æ ‡
 function Good:setIconID(iconID)
 	-- body
 	self.iconID = iconID;
 end
---ÉèÖÃÃû³Æ
+--è®¾ç½®åç§°
 function Good:setName(name)
 	-- body
 	self.name = name;
 end
---ÉèÖÃÃèÊö
+--è®¾ç½®æè¿°
 function Good:setDescription(descrition)
 	-- body
 	self.descrition = descrition;
 end
---ÊÇ·ñÊÇÏûºÄÆ·
+--æ˜¯å¦æ˜¯æ¶ˆè€—å“
 function Good:setDeleption(deleption)
 	-- body
 	self.deleption = deleption;
 end
---ÉèÖÃ¸öÊı
+--è®¾ç½®ä¸ªæ•°
 function Good:setNumber(number)
 	self.number = number;
 end
---ÉèÖÃ¼ÛÇ®      ²»°üÀ¨¼¼ÄÜ ¼ÛÇ®Îª0±íÊ¾²»¿É³öÊÛ
+--è®¾ç½®ä»·é’±      ä¸åŒ…æ‹¬æŠ€èƒ½ ä»·é’±ä¸º0è¡¨ç¤ºä¸å¯å‡ºå”®
 function Good:setCost(cost)
 	self.cost = cost;
 end
@@ -60,15 +60,15 @@ end
 function Good:setGoodType(goodType)
 	self.goodType = goodType;
 end
---ÉèÖÃÊ¹ÓÃ·¶Î§
+--è®¾ç½®ä½¿ç”¨èŒƒå›´
 function Good:setUsageRange(usageRange)
 	self.usageRange = usageRange;
 end
---ÉèÖÃÊ¹ÓÃ³¡ºÏ
+--è®¾ç½®ä½¿ç”¨åœºåˆ
 function Good:setUsageOccasion(usageOccasion)
 	self.usageOccasion = usageOccasion;
 end
---»ñÈ¡Î¨Ò»id
+--è·å–å”¯ä¸€id
 function Good:getUniqueID(bAdding)
 	local var = 1;
 

@@ -2,23 +2,23 @@ require "good"
 require "rpg_core"
 
 Equipment = Good:new();
---ÉèÖÃÎª×°±¸ÀàĞÍ
+--è®¾ç½®ä¸ºè£…å¤‡ç±»å‹
 Equipment:setGoodType(GoodType.Equipment);
 
--- Ö´ĞĞº¯Êı
+-- æ‰§è¡Œå‡½æ•°
 function Equipment:execute(userID,targetID)
 end
 
---×°±¸
+--è£…å¤‡
 function Equipment:equip(ownerID)
 	self.ownerID = ownerID;
 end
 
---Ğ¶ÏÂ×°±¸
+--å¸ä¸‹è£…å¤‡
 function Equipment:unequip()
 	self.ownerID = -1;
 end
---ÉèÖÃ¸÷ÖÖÊôĞÔ
+--è®¾ç½®å„ç§å±æ€§
 function Equipment:setAttack(attack)
 	self.attack = attack;
 end
@@ -42,36 +42,36 @@ end
 function Equipment:setEquipmentType(equipmentType)
 	self.equipmentType = equipmentType;
 end
-----------------------------------------------ÒÂ·ş------------------------------------
---²¼ÒÂ
+----------------------------------------------è¡£æœ------------------------------------
+--å¸ƒè¡£
 SimpleCloth = Equipment:new();
 SimpleCloth:setIconID(155);
-SimpleCloth:setName("²¼ÒÂ");
-SimpleCloth:setDescription("¼òµ¥¹¹ÔìµÄÒÂ·ş,Èç¹û×ĞÏ¸ÎÅµÄ»°»¹ÄÜÎÊµ½Ç°ÈÎÖ÷ÈËµÄÎ¶µÀ");
+SimpleCloth:setName("å¸ƒè¡£");
+SimpleCloth:setDescription("ç®€å•æ„é€ çš„è¡£æœ,å¦‚æœä»”ç»†é—»çš„è¯è¿˜èƒ½é—®åˆ°å‰ä»»ä¸»äººçš„å‘³é“");
 SimpleCloth:setDeleption(false);
 SimpleCloth:setEquipmentType(EquipmentType.Cloth);
 SimpleCloth:setDefense(4);
 SimpleCloth:setCost(10);
---Æ¤¼×
+--çš®ç”²
 LeatherArmor = Equipment:new();
 LeatherArmor:setIconID(156);
-LeatherArmor:setName("Æ¤¼×");
-LeatherArmor:setDescription("Î´Öª¶¯ÎïµÄÆ¤×öµÄÆ¤¼×£¬´©×ÅºÜÊÇÊæÊÊ");
+LeatherArmor:setName("çš®ç”²");
+LeatherArmor:setDescription("æœªçŸ¥åŠ¨ç‰©çš„çš®åšçš„çš®ç”²ï¼Œç©¿ç€å¾ˆæ˜¯èˆ’é€‚");
 LeatherArmor:setDeleption(false);
 LeatherArmor:setEquipmentType(EquipmentType.Cloth);
 LeatherArmor:setDefense(12);
 LeatherArmor:setCost(180);
---ËøÁ´¼×
+--é”é“¾ç”²
 ChainArmor = Equipment:new();
 ChainArmor:setIconID(157);
-ChainArmor:setName("ËøÁ´¼×");
-ChainArmor:setDescription("Ìú×öµÄÁ´¼×£¬Ö»ÄÜÇ¿×³µÄÈË²Å×°±¸µÃÉÏ");
+ChainArmor:setName("é”é“¾ç”²");
+ChainArmor:setDescription("é“åšçš„é“¾ç”²ï¼Œåªèƒ½å¼ºå£®çš„äººæ‰è£…å¤‡å¾—ä¸Š");
 ChainArmor:setDeleption(false);
 ChainArmor:setEquipmentType(EquipmentType.Cloth);
 ChainArmor:setDefense(18);
 ChainArmor:setCost(350);
 
-----------------------------------------------¸±ÊÖ------------------------------------
+----------------------------------------------å‰¯æ‰‹------------------------------------
 OffHand = Equipment:new();
 function OffHand:setOffHandType(offHandType)
 	self.offHandType = offHandType;
@@ -80,47 +80,47 @@ function OffHand:getBulletName()
 	-- body
 	return "arrow01";
 end
------------------------------¹­¼ı----------------------------
+-----------------------------å¼“ç®­----------------------------
 Arrow = OffHand:new();
 Arrow:setDeleption(true);
 Arrow:setEquipmentType(EquipmentType.OffHand);
 Arrow:setOffHandType(OffHandType.Arrow);
---Ä¾¼ı
+--æœ¨ç®­
 WoodenArrow = Arrow:new();
 WoodenArrow:setIconID(107);
-WoodenArrow:setName("Ä¾¼ı");
-WoodenArrow:setDescription("Ï¸Ê÷Ö¦Ï÷³ÉÄ¾¼ı");
+WoodenArrow:setName("æœ¨ç®­");
+WoodenArrow:setDescription("ç»†æ ‘æå‰Šæˆæœ¨ç®­");
 WoodenArrow:setAttack(1);
 WoodenArrow:setCost(2);
 function WoodenArrow:getBulletName()
 	-- body
 	return "arrow01";
 end
------------------------------¶ÜÅÆ----------------------------
+-----------------------------ç›¾ç‰Œ----------------------------
 Shield = OffHand:new();
 Shield:setDeleption(false);
 Shield:setEquipmentType(EquipmentType.OffHand);
 Shield:setOffHandType(OffHandType.Shield);
---Æ¤¶Ü
+--çš®ç›¾
 LeatherShield = Shield:new();
 LeatherShield:setIconID(158);
-LeatherShield:setName("Æ¤¶Ü");
-LeatherShield:setDescription("Î´Öª¶¯ÎïµÄÆ¤×öµÄÆ¤¶Ü");
+LeatherShield:setName("çš®ç›¾");
+LeatherShield:setDescription("æœªçŸ¥åŠ¨ç‰©çš„çš®åšçš„çš®ç›¾");
 LeatherShield:setDefense(4);
 LeatherShield:setCost(90);
---ÁÛ¶Ü
+--é³ç›¾
 ScaleShield = Shield:new();
 ScaleShield:setIconID(159);
-ScaleShield:setName("ÁÛ¶Ü");
-ScaleShield:setDescription("ÄÜÉÔÎ¢Ôö¼Ó·ÀÓùÁ¦");
+ScaleShield:setName("é³ç›¾");
+ScaleShield:setDescription("èƒ½ç¨å¾®å¢åŠ é˜²å¾¡åŠ›");
 ScaleShield:setDefense(7);
 ScaleShield:setCost(180);
---Ìú¶Ü ÀúÊ·ÒÅÁôÎÊÌâ
+--é“ç›¾ å†å²é—ç•™é—®é¢˜
 Ironshield = Shield:new();
---ÉèÖÃ»ù´¡ÊôĞÔ
+--è®¾ç½®åŸºç¡€å±æ€§
 Ironshield:setIconID(129);
-Ironshield:setName("Ìú¶Ü");
-Ironshield:setDescription("Ç¿×³µÄÈËËùÓÃµÄ¶Ü");
+Ironshield:setName("é“ç›¾");
+Ironshield:setDescription("å¼ºå£®çš„äººæ‰€ç”¨çš„ç›¾");
 Ironshield:setDeleption(false);
 Ironshield:setUsageRange(UsageRange.SingleEnemy);
 Ironshield:setUsageOccasion(UsageOccasion.Fighting);

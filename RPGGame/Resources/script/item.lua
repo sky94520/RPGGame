@@ -1,46 +1,46 @@
 require "rpg_core"
 require "good"
 
---ÏúÊÛ¿¨ Ö»ÊÇÈÃÍæ¼ÒÖªµÀÉÌµêµÄ¹ºÂò±È
+--é”€å”®å¡ åªæ˜¯è®©ç©å®¶çŸ¥é“å•†åº—çš„è´­ä¹°æ¯”
 SellCard = Good:new();
---ÉèÖÃ»ù´¡ÊôĞÔ
+--è®¾ç½®åŸºç¡€å±æ€§
 SellCard:setIconID(188);
-SellCard:setName("ÏúÊÛ¿¨");
-SellCard:setDescription("ÉÌµê»áÒÔÎïÆ·50%µÄ¼ÛÇ® ÊÕ¹ºÎïÆ·,¿ÉÉı¼¶");
+SellCard:setName("é”€å”®å¡");
+SellCard:setDescription("å•†åº—ä¼šä»¥ç‰©å“50%çš„ä»·é’± æ”¶è´­ç‰©å“,å¯å‡çº§");
 SellCard:setDeleption(false);
 SellCard:setUsageRange(UsageRange.Self);
 SellCard:setUsageOccasion(UsageOccasion.Normal);
 SellCard:setCost(0);
---Áò»Ç
+--ç¡«ç£º
 Sulphur = Good:new();
-Sulphur:setName("Áò»Ç");
-Sulphur:setDescription("ĞèÒªĞ¡ĞÄ±£´æ£¬ÓÃÍ¾·Ç³£¹ã·º");
+Sulphur:setName("ç¡«ç£º");
+Sulphur:setDescription("éœ€è¦å°å¿ƒä¿å­˜ï¼Œç”¨é€”éå¸¸å¹¿æ³›");
 Sulphur:setDeleption(false);
 Sulphur:setUsageRange(UsageRange.SingleAlly);
 Sulphur:setUsageOccasion(UsageOccasion.Fighting);
 Sulphur:setCost(10);
---Ïõ
+--ç¡
 Nitrate = Good:new();
-Nitrate:setName("ÏõÊ¯");
-Nitrate:setDescription("ÖÆ×÷»ğÒ©µÄÔ­ÁÏÖ®Ò»");
+Nitrate:setName("ç¡çŸ³");
+Nitrate:setDescription("åˆ¶ä½œç«è¯çš„åŸæ–™ä¹‹ä¸€");
 Nitrate:setDeleption(false);
 Nitrate:setUsageRange(UsageRange.SingleAlly);
 Nitrate:setUsageOccasion(UsageOccasion.Fighting);
 Nitrate:setCost(10);
---Ä¾Ì¿
+--æœ¨ç‚­
 Charcoal = Good:new();
-Charcoal:setName("Ä¾Ì¿");
-Charcoal:setDescription("Ä¾²Ä¾­¹ı²»ÍêÈ«È¼ÉÕ»ò¸ô¾ø¿ÕÆøÏÂÈÈ½â¶øÉú³É£¬ÄÜÓÃÀ´¼ÓÈÈÎïÆ·");
+Charcoal:setName("æœ¨ç‚­");
+Charcoal:setDescription("æœ¨æç»è¿‡ä¸å®Œå…¨ç‡ƒçƒ§æˆ–éš”ç»ç©ºæ°”ä¸‹çƒ­è§£è€Œç”Ÿæˆï¼Œèƒ½ç”¨æ¥åŠ çƒ­ç‰©å“");
 Charcoal:setDeleption(false);
 Charcoal:setUsageRange(UsageRange.SingleAlly);
 Charcoal:setUsageOccasion(UsageOccasion.Fighting);
 Charcoal:setCost(10);
---Õ¨Ò© ÈÎÎñÎïÆ·£¬²»¿É³öÊÛ
+--ç‚¸è¯ ä»»åŠ¡ç‰©å“ï¼Œä¸å¯å‡ºå”®
 TNT = Good:new();
---ÉèÖÃ»ù´¡ÊôĞÔ
+--è®¾ç½®åŸºç¡€å±æ€§
 TNT:setIconID(188);
-TNT:setName("Õ¨Ò©");
-TNT:setDescription("ÍşÁ¦¾Ş´óµÄÕ¨Ò©£¬ÄÜÕ¨»ÙÉ½Ê¯");
+TNT:setName("ç‚¸è¯");
+TNT:setDescription("å¨åŠ›å·¨å¤§çš„ç‚¸è¯ï¼Œèƒ½ç‚¸æ¯å±±çŸ³");
 TNT:setDeleption(true);
 TNT:setUsageRange(UsageRange.SingleAlly);
 TNT:setUsageOccasion(UsageOccasion.Fighting);
@@ -50,50 +50,50 @@ function TNT:execute(userID, targetID)
 	-- body
 end
 
------------------------------------------Ò©²İ-------------------------------
+-----------------------------------------è¯è‰-------------------------------
 Item = Good:new();
 Item:setGoodType(GoodType.Item);
 
---ÑªÆ¿
+--è¡€ç“¶
 HitPointItem = Item:new();
---ÖÎÓú
---self ĞèÒªÓĞnameÊôĞÔ ÇÒĞèÒªÓĞÏûºÄÆ·ÊôĞÔ
---userID Ê¹ÓÃÕßµÄid
---targetID Ä¿±êµÄid
---value »Ö¸´µÄÊıÖµ
---anim ÏÔÊ¾µÄ¶¯»­
+--æ²»æ„ˆ
+--self éœ€è¦æœ‰nameå±æ€§ ä¸”éœ€è¦æœ‰æ¶ˆè€—å“å±æ€§
+--userID ä½¿ç”¨è€…çš„id
+--targetID ç›®æ ‡çš„id
+--value æ¢å¤çš„æ•°å€¼
+--anim æ˜¾ç¤ºçš„åŠ¨ç”»
 function HitPointItem:execute(userID, targetID, value, anim, afterCallback)
-	-- ÏûºÄ1¸ö
+	-- æ¶ˆè€—1ä¸ª
 	self.number = self.number - 1;
-	--²¥·ÅÒôĞ§
+	--æ’­æ”¾éŸ³æ•ˆ
 	sound.playEffect("sound/se/Recovery.ogg", 0);
-	--»ñÈ¡ÓÎÏ·×´Ì¬
+	--è·å–æ¸¸æˆçŠ¶æ€
 	local gameState = base.getGameState();
-	--Õı³£/½Å±¾×´Ì¬ÏÂ Ö±½ÓÖÎÓú
+	--æ­£å¸¸/è„šæœ¬çŠ¶æ€ä¸‹ ç›´æ¥æ²»æ„ˆ
 	if gameState == GameState.Normal or gameState == GameState.Script then
 		battle.heal(targetID, value);
-	else--Õ½¶·×´Ì¬ÏÂ£¬ÏûºÄÒ»»ØºÏ£¬²¢ÖÎÓú
+	else--æˆ˜æ–—çŠ¶æ€ä¸‹ï¼Œæ¶ˆè€—ä¸€å›åˆï¼Œå¹¶æ²»æ„ˆ
 		local duration = battle.showBattleAnimation(targetID, anim);
-		--ÏÔÊ¾ÎÄ±¾
-		message.showTip("ÖÎÁÆ", TextPosition.Top, duration);
-		--µÈ´ı
+		--æ˜¾ç¤ºæ–‡æœ¬
+		message.showTip("æ²»ç–—", TextPosition.Top, duration);
+		--ç­‰å¾…
 		timer.delay(duration / 2);
-		--ÖÎÁÆ
+		--æ²»ç–—
 		battle.heal(targetID, value);
-		--µ÷ÓÃ½áÊøº¯Êı
+		--è°ƒç”¨ç»“æŸå‡½æ•°
 		if afterCallback ~= nil then
 			afterCallback();
 		end
 		timer.delay(duration / 2);
-		--»ØºÏ½áÊø
+		--å›åˆç»“æŸ
 		battle.roundOver();
 	end
 end
------------------------------------------Ò©²İ-------------------------------
+-----------------------------------------è¯è‰-------------------------------
 Herbs = HitPointItem:new();
 Herbs:setIconID(183);
-Herbs:setName("Ò©²İ");
-Herbs:setDescription("»Ö¸´ÉÙÁ¿HP");
+Herbs:setName("è¯è‰");
+Herbs:setDescription("æ¢å¤å°‘é‡HP");
 Herbs:setDeleption(true);
 Herbs:setUsageRange(UsageRange.SingleAlly);
 Herbs:setUsageOccasion(UsageOccasion.All);

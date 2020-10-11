@@ -1,5 +1,5 @@
 require "rpg_core"
---´´½¨Ò»¸öÃÅ
+--åˆ›å»ºä¸€ä¸ªé—¨
 object.create("door1", "Door1_0", 6, 5);
 
 object.setTrigger("door1", TriggerType.Click, "change2map01_01");
@@ -10,14 +10,14 @@ function change2map01_01( ... )
 	-- body
 	print("change to map01_01");
 	base.setGameState(GameState.Script);
-	--ÏÔÊ¾¿ªÃÅ¶¯»­
+	--æ˜¾ç¤ºå¼€é—¨åŠ¨ç”»
 	for k, dir in pairs(Direction:toArray()) do
 		local duration = object.showWalkingAnimation("door1", dir);
 		timer.delay(duration);
 	end
 	--fadeIn
 	screen.fadeIn(1.0);
-	--Ìø×ªµØÍ¼
+	--è·³è½¬åœ°å›¾
 	movement.changeMap("map/Map01_01.tmx", 8, 12);
 	screen.fadeOut(1.0);
 	base.setGameState(GameState.Normal);

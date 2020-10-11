@@ -238,10 +238,11 @@ Node* GameScene::getCollisionLayer() const
 {
 	return m_pMapLayer->getCollisionLayer();
 }
-
+//---OperationDelegate---
 void GameScene::openBag()
 {
 	m_pOperationLayer->setTouchEnabled(false);
+	m_pBagLayer->setType(BagLayer::Type::Warehouse);
 	m_pBagLayer->setVisibleofBagLayer(true);
 }
 

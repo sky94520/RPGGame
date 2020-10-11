@@ -1,5 +1,5 @@
 require "rpg_core"
---创建一个门
+--鍒涘缓涓�涓棬
 object.create("portal1", "Portal_1", 8, 13);
 
 object.setTrigger("portal1", TriggerType.Touch, "change2map01");
@@ -12,7 +12,7 @@ function change2map01( ... )
 	base.setGameState(GameState.Script);
 	--fadeIn
 	screen.fadeIn(1);
-	--跳转地图
+	--璺宠浆鍦板浘
 	movement.changeMap("map/Map01.tmx", 6, 6);
 	screen.fadeOut(1);
 	base.setGameState(GameState.Normal);
