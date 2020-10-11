@@ -72,9 +72,11 @@ bool GameScene::init()
 	this->addChild(m_pEffectLayer);
 	//ui/展示层
 	m_pOperationLayer = OperationLayer::create();
+	m_pOperationLayer->setDelegate(this);
 	this->addChild(m_pOperationLayer);
 	//ui/背包层
 	m_pBagLayer = BagLayer::create();
+	m_pBagLayer->setDelegate(this);
 	this->addChild(m_pBagLayer);
 	//玩家层
 	m_pPlayerManager = PlayerManager::create();
@@ -235,6 +237,42 @@ void GameScene::update(float dt)
 Node* GameScene::getCollisionLayer() const
 {
 	return m_pMapLayer->getCollisionLayer();
+}
+
+void GameScene::openBag()
+{
+	m_pOperationLayer->setTouchEnabled(false);
+	m_pBagLayer->setVisibleofBagLayer(true);
+}
+
+void GameScene::saveProgress()
+{
+}
+//---GoodLayerDelegate---
+void GameScene::pageBtnCallback(GoodLayer* goodLayer, int value)
+{
+	m_pBagLayer->pageBtnCallback(goodLayer, value);
+}
+
+void GameScene::useBtnCallback(GoodLayer* goodLayer)
+{
+	m_pBagLayer->useBtnCallback(goodLayer);
+}
+
+void GameScene::equipBtnCallback(GoodLayer* goodLayer)
+{
+	m_pBagLayer->equipBtnCallback(goodLayer);
+}
+
+void GameScene::closeBtnCallback(GoodLayer* goodLayer)
+{
+	m_pOperationLayer->setTouchEnabled(true);
+	m_pBagLayer->closeBtnCallback(goodLayer);
+}
+
+void GameScene::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good)
+{
+	m_pBagLayer->selectGoodCallback(goodLayer, good);
 }
 
 void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)

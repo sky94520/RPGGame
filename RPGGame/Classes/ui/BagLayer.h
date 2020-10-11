@@ -8,7 +8,7 @@
 using namespace std;
 using namespace SDL;
 
-class BagLayer : public Layer, GoodLayerDelegate
+class BagLayer : public Layer
 {
 public:
 	/*物品层显示类型 待修改*/
@@ -24,34 +24,35 @@ public:
 	virtual ~BagLayer();
 	CREATE_FUNC(BagLayer);
 	bool init();
-public:
+	void setDelegate(GoodLayerDelegate* pDelegate) { m_pGoodLayer->setDelegate(pDelegate); }
+	void setVisibleofBagLayer(bool visible);
 	/**
 	 * 点击上一页按钮回调函数
 	 * @param goodLayer 对应的物品层
 	 * @param value 下一页+1 上一页-1
 	 */
-	virtual void pageBtnCallback(GoodLayer* goodLayer, int value);
+	void pageBtnCallback(GoodLayer* goodLayer, int value);
 	/**
 	 * 使用按钮回调函数
 	 * @param goodLayer 对应的物品层
 	 */
-	virtual void useBtnCallback(GoodLayer* goodLayer);
+	void useBtnCallback(GoodLayer* goodLayer);
 	/**
 	 * 装备按钮回调函数
 	 * @param goodLayer 对应的物品层
 	 */
-	virtual void equipBtnCallback(GoodLayer* goodLayer);
+	void equipBtnCallback(GoodLayer* goodLayer);
 	/**
 	 * 关闭按钮回调函数
 	 * @param goodLayer 对应的物品层
 	 */
-	virtual void closeBtnCallback(GoodLayer* goodLayer);
+	void closeBtnCallback(GoodLayer* goodLayer);
 	/**
 	 * 选中物品回调函数
 	 * @param goodLayer 对应的物品层
 	 * @param good 对应的物品
 	 */
-	virtual void selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good);
+	void selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good);
 private:
 	Type m_type;//类型(玩家背包、商店等)
 	unsigned int m_nCurPage;//当前页

@@ -2,9 +2,11 @@
 #define __GameScene_H__
 #include <vector>
 #include <string>
+#include <SDL_Engine/SDL_Engine.h>
 
-#include "SDL_Engine/SDL_Engine.h"
 #include "entity/AStar.h"
+#include "ui/GoodLayer.h"
+#include "ui/OperationLayer.h"
 
 using namespace std;
 USING_NS_SDL;
@@ -17,7 +19,7 @@ class OperationLayer;
 class BagLayer;
 enum class GameState;
 
-class GameScene : public Scene, public AStartDelegate
+class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLayerDelegate
 {
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//特效层
@@ -44,6 +46,15 @@ public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
 	void update(float dt);
 	Node* getCollisionLayer() const;
+public: //OperationDelegate
+	virtual void openBag();
+	virtual void saveProgress();
+public: //GoodLayerDelegate
+	virtual void pageBtnCallback(GoodLayer* goodLayer, int value);
+	virtual void useBtnCallback(GoodLayer* goodLayer);
+	virtual void equipBtnCallback(GoodLayer* goodLayer);
+	virtual void closeBtnCallback(GoodLayer* goodLayer);
+	virtual void selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good);
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);

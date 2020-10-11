@@ -3,10 +3,11 @@
 
 OperationLayer::OperationLayer()
 	:m_pBagBtn(nullptr)
-	, m_pSaveBtn(nullptr)
-	, m_pTaskBtn(nullptr)
-	, m_pArrowBtn(nullptr)
-	, m_bBtnHide(false)
+	,m_pSaveBtn(nullptr)
+	,m_pTaskBtn(nullptr)
+	,m_pArrowBtn(nullptr)
+	,m_bBtnHide(false)
+	,m_pDelegate(nullptr)
 {
 }
 
@@ -25,7 +26,7 @@ bool OperationLayer::init()
 	m_pBagBtn->addClickEventListener(SDL_CALLBACK_1(OperationLayer::openBag, this));
 	//保存按钮
 	m_pSaveBtn = node->getChildByName<ui::Button*>("save_btn");
-	m_pSaveBtn->addClickEventListener(SDL_CALLBACK_1(OperationLayer::save, this));
+	m_pSaveBtn->addClickEventListener(SDL_CALLBACK_1(OperationLayer::saveProgress, this));
 	//任务按钮
 	m_pTaskBtn = node->getChildByName<ui::Button*>("task_btn");
 	m_pTaskBtn->addClickEventListener(SDL_CALLBACK_1(OperationLayer::openTask, this));
@@ -83,10 +84,22 @@ float OperationLayer::setTouchEnabled(bool enable)
 
 void OperationLayer::openBag(Object* sender)
 {
+	if (m_pDelegate == nullptr) 
+	{
+		LOG("OperationLayer::openBag m_pDelegate=nullptr\n");
+		return;
+	}
+	m_pDelegate->openBag();
 }
 
-void OperationLayer::save(Object* sender)
+void OperationLayer::saveProgress(Object* sender)
 {
+	if (m_pDelegate == nullptr) 
+	{
+		LOG("OperationLayer::openBag m_pDelegate=nullptr\n");
+		return;
+	}
+	m_pDelegate->saveProgress();
 }
 
 void OperationLayer::openTask(Object* sender)
