@@ -28,7 +28,6 @@ class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLa
 
 	SDL_SYNTHESIZE_READONLY(PlayerManager*, m_pPlayerManager, PlayerManager);//玩家层
 	SDL_SYNTHESIZE_READONLY(ScriptManager*, m_pScriptManager, ScriptManager);//脚本层
-	SDL_SYNTHESIZE(GameState, m_gameState, GameState);//游戏状态
 public:
 	static GameScene* getInstance();
 	static void purge();
@@ -46,6 +45,8 @@ public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
 	void update(float dt);
 	Node* getCollisionLayer() const;
+	GameState getGameState() const { return m_gameState; }
+	void setGameState(GameState state);
 public: //OperationDelegate
 	virtual void openBag();
 	virtual void saveProgress();
@@ -60,5 +61,6 @@ public:
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);
 private:
 	static GameScene* s_pInstance;
+	GameState m_gameState; //游戏状态
 };
 #endif

@@ -30,7 +30,6 @@ GameScene* GameScene::getInstance()
 		s_pInstance = new GameScene();
 		s_pInstance->init();
 	}
-
 	return s_pInstance;
 }
 
@@ -59,11 +58,8 @@ GameScene::~GameScene()
 
 bool GameScene::init()
 {
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-
 	//加载资源
 	this->preloadResources();
-
 	//地图层
 	m_pMapLayer = MapLayer::create();
 	this->addChild(m_pMapLayer);
@@ -231,12 +227,28 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 void GameScene::update(float dt)
 {
 	m_pMapLayer->update(dt);
+	m_pPlayerManager->update(dt);
 	m_pScriptManager->update(dt, m_gameState);
 }
 
 Node* GameScene::getCollisionLayer() const
 {
 	return m_pMapLayer->getCollisionLayer();
+}
+
+void GameScene::setGameState(GameState state)
+{
+	if (m_gameState == state)
+		return;
+	m_gameState = state;
+	//操作层可点击
+	bool enable = m_gameState == GameState::Normal ? true : false;
+	m_pOperationLayer->setTouchEnabled(enable);
+	//TODO: 从脚本中结束，尝试恢复行走
+	if (m_gameState == GameState::Normal)
+	{
+		//m_pPlayerLayer->getPlayer()->popStepAndAnimate();
+	}
 }
 //---OperationDelegate---
 void GameScene::openBag()
@@ -287,13 +299,11 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 	auto mapSize = tiledMap->getMapSize();
 	StaticData::getInstance()->getAStar()->setMapSize(int(mapSize.width), int(mapSize.height));
 
-	//MapLayer 改变当前中心点
 	auto tileSize = tiledMap->getTileSize();
-	//设置瓦片大小
 	Character::setTileSize((int)tileSize.width, (int)tileSize.height);
-	auto pos = Point(tileSize.width * (tileCoodinate.x + 0.5f)
-		,tileSize.height * (tileCoodinate.y + 0.5f));
-	m_pMapLayer->setViewpointCenter(pos);
+	auto pos = Point(tileSize.width * (tileCoodinate.x + 0.5f),tileSize.height * (tileCoodinate.y + 0.5f));
+	//MapLayer 改变当前中心点
+	m_pMapLayer->setViewpointCenter(pos, 2000);
 
 	//PlayerManager 更改玩家层的玩家所在的层
 	auto collisionLayer = m_pMapLayer->getCollisionLayer();

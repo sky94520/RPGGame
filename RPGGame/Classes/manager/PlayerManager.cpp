@@ -130,20 +130,21 @@ bool PlayerManager::isCollidedWithCharacter(const Rect& rect)
 void PlayerManager::movePlayer(const SDL_Point& toTile)
 {
 	auto controller = m_controllers.front();
-
 	controller->moveToward(toTile);
 }
 
 void PlayerManager::changeLayerOfPlayer(Node* layer, const Point& location)
 {
 	for (auto controller : m_controllers) {
-		auto listener = controller->getControllerListener();
-		auto player = static_cast<Character*>(listener);
+		ControllerListener* listener = controller->getControllerListener();
+		Character* player = static_cast<Character*>(listener);
 		//层和父亲节点相同
 		if (layer == player->getParent())
 			break;
 		player->setPosition(location);
+		SDL_SAFE_RETAIN(player);
 		player->removeFromParent();
 		layer->addChild(player);
+		SDL_SAFE_RELEASE(player);
 	}
 }

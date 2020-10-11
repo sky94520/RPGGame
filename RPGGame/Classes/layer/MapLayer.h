@@ -1,7 +1,8 @@
 #ifndef __MapLayer_H__
 #define __MapLayer_H__
 #include <string>
-#include "SDL_Engine/SDL_Engine.h"
+#include <algorithm>
+#include <SDL_Engine/SDL_Engine.h>
 
 using namespace std;
 USING_NS_SDL;

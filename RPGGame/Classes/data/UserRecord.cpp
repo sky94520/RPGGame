@@ -104,7 +104,6 @@ void UserRecord::parseBag(rapidxml::xml_node<>* root)
 	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
 	{
 		//<good name="Herbs" number="2">
-		//获取attribute
 		auto nameAttr = node->first_attribute("name");
 		auto numberAttr = node->first_attribute("number");
 		//获取物品的名称和数量

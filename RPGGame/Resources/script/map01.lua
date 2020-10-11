@@ -5,6 +5,8 @@ object.create("door1", "Door1_0", 6, 5);
 object.setTrigger("door1", TriggerType.Click, "change2map01_01");
 object.setPriority("door1", Priority.Same);
 
+--base.setViewpointCenter(12*48, 6*48, 2000);
+
 
 function change2map01_01( ... )
 	-- body
