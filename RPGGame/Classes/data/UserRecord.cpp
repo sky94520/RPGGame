@@ -1,6 +1,7 @@
 #include "UserRecord.h"
 #include "../GameMacros.h"
 #include "../entity/Good.h"
+#include "../entity/Character.h"
 
 UserRecord::UserRecord()
 	:goldNumber(0)
@@ -15,6 +16,12 @@ UserRecord::~UserRecord()
 	while (it != players.end())
 	{
 		PlayerData* data = it->second;
+		//释放技能
+		for (auto it = data->skills.begin(); it != data->skills.end(); ) {
+			Good* good = *it;
+			SDL_SAFE_RELEASE(good);
+			it = data->skills.erase(it);
+		}
 		delete data;
 		it = players.erase(it);
 	}
@@ -77,6 +84,28 @@ bool UserRecord::writeToXML(const string& filename)
 	return true;
 }
 
+void UserRecord::equip(const string&playerName, int uniqueId, Good* good)
+{
+	PlayerData* playerData = players[playerName];
+
+	auto equipmentType = good->getEquipmentType();
+	auto& equipments = playerData->equipments;
+	//原来装备不为空,卸载
+	auto iter = equipments.find(equipmentType);
+	if (iter != equipments.end())
+	{
+		auto oldGood = iter->second;
+		oldGood->unequip();
+		SDL_SAFE_RELEASE(oldGood);
+
+		equipments.erase(iter);
+	}
+	//更换装备
+	good->equip(uniqueId);
+	SDL_SAFE_RETAIN(good);
+	equipments.insert(make_pair(equipmentType, good));
+}
+
 void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
 {
 	string playerName;
@@ -94,21 +123,28 @@ void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
 		else if (strcmp(name, "exp") == 0)
 			data->exp = SDL_atoi(value);
 	}
-	players.insert(make_pair(playerName, data));
 	//技能
 	auto skillRoot = root->first_node("skill");
 	if (skillRoot != nullptr) {
-		this->parseSkill(skillRoot);
+		this->parseSkill(skillRoot, data);
 	}
+	players.insert(make_pair(playerName, data));
 }
 
-void UserRecord::parseSkill(rapidxml::xml_node<>* root)
+void UserRecord::parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData)
 {
+	//解析并创建技能
+	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling()) {
+		string skillName = node->first_attribute("name")->value();
+		Good* skill = Good::create(skillName);
+		skill->retain();
+		playerData->skills.push_back(skill);
+	}
 }
 
 void UserRecord::parseBag(rapidxml::xml_node<>* root)
 {
-	//遍历背包
+	//背包物品<good name="Herbs" number="2">
 	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
 	{
 		//<good name="Herbs" number="2">
@@ -124,5 +160,20 @@ void UserRecord::parseBag(rapidxml::xml_node<>* root)
 		Good* good = Good::create(name, number);
 		SDL_SAFE_RETAIN(good);
 		m_bagGoodList.push_back(good);
+	}
+}
+
+void UserRecord::parseEquipment(rapidxml::xml_node<>* root, Character* player)
+{
+	auto chartletName = player->getChartletName();
+	auto uniqueID = player->getUniqueID();
+	//解析装备 <equipment name="Sword" number="1"/>
+	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
+	{
+		string goodName = node->first_attribute("name")->value();
+		int number = stoi(node->first_attribute("number")->value());
+		//创建并装备
+		auto good = Good::create(goodName, number);
+		this->equip(chartletName, uniqueID, good);
 	}
 }

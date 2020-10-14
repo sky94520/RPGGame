@@ -11,8 +11,9 @@
 USING_NS_SDL;
 using namespace std;
 
-struct PlayerData;
 class Good;
+class Character;
+struct PlayerData;
 
 class UserRecord : public Object
 {
@@ -25,10 +26,13 @@ public:
 	bool readFromXML(const string& filename);
 	//保存数据到文件中
 	bool writeToXML(const string& filename);
+	//装备
+	void equip(const string&playerName, int uniqueId, Good* good);
 private:
 	void parsePlayer(rapidxml::xml_node<>* root);
-	void parseSkill(rapidxml::xml_node<>* root);
+	void parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData);
 	void parseBag(rapidxml::xml_node<>* root);
+	void parseEquipment(rapidxml::xml_node<>* root, Character* player);
 public:
 	//金币数量
 	int goldNumber;
