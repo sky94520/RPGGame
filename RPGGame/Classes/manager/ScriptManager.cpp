@@ -48,12 +48,15 @@ bool ScriptManager::init()
 		m_pLuaStack->addLuaSearchPath("Resources/script");
 		FileUtils::getInstance()->addSearchPath("Resources/script");
 	}
-	else
+	else {
 		m_pLuaStack->addLuaSearchPath("script");
+	}
 	//注册c函数给lua
 	this->registerFuncs(m_pLuaStack->getLuaState());
 	//加载必要的脚本
 	m_pLuaStack->executeScriptFile("item.lua");
+	m_pLuaStack->executeScriptFile("weapon.lua");
+	m_pLuaStack->executeScriptFile("skill.lua");
 	return true;
 }
 

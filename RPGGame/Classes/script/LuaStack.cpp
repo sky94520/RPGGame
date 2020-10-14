@@ -18,6 +18,8 @@ bool LuaStack::init()
 {
 	m_pLuaState = luaL_newstate();
 	luaL_openlibs(m_pLuaState);
+	//添加自定义的lua加载器
+	this->addLuaLoader(sdl_lua_loader);
 
 	return true;
 }

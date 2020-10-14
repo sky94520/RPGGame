@@ -1,4 +1,4 @@
-﻿#ifndef __UserRecord_H__
+#ifndef __UserRecord_H__
 #define __UserRecord_H__
 
 #include <vector>
@@ -27,6 +27,7 @@ public:
 	bool writeToXML(const string& filename);
 private:
 	void parsePlayer(rapidxml::xml_node<>* root);
+	void parseSkill(rapidxml::xml_node<>* root);
 	void parseBag(rapidxml::xml_node<>* root);
 public:
 	//金币数量

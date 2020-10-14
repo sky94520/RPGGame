@@ -93,9 +93,17 @@ void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
 			data->level = SDL_atoi(value);
 		else if (strcmp(name, "exp") == 0)
 			data->exp = SDL_atoi(value);
-		//TODO:后续数据
 	}
 	players.insert(make_pair(playerName, data));
+	//技能
+	auto skillRoot = root->first_node("skill");
+	if (skillRoot != nullptr) {
+		this->parseSkill(skillRoot);
+	}
+}
+
+void UserRecord::parseSkill(rapidxml::xml_node<>* root)
+{
 }
 
 void UserRecord::parseBag(rapidxml::xml_node<>* root)

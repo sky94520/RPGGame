@@ -2,8 +2,13 @@
 #define __GameMacros_H__
 
 #include <string>
+#include <vector>
+#include <unordered_map>
 
 using namespace std;
+
+enum class EquipmentType;
+class Good;
 
 /*方向,跟贴图有关*/
 enum class Direction
@@ -174,9 +179,9 @@ public:
 struct PlayerData
 {
 	//装备
-	//map<EquipmentType, Good*> equipments;
+	unordered_map<EquipmentType, Good*> equipments;
 	//技能
-	//vector<Good*> skills;
+	vector<Good*> skills;
 	//属性
 	Properties properties;
 	int maxHp;
