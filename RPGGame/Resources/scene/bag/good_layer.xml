@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Layer anchor-point="0.5,0.5" position="320,400" name="bag_good_layer" size="366,436">
+<Layer anchor-point="0.5,0.5" position="480,320" name="bag_good_layer" size="366,436">
 	<!--背包bg-->
 	<Sprite anchor-point="0.5,0.5" name="bag_bg" position="183,218">
 		<properties>
@@ -140,7 +140,7 @@
   <!--商品列表-->
   <Xml name="bag_good_list" position="0,0">
     <properties>
-      <property name="filename" value="scene/bag_good_list.xml"/>
+      <property name="filename" value="scene/bag/_good_list.xml"/>
     </properties>
   </Xml>
 </Layer>

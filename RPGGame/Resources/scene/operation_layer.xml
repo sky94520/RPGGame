@@ -19,7 +19,7 @@
     </properties>
   </Button>
   <!--箭头按钮-->
-  <Button position="620,31" name="arrow_btn">
+  <Button position="940,31" name="arrow_btn">
     <properties>
       <property name="normal-image" value="arrow_n.png"/>
       <property name="selected-image" value="arrow_h.png"/>
@@ -28,7 +28,7 @@
     </properties>
   </Button>
   <!--存档按钮-->
-  <Button position="590,330" name="save_btn">
+  <Button position="910,330" name="save_btn">
     <properties>
       <property name="normal-image" value="save_n.png"/>
       <property name="selected-image" value="save_h.png"/>

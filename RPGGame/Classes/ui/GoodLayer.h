@@ -89,36 +89,6 @@ public:
  */
 class GoodLayer : public Layer
 {
-	//当前物品层是否打开（逻辑上标识）
-	//SDL_BOOL_SYNTHESIZE(m_bShowing, Showing);
-private:
-	bool m_bShowing;
-	//保存XML文件中常用的控件
-	//背景
-	Sprite* m_pBagBG;
-	//标题
-	Sprite* m_pTitleSprite;
-	//关闭按钮
-	Button* m_pCloseBtn;
-	//物品描述文本
-	LabelBMFont* m_pDescLabel;
-	//使用按钮
-	Button* m_pUserBtn;
-	//装备按钮
-	Button* m_pEquipBtn;
-	//上一页按钮
-	Button* m_pPrePageBtn;
-	//下一页按钮
-	Button* m_pNextPageBtn;
-	//页面标签
-	LabelAtlas* m_pPageLabel;
-	//金币标签
-	LabelAtlas* m_pGoldLabel;
-	//物品组
-	RadioButtonGroup* m_pGoodGroup;
-	//委托
-	GoodLayerDelegate* m_pDelegate;
-	EventListenerTouchOneByOne* m_pListener;
 public:
 	GoodLayer();
 	~GoodLayer();
@@ -233,5 +203,33 @@ public:
 			}
 		}
 	}
+private:
+	bool m_bShowing;
+	//保存XML文件中常用的控件
+	//背景
+	Sprite* m_pBagBG;
+	//标题
+	Sprite* m_pTitleSprite;
+	//关闭按钮
+	Button* m_pCloseBtn;
+	//物品描述文本
+	LabelBMFont* m_pDescLabel;
+	//使用按钮
+	Button* m_pUserBtn;
+	//装备按钮
+	Button* m_pEquipBtn;
+	//上一页按钮
+	Button* m_pPrePageBtn;
+	//下一页按钮
+	Button* m_pNextPageBtn;
+	//页面标签
+	LabelAtlas* m_pPageLabel;
+	//金币标签
+	LabelAtlas* m_pGoldLabel;
+	//物品组
+	RadioButtonGroup* m_pGoodGroup;
+	//委托
+	GoodLayerDelegate* m_pDelegate;
+	EventListenerTouchOneByOne* m_pListener;
 };
 #endif

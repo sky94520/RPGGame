@@ -28,7 +28,7 @@ GoodLayer::~GoodLayer()
 bool GoodLayer::init()
 {
 	auto manager = ui::UIWidgetManager::getInstance();
-	auto node = manager->createWidgetsWithXml("scene/bag_good_layer.xml");
+	auto node = manager->createWidgetsWithXml("scene/bag/good_layer.xml");
 	this->addChild(node);
 	//获取节点相应控件
 	m_pBagBG = node->getChildByName<Sprite*>("bag_bg");

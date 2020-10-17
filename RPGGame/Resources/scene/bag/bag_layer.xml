@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Layer anchor-point="0,0" position="123,85" name="bag_layer">
+	<!--状态栏bg-->
+	<Sprite anchor-point="0.5,0.5" name="attribute_bg" position="220,240">
+		<properties>
+			<property name="filename" value="attribute_bg.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--立绘-->
+	<Sprite anchor-point="0.5,0.5" name="face" position="140,60">
+		<properties>
+			<property name="filename" value="Actor01-face01.png"/>
+		</properties>
+	</Sprite>
+	<!--背包/技能切换按钮-->
+	<Button position="725,220" name="toggle_btn">
+		<properties>
+			<property name="normal-image" value="sbt2_1.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Button>	
+	<!--装备提示信息-->
+	<Sprite position="220,160" anchor-point="0.5,0.5">
+		<properties>
+			<property name="filename" value="bag_main_weapon.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<Sprite position="220,210" anchor-point="0.5,0.5">
+		<properties>
+			<property name="filename" value="bag_minor_weapon.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<Sprite position="220,260" anchor-point="0.5,0.5">
+		<properties>
+			<property name="filename" value="bag_cloth.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<Sprite position="220,310" anchor-point="0.5,0.5">
+		<properties>
+			<property name="filename" value="bag_ornament.png"/>
+			<property name="res-type" value="XML"/>
+		</properties>
+	</Sprite>
+	<!--人物列表-->
+	<Xml name="bag_player_list">
+		<properties>
+			<property name="filename" value="scene/bag/_player_list.xml"/>
+		</properties>
+	</Xml>
+	<!--角色名称-->
+	<LabelBMFont position="310,65"  anchor-point="0.5,0.5" name="player_name">
+		<properties>
+			<property name="text" value="sky"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="255,255,255"/>
+		</properties>
+	</LabelBMFont>
+	<!--经验值-->
+	<LabelBMFont position="280,87"  anchor-point="0.5,0.5" name="exp">
+		<properties>
+			<property name="text" value="0"/>
+			<property name="font-path" value="fonts/1.fnt"/>
+			<property name="font-color" value="255,255,255"/>
+		</properties>
+	</LabelBMFont>
+	<!--属性框-->
+	<Xml name="bag_player_property">
+		<properties>
+			<property name="filename" value="scene/bag/_player_property.xml"/>
+		</properties>
+	</Xml>
+</Layer>

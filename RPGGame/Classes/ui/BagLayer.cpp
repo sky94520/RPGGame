@@ -10,6 +10,7 @@ BagLayer::BagLayer()
 	:m_type(Type::None)
 	,m_nCurPage(1)
 	,m_pGoodLayer(nullptr)
+	,m_pStatusLayer(nullptr)
 {
 }
 
@@ -19,12 +20,18 @@ BagLayer::~BagLayer()
 
 bool BagLayer::init()
 {
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+
+	auto manager = ui::UIWidgetManager::getInstance();
+	m_pStatusLayer = manager->createWidgetsWithXml("scene/bag/bag_layer.xml");
+	this->addChild(m_pStatusLayer);
 	//物品层
 	m_pGoodLayer = GoodLayer::create();
+	//m_pGoodLayer->setPosition(200.f, 0.f);
 	this->addChild(m_pGoodLayer);
-	//隐藏GoodLayer
-	Size visibleSize = Director::getInstance()->getVisibleSize();
+	//隐藏
 	m_pGoodLayer->setPositionY(-visibleSize.height);
+	m_pStatusLayer->setPositionY(-visibleSize.height);
 
 	return true;
 }
@@ -38,12 +45,12 @@ void BagLayer::setVisibleofBagLayer(bool visible)
 	//出现
 	if (visible)
 	{
-		MoveTo* move = MoveTo::create(0.5f, Point(0, 0));
+		MoveTo* move = MoveBy::create(0.5f, Point(0, 0));
 		action = EaseExponentialOut::create(move);
 	}
 	else
 	{
-		MoveTo* move = MoveTo::create(0.5f, Point(0, -visibleSize.height));
+		MoveTo* move = MoveBy::create(0.5f, Point(0, -visibleSize.height));
 		action = EaseExponentialIn::create(move);
 	}
 	action->setTag(tag);
