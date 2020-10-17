@@ -14,7 +14,7 @@
 		</properties>
 	</Sprite>
 	<!--背包/技能切换按钮-->
-	<Button position="725,220" name="toggle_btn">
+	<Button position="760,220" name="toggle_btn">
 		<properties>
 			<property name="normal-image" value="sbt2_1.png"/>
 			<property name="res-type" value="XML"/>

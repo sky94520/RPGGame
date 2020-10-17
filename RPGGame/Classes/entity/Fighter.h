@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "../GameMacros.h"
 
-struct Properties;
+class Properties;
 class Good;
 
 /*16种战斗状态*/

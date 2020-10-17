@@ -12,10 +12,9 @@
 USING_NS_SDL;
 using namespace std;
 
-struct PlayerData;
 class Good;
+struct PlayerData;
 
-//--------------------------------------------DynamicData---------------------------------------
 class DynamicData : public Object
 {
 public:
@@ -26,7 +25,13 @@ public:
 	bool initializeSaveData(int idx);
 	//保存数据
 	bool save(const string& map,const Point& tilePos, int nDir);
-
+	
+	int getMaxHitPoint(const string& playerName)const;
+	int getMaxManaPoint(const string& playerName)const;
+	Properties getTotalProperties(const string& playerName);
+	int getLevel(const string& playerName) const;
+	int getExp(const string& playerName) const;
+	vector<Good*>& getSkills(const string& playerName);
 	//获取存档的所在地图名
 	const string& getMapFilename() const;
 	//获取角色的位置

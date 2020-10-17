@@ -5,8 +5,9 @@
 #include <string>
 #include <cstring>
 #include <unordered_map>
+#include <SDL_Engine/SDL_Engine.h>
 
-#include "SDL_Engine/SDL_Engine.h"
+#include "../GameMacros.h"
 
 USING_NS_SDL;
 using namespace std;
@@ -23,13 +24,14 @@ public:
 	CREATE_FUNC(UserRecord);
 
 	//从文件中读取数据
-	bool readFromXML(const string& filename);
+	bool readFromXML(const string& filename, bool bFirstGame);
 	//保存数据到文件中
 	bool writeToXML(const string& filename);
+	Properties getTotalProperties(const string& playerName);
 	//装备
 	void equip(const string&playerName, int uniqueId, Good* good);
 private:
-	void parsePlayer(rapidxml::xml_node<>* root);
+	void parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame);
 	void parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData);
 	void parseBag(rapidxml::xml_node<>* root);
 	void parseEquipment(rapidxml::xml_node<>* root, Character* player);

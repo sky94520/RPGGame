@@ -156,6 +156,7 @@
     <ClCompile Include="Classes\script\BaseScript.cpp" />
     <ClCompile Include="Classes\script\LuaStack.cpp" />
     <ClCompile Include="Classes\script\ObjectScript.cpp" />
+    <ClCompile Include="Classes\ui\AttributeLayer.cpp" />
     <ClCompile Include="Classes\ui\BagLayer.cpp" />
     <ClCompile Include="Classes\ui\GoodLayer.cpp" />
     <ClCompile Include="Classes\ui\OperationLayer.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Classes\script\BaseScript.h" />
     <ClInclude Include="Classes\script\LuaStack.h" />
     <ClInclude Include="Classes\script\ObjectScript.h" />
+    <ClInclude Include="Classes\ui\AttributeLayer.h" />
     <ClInclude Include="Classes\ui\BagLayer.h" />
     <ClInclude Include="Classes\ui\GoodLayer.h" />
     <ClInclude Include="Classes\ui\OperationLayer.h" />

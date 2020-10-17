@@ -1,5 +1,6 @@
 #include "DynamicData.h"
 #include "UserRecord.h"
+#include "../GameMacros.h"
 
 DynamicData* DynamicData::s_pInstance = nullptr;
 
@@ -55,7 +56,7 @@ bool DynamicData::initializeSaveData(int idx)
 
 	m_nSaveDataIndex = idx;
 	//读取文件 获取数据
-	m_pUserRecord->readFromXML(filepath);
+	m_pUserRecord->readFromXML(filepath, m_bFirstGame);
 
 	return true;
 }
@@ -63,6 +64,42 @@ bool DynamicData::initializeSaveData(int idx)
 bool DynamicData::save(const string&map,const Point& tilePos, int nDir)
 {
 	return true;
+}
+
+int DynamicData::getMaxHitPoint(const string& playerName)const
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	return data->maxHp;
+}
+
+int DynamicData::getMaxManaPoint(const string& playerName)const
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	return data->maxMp;
+}
+
+Properties DynamicData::getTotalProperties(const string& playerName)
+{
+	return m_pUserRecord->getTotalProperties(playerName);
+}
+
+int DynamicData::getLevel(const string& playerName) const
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	return data->level;
+}
+
+int DynamicData::getExp(const string& playerName) const
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	return data->exp;
+}
+
+vector<Good*>& DynamicData::getSkills(const string& playerName)
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	vector<Good*>& skills = data->skills;
+	return skills;
 }
 
 const string& DynamicData::getMapFilename() const

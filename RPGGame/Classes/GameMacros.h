@@ -76,8 +76,9 @@ enum class PropertyType
 };
 
 /*属性结构体*/
-typedef struct Properties
+class Properties
 {
+public:
 	int hp;
 	int mp;
 	int attack;
@@ -163,7 +164,7 @@ public:
 
 		return st;
 	}
-}Properties;
+};
 
 struct LevelUp
 {

@@ -44,8 +44,8 @@ int setGameState(lua_State* pL)
 
 int setViewpointCenter(lua_State* pL)
 {
-	int x = luaL_checkinteger(pL, 1);
-	int y = luaL_checkinteger(pL, 2);
+	int x = (int)luaL_checkinteger(pL, 1);
+	int y = (int)luaL_checkinteger(pL, 2);
 	unsigned duration = (unsigned)luaL_checkinteger(pL, 3);
 	
 	MapLayer* pMapLayer = GameScene::getInstance()->getMapLayer();

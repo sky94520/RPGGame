@@ -1,6 +1,5 @@
 #include "BagLayer.h"
-#include "GoodLayer.h"
-#include "../GameScene.h"
+#include "AttributeLayer.h"
 
 #include "../entity/Good.h"
 #include "../entity/Character.h"
@@ -14,8 +13,7 @@ BagLayer::BagLayer()
 	:m_type(Type::None)
 	,m_nCurPage(1)
 	,m_pGoodLayer(nullptr)
-	,m_pStatusLayer(nullptr)
-	,m_pPlayerGroup(nullptr)
+	,m_pAttributeLayer(nullptr)
 	,m_bVisible(false)
 {
 }
@@ -27,17 +25,15 @@ BagLayer::~BagLayer()
 bool BagLayer::init()
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-
-	auto manager = ui::UIWidgetManager::getInstance();
-	m_pStatusLayer = manager->createWidgetsWithXml("scene/bag/bag_layer.xml");
-	this->addChild(m_pStatusLayer);
-	this->initializeUI(m_pStatusLayer);
+	
+	m_pAttributeLayer = AttributeLayer::create("scene/bag/bag_layer.xml", SDL_CALLBACK_1(BagLayer::toggle, this));
+	this->addChild(m_pAttributeLayer);
 	//物品层
 	m_pGoodLayer = GoodLayer::create();
 	this->addChild(m_pGoodLayer);
 	//隐藏
 	m_pGoodLayer->setPositionY(-visibleSize.height);
-	m_pStatusLayer->setPositionY(m_pStatusLayer->getPositionY() - visibleSize.height);
+	m_pAttributeLayer->setPositionY(-visibleSize.height);
 
 	return true;
 }
@@ -59,9 +55,7 @@ void BagLayer::setVisibleofBagLayer(bool visible)
 		//更新玩家组
 		if (m_type != Type::SeedBag) 
 		{
-			vector<Character*> players = GameScene::getInstance()->getCharacterList();
-			auto callback = SDL_CALLBACK_2(BagLayer::updatePlayerGroup, this);
-			GoodLayer::updateRadioButtons<Character*>(m_pPlayerGroup, players, callback);
+			m_pAttributeLayer->updatePlayerGroup();
 		}
 	}
 	else
@@ -77,8 +71,8 @@ void BagLayer::setVisibleofBagLayer(bool visible)
 	
 	auto newAction = action->clone();
 	newAction->setTag(tag);
-	m_pStatusLayer->stopActionByTag(tag);
-	m_pStatusLayer->runAction(newAction);
+	m_pAttributeLayer->stopActionByTag(tag);
+	m_pAttributeLayer->runAction(newAction);
 }
 
 void BagLayer::setType(Type type)
@@ -91,19 +85,50 @@ void BagLayer::setType(Type type)
 	this->pageBtnCallback(m_pGoodLayer, 0);
 }
 
+void BagLayer::toggle(Object* sender)
+{
+	if (m_type == Type::Shop || m_type == Type::SeedBag)
+		return;
+
+	if (m_type == Type::Bag)
+	{
+		this->setType(Type::Skill);
+	}
+	else if (m_type == Type::Skill)
+	{
+		this->setType(Type::Bag);
+	}
+}
+
 void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 {
+	bool bEquipVisible = true;
 	switch (m_type)
 	{
 		case Type::Bag:
 		{
 			const vector<Good*>& goodList = DynamicData::getInstance()->getBagGoodList();
 			this->showGoodLayer("bag_title_txt1.png", "use_text.png", goodList, m_nCurPage+delta);
+
+			m_pAttributeLayer->changeToggleBtnFrame("sbt2_1.png");
+			m_pGoodLayer->updateShowingTitle("bag_title_txt1.png");
+		}break;
+		case Type::Skill:
+		{
+			Character* player = m_pAttributeLayer->getSelectedPlayer();
+			string name = player->getChartletName();
+			const vector<Good*>& goodList = DynamicData::getInstance()->getSkills(name);
+			this->showGoodLayer("bag_title_txt2.png", "use_text.png", goodList, m_nCurPage + delta);
+
+			m_pAttributeLayer->changeToggleBtnFrame("sbt2_2.png");
+			m_pGoodLayer->updateShowingTitle("bag_title_txt2.png");
+			bEquipVisible = false;
 		}
 		break;
 		default:
 			LOG("BagLayer::setType the type has not handled\n");
 	}
+	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(bEquipVisible, bEquipVisible));
 }
 
 void BagLayer::useBtnCallback(GoodLayer* goodLayer)
@@ -128,62 +153,6 @@ bool BagLayer::touchOutsideCallback(GoodLayer* goodLayer)
 {
 	//TODO:点击了外面，暂时不处理
 	return false;
-}
-
-void BagLayer::initializeUI(Node* pXmlNode)
-{
-	//人物单选
-	m_pPlayerGroup = RadioButtonGroup::create();
-	m_pPlayerGroup->addEventListener(SDL_CALLBACK_3(BagLayer::selectPlayer, this));
-
-	this->addChild(m_pPlayerGroup);
-	//获取列表
-	auto& children = pXmlNode->getChildByName("bag_player_list")->getChildren();
-	//添加人物单选按钮
-	for (unsigned i = 0; i < children.size(); i++)
-	{
-		auto radioBtn = static_cast<RadioButton*>(children.at(i));
-		m_pPlayerGroup->addRadioButton(radioBtn);
-	}
-}
-
-void BagLayer::selectPlayer(RadioButton* radioBtn, int index, RadioButtonGroup::EventType)
-{
-	//获取选中的角色
-	Character* player = this->getSelectedPlayer();
-	if (player == nullptr) {
-		LOG("BagLayer selectPlayer not bind player");
-		return;
-	}
-	auto chartletName = player->getChartletName();
-	//设置立绘
-	auto spriteFrame = StaticData::getInstance()->getCharacterData()->getFaceSpriteFrame(chartletName);
-	m_pStatusLayer->getChildByName<Sprite*>("face")->setSpriteFrame(spriteFrame);
-	//更新名称
-	string name = player->getChartletName();
-	m_pStatusLayer->getChildByName<LabelBMFont*>("player_name")->setString(name);
-	//更新属性值
-	//this->updateLabelOfProp(player);
-	//更新经验值
-	//this->updateShownOfExp();
-	//如果是处于技能下，才更新
-	if (m_type == Type::Skill)
-	{
-		//this->updateShownOfGoods();
-	}
-}
-
-Character* BagLayer::getSelectedPlayer() const
-{
-	if (m_pPlayerGroup == nullptr)
-		return nullptr;
-	auto radioBtn = m_pPlayerGroup->getSelectedButton();
-	Character* player = nullptr;
-
-	if (radioBtn != nullptr)
-		player = static_cast<Character*>(radioBtn->getUserObject());
-
-	return player;
 }
 
 void BagLayer::showGoodLayer(const string& titleFrameName, const string& btnFrameName
@@ -226,15 +195,4 @@ void BagLayer::showGoodLayer(const string& titleFrameName, const string& btnFram
 	//更新页码并填充物品
 	m_pGoodLayer->updateShowingPage(m_nCurPage, totalPage);
 	m_pGoodLayer->updateShowingGoods(content);
-}
-
-void BagLayer::updatePlayerGroup(RadioButton* radioBtn, Character* player)
-{
-	bool ret = (player != nullptr);
-	radioBtn->setUserObject(player);
-	radioBtn->setVisible(ret);
-	radioBtn->setTouchEnabled(ret);
-	if (!ret)
-		return;
-	//更新
 }

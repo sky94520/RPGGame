@@ -1,7 +1,8 @@
 #include "UserRecord.h"
-#include "../GameMacros.h"
 #include "../entity/Good.h"
 #include "../entity/Character.h"
+#include "../data/StaticData.h"
+#include "../data/CharacterData.h"
 
 UserRecord::UserRecord()
 	:goldNumber(0)
@@ -34,7 +35,7 @@ UserRecord::~UserRecord()
 	}
 }
 
-bool UserRecord::readFromXML(const string& filename)
+bool UserRecord::readFromXML(const string& filename, bool bFirstGame)
 {
 	rapidxml::xml_document<> doc;
 	std::unique_ptr<char> text_ptr = std::move(FileUtils::getInstance()->getUniqueDataFromFile(filename));
@@ -64,7 +65,7 @@ bool UserRecord::readFromXML(const string& filename)
 			else if (name == "direction")
 				;
 			else if (name == "player")
-				this->parsePlayer(node);
+				this->parsePlayer(node, bFirstGame);
 			else if (name == "bag")
 				this->parseBag(node);
 		}
@@ -82,6 +83,26 @@ bool UserRecord::readFromXML(const string& filename)
 bool UserRecord::writeToXML(const string& filename)
 {
 	return true;
+}
+
+Properties UserRecord::getTotalProperties(const string& playerName)
+{
+	PlayerData* playerData = players.at(playerName);
+
+	Properties result = playerData->properties;
+	auto &equipmentMap = playerData->equipments;
+
+	for (auto iterator : equipmentMap)
+	{
+		auto equipment = iterator.second;
+
+		if (equipment == nullptr)
+			continue;
+
+		auto temp = equipment->getProperties();
+		result = result + temp;
+	}
+	return result;
 }
 
 void UserRecord::equip(const string&playerName, int uniqueId, Good* good)
@@ -106,7 +127,7 @@ void UserRecord::equip(const string&playerName, int uniqueId, Good* good)
 	equipments.insert(make_pair(equipmentType, good));
 }
 
-void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
+void UserRecord::parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame)
 {
 	string playerName;
 	PlayerData* data = new PlayerData();
@@ -129,17 +150,26 @@ void UserRecord::parsePlayer(rapidxml::xml_node<>* root)
 		this->parseSkill(skillRoot, data);
 	}
 	players.insert(make_pair(playerName, data));
+	//第一次进入游戏，使用预设的级别一
+	if (bFirstGame)
+	{
+		auto characterData = StaticData::getInstance()->getCharacterData();
+		auto &lvStruct = characterData->getDataByLevel(playerName, 1);
+		auto &properties = lvStruct.properties;
+		//设置属性
+		data->properties = properties;
+		data->maxHp = lvStruct.properties.hp;
+		data->maxMp = lvStruct.properties.mp;
+	}
 }
 
 void UserRecord::parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData)
 {
 	//解析并创建技能
-	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling()) {
-		string skillName = node->first_attribute("name")->value();
-		Good* skill = Good::create(skillName);
-		skill->retain();
-		playerData->skills.push_back(skill);
-	}
+	string skillName = root->first_attribute("name")->value();
+	Good* skill = Good::create(skillName);
+	skill->retain();
+	playerData->skills.push_back(skill);
 }
 
 void UserRecord::parseBag(rapidxml::xml_node<>* root)

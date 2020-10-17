@@ -126,6 +126,9 @@
     <ClCompile Include="Classes\dist\jsoncpp.cpp">
       <Filter>Classes\dist</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\ui\AttributeLayer.cpp">
+      <Filter>Classes\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\HelloWorldScene.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Classes\dist\json\json-forwards.h">
       <Filter>Classes\dist</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\ui\AttributeLayer.h">
+      <Filter>Classes\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

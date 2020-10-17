@@ -8,7 +8,7 @@
 using namespace std;
 USING_NS_SDL;
 
-struct Properties;
+class Properties;
 enum class PropertyType;
 enum class FightState;
 /*物品类型*/
