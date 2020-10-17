@@ -148,3 +148,14 @@ void PlayerManager::changeLayerOfPlayer(Node* layer, const Point& location)
 		SDL_SAFE_RELEASE(player);
 	}
 }
+
+vector<Character*> PlayerManager::getCharacterList()
+{
+	vector<Character*> results;
+	for (auto controller : m_controllers) {
+		ControllerListener* listener = controller->getControllerListener();
+		Character* player = static_cast<Character*>(listener);
+		results.push_back(player);
+	}
+	return results;
+}

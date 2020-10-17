@@ -17,6 +17,7 @@ class PlayerManager;
 class ScriptManager;
 class OperationLayer;
 class BagLayer;
+class Character;
 enum class GameState;
 
 class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLayerDelegate
@@ -47,6 +48,7 @@ public:
 	Node* getCollisionLayer() const;
 	GameState getGameState() const { return m_gameState; }
 	void setGameState(GameState state);
+	vector<Character*> getCharacterList();
 public: //OperationDelegate
 	virtual void openBag();
 	virtual void saveProgress();
@@ -56,6 +58,7 @@ public: //GoodLayerDelegate
 	virtual void equipBtnCallback(GoodLayer* goodLayer);
 	virtual void closeBtnCallback(GoodLayer* goodLayer);
 	virtual void selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good);
+	virtual bool touchOutsideCallback(GoodLayer* goodLayer);
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);

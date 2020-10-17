@@ -44,10 +44,12 @@ public:
 	virtual void closeBtnCallback(GoodLayer* goodLayer) = 0;
 	/**
 	 * 点击了GoodLayer外部回调函数 默认回调closeBtnCallback()
+	 * @return 是否捕获事件
 	 */
-	virtual void touchOutsideCallback(GoodLayer* goodLayer)
+	virtual bool touchOutsideCallback(GoodLayer* goodLayer)
 	{
 		closeBtnCallback(goodLayer);
+		return true;
 	}
 	/**
 	 * 选中物品回调函数

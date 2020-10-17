@@ -32,6 +32,8 @@ public:
 	void movePlayer(const SDL_Point& toTile);
 	//改变玩家的所在层
 	void changeLayerOfPlayer(Node* layer, const Point& location);
+	//获取所有的玩家角色
+	vector<Character*> getCharacterList();
 private:
 	vector<Controller*> m_controllers;
 };

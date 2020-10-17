@@ -192,6 +192,9 @@ void GameScene::moveToTile(EventCustom* eventCustom)
 
 bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 {
+	//只有正常状态下才可以寻路
+	if (m_gameState != GameState::Normal || m_pBagLayer->isShowing())
+		return true;
 	//转换成地图坐标
 	auto location = touch->getLocation();
 	auto tiledMap = m_pMapLayer->getTiledMap();
@@ -205,9 +208,6 @@ bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 
 	m_pEffectLayer->showClickAnimation(pos, collisionLayer);
 
-	//只有正常状态下才可以寻路
-	if (m_gameState != GameState::Normal)
-		return true;
 	//是否点击了相同优先级的NPC
 	LuaObject* luaObject = m_pScriptManager->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
 
@@ -252,6 +252,11 @@ void GameScene::setGameState(GameState state)
 		//m_pPlayerLayer->getPlayer()->popStepAndAnimate();
 	}
 }
+
+vector<Character*> GameScene::getCharacterList()
+{ 
+	return m_pPlayerManager->getCharacterList(); 
+}
 //---OperationDelegate---
 void GameScene::openBag()
 {
@@ -288,6 +293,11 @@ void GameScene::closeBtnCallback(GoodLayer* goodLayer)
 void GameScene::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good)
 {
 	m_pBagLayer->selectGoodCallback(goodLayer, good);
+}
+
+bool GameScene::touchOutsideCallback(GoodLayer* goodLayer)
+{
+	return m_pBagLayer->touchOutsideCallback(goodLayer);
 }
 
 void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)

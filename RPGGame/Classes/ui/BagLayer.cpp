@@ -16,6 +16,7 @@ BagLayer::BagLayer()
 	,m_pGoodLayer(nullptr)
 	,m_pStatusLayer(nullptr)
 	,m_pPlayerGroup(nullptr)
+	,m_bVisible(false)
 {
 }
 
@@ -30,6 +31,7 @@ bool BagLayer::init()
 	auto manager = ui::UIWidgetManager::getInstance();
 	m_pStatusLayer = manager->createWidgetsWithXml("scene/bag/bag_layer.xml");
 	this->addChild(m_pStatusLayer);
+	this->initializeUI(m_pStatusLayer);
 	//物品层
 	m_pGoodLayer = GoodLayer::create();
 	this->addChild(m_pGoodLayer);
@@ -42,6 +44,9 @@ bool BagLayer::init()
 
 void BagLayer::setVisibleofBagLayer(bool visible)
 {
+	if (m_bVisible == visible)
+		return;
+	m_bVisible = visible;
 	//显示动作
 	const int tag = 1;
 	Size visibleSize = Director::getInstance()->getVisibleSize();
@@ -54,6 +59,9 @@ void BagLayer::setVisibleofBagLayer(bool visible)
 		//更新玩家组
 		if (m_type != Type::SeedBag) 
 		{
+			vector<Character*> players = GameScene::getInstance()->getCharacterList();
+			auto callback = SDL_CALLBACK_2(BagLayer::updatePlayerGroup, this);
+			GoodLayer::updateRadioButtons<Character*>(m_pPlayerGroup, players, callback);
 		}
 	}
 	else
@@ -116,6 +124,12 @@ void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good)
 {
 }
 
+bool BagLayer::touchOutsideCallback(GoodLayer* goodLayer)
+{
+	//TODO:点击了外面，暂时不处理
+	return false;
+}
+
 void BagLayer::initializeUI(Node* pXmlNode)
 {
 	//人物单选
@@ -133,10 +147,14 @@ void BagLayer::initializeUI(Node* pXmlNode)
 	}
 }
 
-void BagLayer::selectPlayer(RadioButton*, int, RadioButtonGroup::EventType)
+void BagLayer::selectPlayer(RadioButton* radioBtn, int index, RadioButtonGroup::EventType)
 {
 	//获取选中的角色
 	Character* player = this->getSelectedPlayer();
+	if (player == nullptr) {
+		LOG("BagLayer selectPlayer not bind player");
+		return;
+	}
 	auto chartletName = player->getChartletName();
 	//设置立绘
 	auto spriteFrame = StaticData::getInstance()->getCharacterData()->getFaceSpriteFrame(chartletName);
@@ -208,4 +226,15 @@ void BagLayer::showGoodLayer(const string& titleFrameName, const string& btnFram
 	//更新页码并填充物品
 	m_pGoodLayer->updateShowingPage(m_nCurPage, totalPage);
 	m_pGoodLayer->updateShowingGoods(content);
+}
+
+void BagLayer::updatePlayerGroup(RadioButton* radioBtn, Character* player)
+{
+	bool ret = (player != nullptr);
+	radioBtn->setUserObject(player);
+	radioBtn->setVisible(ret);
+	radioBtn->setTouchEnabled(ret);
+	if (!ret)
+		return;
+	//更新
 }
