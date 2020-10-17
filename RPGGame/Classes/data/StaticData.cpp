@@ -34,8 +34,19 @@ StaticData::~StaticData()
 bool StaticData::init()
 {
 	//读取文件并保存键值对
-	m_valueMap = FileUtils::getInstance()->getValueMapFromFile(STATIC_DATA_PATH);
+	Json::CharReaderBuilder readerBuilder;
+	unique_ptr<Json::CharReader>const jsonReader(readerBuilder.newCharReader());
 
+	unique_ptr<char> uniqueStr = std::move(FileUtils::getInstance()->getUniqueDataFromFile(STATIC_DATA_PATH));
+	const char* text = uniqueStr.get();
+
+	Json::String errorMsg;
+	//解析失败
+	if (!jsonReader->parse(text, text + strlen(text), &m_jsonData, &errorMsg)) {
+		LOG(errorMsg.c_str());
+		return false;
+	}
+	//角色的战斗图、立绘等
 	m_pCharacterData = CharacterData::create();
 	SDL_SAFE_RETAIN(m_pCharacterData);
 	m_pCharacterData->loadCharacterFile("data/character.json");
@@ -43,13 +54,13 @@ bool StaticData::init()
 	return true;
 }
 
-string StaticData::toString(PropertyType type) const
+string StaticData::toString(PropertyType type)
 {
 	//根据属性的名称获取属性的字符串
-	auto array = STATIC_DATA_ARRAY("prop_array");
+	const Json::Value& data = this->getValueForKey("prop_array");
 	int index = static_cast<int>(type);
 
-	return array.at(index).asString();
+	return data[index].asString();
 }
 
 SpriteFrame* StaticData::getIconSpriteFrame(int id) const
@@ -71,25 +82,20 @@ SpriteFrame* StaticData::getIconSpriteFrame(int id) const
 	return SpriteFrame::createWithTexture(texture, rect);
 }
 
-Value* StaticData::getValueForKey(const string& key)
+const Json::Value& StaticData::getValueForKey(const string& key)
 {
-	auto iter = m_valueMap.find(key);
-
-	if(iter != m_valueMap.end())
-		return &iter->second;
-
-	return nullptr;
+	Json::Value& data = m_jsonData[key];
+	return data;
 }
 
 Point StaticData::getPointForKey(const string& key)
 {
 	Point point;
+	const Json::Value& value = this->getValueForKey(key);
 
-	auto value = this->getValueForKey(key);
-
-	if (value != nullptr)
+	if (!value.isNull())
 	{
-		point = PointFromString(value->asString());
+		point = PointFromString(value.asString());
 	}
 	return point;
 }
@@ -97,12 +103,11 @@ Point StaticData::getPointForKey(const string& key)
 Size StaticData::getSizeForKey(const string& key)
 {
 	Size size;
+	const Json::Value& value = this->getValueForKey(key);
 
-	auto value = this->getValueForKey(key);
-
-	if (value != nullptr)
+	if (!value.isNull())
 	{
-		size = SizeFromString(value->asString());
+		size = SizeFromString(value.asString());
 	}
 	return size;
 }

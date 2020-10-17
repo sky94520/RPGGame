@@ -15,7 +15,7 @@ bool CharacterData::loadCharacterFile(const string& filename)
 	Json::CharReaderBuilder readerBuilder;
 	unique_ptr<Json::CharReader>const jsonReader(readerBuilder.newCharReader());
 
-	unique_ptr<char> uniqueStr = std::move(FileUtils::getInstance()->getUniqueDataFromFile("data/character.json"));
+	unique_ptr<char> uniqueStr = std::move(FileUtils::getInstance()->getUniqueDataFromFile(filename));
 	const char* text = uniqueStr.get();
 
 	Json::String errorMsg;
@@ -135,12 +135,12 @@ SpriteFrame* CharacterData::getFaceSpriteFrame(const string& chartletName)
 
 Animation* CharacterData::getSVAnimation(const string&chartletName, FightState fightState)
 {
-	auto& vec = StaticData::getInstance()->getValueForKey("sv")->asValueVector();
+	auto& vec = StaticData::getInstance()->getValueForKey("sv");
 	int index = static_cast<int>(fightState);
 	//获取对应状态的字符串
-	auto& valueMap = vec.at(index).asValueMap();
+	auto& valueMap = vec[index];
 
-	auto sState = valueMap.at("name").asString();
+	auto sState = valueMap["name"].asString();
 	//获取动画
 	auto animationName = StringUtils::format("%s_%s",chartletName.c_str(),sState.c_str());
 	auto animation = AnimationCache::getInstance()->getAnimation(animationName);
@@ -176,7 +176,7 @@ bool CharacterData::addSVAnimation(const string& chartletName, const string& fil
 	int height = h / 6;
 
 	//获取预定的贴图
-	auto& vec = StaticData::getInstance()->getValueForKey("sv")->asValueVector();
+	auto& vec = StaticData::getInstance()->getValueForKey("sv");
 	vector<SpriteFrame*> frames;
 	string animationName;
 
@@ -185,10 +185,10 @@ bool CharacterData::addSVAnimation(const string& chartletName, const string& fil
 		int x = i % 3;
 		int y = i / 3;
 		//获取对应位置的动画名称
-		auto& valueMap = vec.at(i).asValueMap();
-		auto name = valueMap.at("name").asString();
-		auto loop = valueMap.at("loop").asBool();
-		auto duration = valueMap.at("duration").asFloat();
+		auto& valueMap = vec[i];
+		auto name = valueMap["name"].asString();
+		auto loop = valueMap["loop"].asBool();
+		auto duration = valueMap["duration"].asFloat();
 
 		animationName = StringUtils::format("%s_%s",chartletName.c_str(),name.c_str());
 		//一个动画是三帧

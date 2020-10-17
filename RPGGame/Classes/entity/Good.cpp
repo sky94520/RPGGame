@@ -232,7 +232,7 @@ bool Good::isEquiped() const
 int Good::getProperty(PropertyType type) const
 {
 	//获取键
-	auto key = STATIC_DATA_TOSTRING(type);
+	auto key = StaticData::getInstance()->toString(type);
 	auto value = this->getValueForKey(key, Value::Type::INTEGER);
 
 	return value.asInt();

@@ -123,10 +123,12 @@ bool GameScene::initializeMap()
 
 void GameScene::preloadResources()
 {
-	//StaticData::getInstance()->loadCharacterFile("data/character.plist");
 	//加载SpriteFrame
 	auto frameCache = Director::getInstance()->getSpriteFrameCache();
-	auto& framePathArray = STATIC_DATA_ARRAY("sprite_frame_array");
+	//StaticData::getInstance()->loadCharacterFile("data/character.plist");
+	auto staticData = StaticData::getInstance();
+	auto& framePathArray = staticData->getValueForKey("sprite_frame_array");
+
 	for (auto& value : framePathArray)
 	{
 		auto filepath = value.asString();
@@ -134,7 +136,7 @@ void GameScene::preloadResources()
 	}
 	//加载Animation动画
 	auto animationCache = AnimationCache::getInstance();
-	auto& aniPathArray = STATIC_DATA_ARRAY("animation_array");
+	auto& aniPathArray = staticData->getValueForKey("animation_array");
 
 	for (auto& value : aniPathArray)
 	{

@@ -309,9 +309,9 @@ int Enemy::getProperty(PropertyType type) const
 
 void Enemy::setProperty(PropertyType type, int value)
 {
-	auto& array = STATIC_DATA_ARRAY("enemy_prop_func");
+	auto& array = StaticData::getInstance()->getValueForKey("enemy_prop_func");
 	int index = static_cast<int>(type);
-	auto funcName = array.at(index).asString();
+	auto funcName = array[index].asString();
 
 	LuaStack* luaStack = GameScene::getInstance()->getScriptManager()->getLuaStack();
 	//获取函数

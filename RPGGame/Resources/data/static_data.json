@@ -1,0 +1,189 @@
+{
+  //地图 碰撞层和脚本层名称
+  "collision_layer_name": "collision layer",
+  "script_layer_name": "script layer",
+  "tip_size": "{260,25}",
+  "equip_frame_name": "equip_text.png",
+  "unequip_frame_name": "unequip_text.png",
+  "use_btn_array": [
+    "use_text.png",
+    "use_text.png",
+    "buy_text.png",
+    "sell_text.png",
+    "use_text.png"
+  ],
+  "buy_text": [
+    "购买成功",
+    "购买失败"
+  ],
+  "sell_text": [
+    "该物品不可出售",
+    "出售成功"
+  ],
+  "level_exp_format": "%d级%d/%d经验",
+  "not_pass_dialog": "该点不可达",
+  "use_default_text": "使用物品失败",
+  "prop_array": [
+    "hp",
+    "mp",
+    "attack",
+    "defense",
+    "magicAttack",
+    "magicDefense",
+    "agility",
+    "luck"
+  ],
+  "enemy_prop_func": [
+    "setHitPoint",
+    "setManaPoint",
+    "setAttack",
+    "setDefense",
+    "setMagicAttack",
+    "setMagicDefense",
+    "setAgility",
+    "setLuck"
+  ],
+  "sv": [
+    {
+      "name": "walk",
+      "loop": true,
+      "duration": 0.11
+    },
+    {
+      "name": "thrust",
+      "loop": false,
+      "duration": 0.2
+    },
+    {
+      "name": "escape",
+      "loop": true,
+      "duration": 0.11
+    },
+    {
+      "name": "wait",
+      "loop": true,
+      "duration": 0.11
+    },
+    {
+      "name": "swing",
+      "loop": false,
+      "duration": 0.2
+    },
+    {
+      "name": "victory",
+      "loop": true,
+      "duration": 0.2
+    },
+    {
+      "name": "chant",
+      "loop": true,
+      "duration": 0.11
+    },
+    {
+      "name": "missile",
+      "loop": false,
+      "duration": 0.2
+    },
+    {
+      "name": "dying",
+      "loop": true,
+      "duration": 0.11
+    },
+    {
+      "name": "guard",
+      "loop": true,
+      "duration": 0.11
+    },
+    {
+      "name": "skill",
+      "loop": false,
+      "duration": 0.11
+    },
+    {
+      "name": "abnormal",
+      "loop": true,
+      "duration": 0.11
+    },
+    {
+      "name": "damage",
+      "loop": false,
+      "duration": 0.11
+    },
+    {
+      "name": "spell",
+      "loop": false,
+      "duration": 0.11
+    },
+    {
+      "name": "evade",
+      "loop": false,
+      "duration": 0.11
+    },
+    {
+      "name": "item",
+      "loop": false,
+      "duration": 0.11
+    },
+    {
+      "name": "dead",
+      "loop": true,
+      "duration": 0.11
+    }
+  ],
+  "damage_filename": [
+    "damage-white.png",
+    "damage-blue.png",
+    "damage-green.png",
+    "damage-yellow.png"
+  ],
+  "battle_result_sp": [
+    "battle_failure.png",
+    "battle_win.png"
+  ],
+  "save_result_array": [
+    "存档失败",
+    "存档成功"
+  ],
+  "battle_result_default_text": "无",
+  "sprite_frame_array": [
+    "sprite/effect1.xml",
+    "sprite/effect2.xml",
+    "sprite/ui1.xml",
+    "sprite/enemy.xml",
+    "sprite/Weapon.xml",
+    "sprite/turn.xml",
+    "sprite/balloon.xml"
+  ],
+  "animation_array": [
+    "data/effect1.plist",
+    "data/effect2.plist",
+    "data/enemy.plist"
+  ],
+  "battle_our_start_pos": "{550, 120}",
+  "battle_enemy_start_pos": "{100, 120}",
+  "battle_our_pos_arr": [
+    "700, 350",
+    "720, 360"
+  ],
+  "battle_enemy_pos_arr": [
+    "80,300",
+    "160,370",
+    "240,440",
+    "250,300",
+    "340,370",
+    "430,440"
+  ],
+  "theme_bgm": "sound/bgm/Theme2.ogg",
+  "battle_bgm": "sound/bgm/Battle1.ogg",
+  "battle_me": "sound/me/Curse1.ogg",
+  "battle_victory": "sound/me/Victory1.ogg",
+  "change_map_se": "sound/me/Move1.ogg",
+  "load_data_se": "sound/me/Load.ogg",
+  "save_data_se": "sound/se/Save.ogg",
+  "open_shop_se": "sound/se/Shop1.ogg",
+  "use_good_se": "sound/se/Item3.ogg",
+  "escape_se": "sound/se/Equip1.ogg",
+  "enemy_damage_se": "sound/se/Damage4.ogg",
+  "actor_damage_se": "sound/se/Damage5.ogg",
+  "arrow_hit_se": "sound/se/Thunder1.ogg"
+}
