@@ -256,7 +256,7 @@ void GameScene::setGameState(GameState state)
 void GameScene::openBag()
 {
 	m_pOperationLayer->setTouchEnabled(false);
-	m_pBagLayer->setType(BagLayer::Type::Warehouse);
+	m_pBagLayer->setType(BagLayer::Type::Bag);
 	m_pBagLayer->setVisibleofBagLayer(true);
 }
 

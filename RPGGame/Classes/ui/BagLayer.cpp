@@ -1,9 +1,13 @@
 #include "BagLayer.h"
 #include "GoodLayer.h"
+#include "../GameScene.h"
 
 #include "../entity/Good.h"
-#include "../data/DynamicData.h"
+#include "../entity/Character.h"
 
+#include "../data/StaticData.h"
+#include "../data/DynamicData.h"
+#include "../data/CharacterData.h"
 
 
 BagLayer::BagLayer()
@@ -11,6 +15,7 @@ BagLayer::BagLayer()
 	,m_nCurPage(1)
 	,m_pGoodLayer(nullptr)
 	,m_pStatusLayer(nullptr)
+	,m_pPlayerGroup(nullptr)
 {
 }
 
@@ -27,11 +32,10 @@ bool BagLayer::init()
 	this->addChild(m_pStatusLayer);
 	//物品层
 	m_pGoodLayer = GoodLayer::create();
-	//m_pGoodLayer->setPosition(200.f, 0.f);
 	this->addChild(m_pGoodLayer);
 	//隐藏
 	m_pGoodLayer->setPositionY(-visibleSize.height);
-	m_pStatusLayer->setPositionY(-visibleSize.height);
+	m_pStatusLayer->setPositionY(m_pStatusLayer->getPositionY() - visibleSize.height);
 
 	return true;
 }
@@ -45,8 +49,12 @@ void BagLayer::setVisibleofBagLayer(bool visible)
 	//出现
 	if (visible)
 	{
-		MoveTo* move = MoveBy::create(0.5f, Point(0, 0));
+		MoveTo* move = MoveBy::create(0.5f, Point(0.f, visibleSize.height));
 		action = EaseExponentialOut::create(move);
+		//更新玩家组
+		if (m_type != Type::SeedBag) 
+		{
+		}
 	}
 	else
 	{
@@ -58,6 +66,11 @@ void BagLayer::setVisibleofBagLayer(bool visible)
 	//停止原先动画并开始新动画
 	m_pGoodLayer->stopActionByTag(tag);
 	m_pGoodLayer->runAction(action);
+	
+	auto newAction = action->clone();
+	newAction->setTag(tag);
+	m_pStatusLayer->stopActionByTag(tag);
+	m_pStatusLayer->runAction(newAction);
 }
 
 void BagLayer::setType(Type type)
@@ -74,7 +87,7 @@ void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 {
 	switch (m_type)
 	{
-		case Type::Warehouse:
+		case Type::Bag:
 		{
 			const vector<Good*>& goodList = DynamicData::getInstance()->getBagGoodList();
 			this->showGoodLayer("bag_title_txt1.png", "use_text.png", goodList, m_nCurPage+delta);
@@ -101,6 +114,58 @@ void BagLayer::closeBtnCallback(GoodLayer* goodLayer)
 
 void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good)
 {
+}
+
+void BagLayer::initializeUI(Node* pXmlNode)
+{
+	//人物单选
+	m_pPlayerGroup = RadioButtonGroup::create();
+	m_pPlayerGroup->addEventListener(SDL_CALLBACK_3(BagLayer::selectPlayer, this));
+
+	this->addChild(m_pPlayerGroup);
+	//获取列表
+	auto& children = pXmlNode->getChildByName("bag_player_list")->getChildren();
+	//添加人物单选按钮
+	for (unsigned i = 0; i < children.size(); i++)
+	{
+		auto radioBtn = static_cast<RadioButton*>(children.at(i));
+		m_pPlayerGroup->addRadioButton(radioBtn);
+	}
+}
+
+void BagLayer::selectPlayer(RadioButton*, int, RadioButtonGroup::EventType)
+{
+	//获取选中的角色
+	Character* player = this->getSelectedPlayer();
+	auto chartletName = player->getChartletName();
+	//设置立绘
+	auto spriteFrame = StaticData::getInstance()->getCharacterData()->getFaceSpriteFrame(chartletName);
+	m_pStatusLayer->getChildByName<Sprite*>("face")->setSpriteFrame(spriteFrame);
+	//更新名称
+	string name = player->getChartletName();
+	m_pStatusLayer->getChildByName<LabelBMFont*>("player_name")->setString(name);
+	//更新属性值
+	//this->updateLabelOfProp(player);
+	//更新经验值
+	//this->updateShownOfExp();
+	//如果是处于技能下，才更新
+	if (m_type == Type::Skill)
+	{
+		//this->updateShownOfGoods();
+	}
+}
+
+Character* BagLayer::getSelectedPlayer() const
+{
+	if (m_pPlayerGroup == nullptr)
+		return nullptr;
+	auto radioBtn = m_pPlayerGroup->getSelectedButton();
+	Character* player = nullptr;
+
+	if (radioBtn != nullptr)
+		player = static_cast<Character*>(radioBtn->getUserObject());
+
+	return player;
 }
 
 void BagLayer::showGoodLayer(const string& titleFrameName, const string& btnFrameName
