@@ -1,5 +1,6 @@
 #ifndef __Enemy_H__
 #define __Enemy_H__
+
 #include "Fighter.h"
 
 class Good;

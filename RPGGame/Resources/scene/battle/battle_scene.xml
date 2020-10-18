@@ -6,12 +6,6 @@
 			<property name="filename" value="scene/battle_action_layer.xml"/>
 		</properties>
 	</Xml>
-	<!--战斗结果-->
-	<Xml name="battle_result_layer" anchor-point="0,0" position="100,0">
-		<properties>
-			<property name="filename" value="scene/battle_result_layer.xml"/>
-		</properties>
-	</Xml>	
 	<!--撤销按钮-->
 	<Button position="906,31" name="undo_btn">
 		<properties>

@@ -22,11 +22,14 @@
     <Filter Include="Classes\ui">
       <UniqueIdentifier>{c74e9704-d42b-4fd8-b8ac-acbb7ca504c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\entity\战斗">
-      <UniqueIdentifier>{896ebc22-fe3a-4eee-a8b8-2a04bdcb2ccf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\dist">
       <UniqueIdentifier>{b9472b9f-1c46-46bc-9739-1f8c8a58c099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\battle">
+      <UniqueIdentifier>{5a6ea161-772f-4a88-8f99-04b0ba7de5a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\battle\entity">
+      <UniqueIdentifier>{37f0db98-264f-48c5-b12b-a03c225b03b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,15 +111,6 @@
     <ClCompile Include="Classes\entity\Good.cpp">
       <Filter>Classes\entity</Filter>
     </ClCompile>
-    <ClCompile Include="Classes\entity\Fighter.cpp">
-      <Filter>Classes\entity\战斗</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\entity\Actor.cpp">
-      <Filter>Classes\entity\战斗</Filter>
-    </ClCompile>
-    <ClCompile Include="Classes\entity\Enemy.cpp">
-      <Filter>Classes\entity\战斗</Filter>
-    </ClCompile>
     <ClCompile Include="Classes\ui\GoodLayer.cpp">
       <Filter>Classes\ui</Filter>
     </ClCompile>
@@ -128,6 +122,33 @@
     </ClCompile>
     <ClCompile Include="Classes\ui\AttributeLayer.cpp">
       <Filter>Classes\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\BattleScene.cpp">
+      <Filter>Classes\battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\BattleLayer.cpp">
+      <Filter>Classes\battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\HpBar.cpp">
+      <Filter>Classes\battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\Actor.cpp">
+      <Filter>Classes\battle\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\Enemy.cpp">
+      <Filter>Classes\battle\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\Fighter.cpp">
+      <Filter>Classes\battle\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\BattleResult.cpp">
+      <Filter>Classes\battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\BattlePanelLayer.cpp">
+      <Filter>Classes\battle</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\battle\PriorityQueue.cpp">
+      <Filter>Classes\battle\entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,15 +233,6 @@
     <ClInclude Include="Classes\entity\Good.h">
       <Filter>Classes\entity</Filter>
     </ClInclude>
-    <ClInclude Include="Classes\entity\Fighter.h">
-      <Filter>Classes\entity\战斗</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\entity\Actor.h">
-      <Filter>Classes\entity\战斗</Filter>
-    </ClInclude>
-    <ClInclude Include="Classes\entity\Enemy.h">
-      <Filter>Classes\entity\战斗</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\entity\GoodInterface.h">
       <Filter>Classes\entity</Filter>
     </ClInclude>
@@ -238,6 +250,33 @@
     </ClInclude>
     <ClInclude Include="Classes\ui\AttributeLayer.h">
       <Filter>Classes\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\BattleScene.h">
+      <Filter>Classes\battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\BattleLayer.h">
+      <Filter>Classes\battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\HpBar.h">
+      <Filter>Classes\battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\Actor.h">
+      <Filter>Classes\battle\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\Enemy.h">
+      <Filter>Classes\battle\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\Fighter.h">
+      <Filter>Classes\battle\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\BattleResult.h">
+      <Filter>Classes\battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\BattlePanelLayer.h">
+      <Filter>Classes\battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\battle\PriorityQueue.h">
+      <Filter>Classes\battle\entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

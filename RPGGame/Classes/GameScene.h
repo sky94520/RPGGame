@@ -18,6 +18,7 @@ class ScriptManager;
 class OperationLayer;
 class BagLayer;
 class Character;
+class LuaStack;
 enum class GameState;
 
 class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLayerDelegate
@@ -49,6 +50,7 @@ public:
 	GameState getGameState() const { return m_gameState; }
 	void setGameState(GameState state);
 	vector<Character*> getCharacterList();
+	LuaStack* getLuaStack() const;
 public: //OperationDelegate
 	virtual void openBag();
 	virtual void saveProgress();

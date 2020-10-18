@@ -1,8 +1,11 @@
 #include "Enemy.h"
+
 #include "../GameScene.h"
+
 #include "../data/DynamicData.h"
 #include "../data/StaticData.h"
 #include "../data/CharacterData.h"
+
 #include "../manager/ScriptManager.h"
 #include "../script/LuaStack.h"
 

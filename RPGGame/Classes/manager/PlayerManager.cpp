@@ -1,10 +1,12 @@
 #include "PlayerManager.h"
+#include "../GameMacros.h"
+
 #include "../entity/Character.h"
 #include "../entity/AStarController.h"
 #include "../entity/FollowController.h"
+
 #include "../data/StaticData.h"
 #include "../data/DynamicData.h"
-#include "../GameMacros.h"
 
 PlayerManager::PlayerManager()
 {
@@ -86,15 +88,15 @@ AStarController* PlayerManager::getAStarController()
 int PlayerManager::getIndexOfCharacter(const string& chartletName)
 {
 	int i = -1;
-
-	/*
-	for (i = 0;i < (int)m_characters.size();i++)
-	{
-		auto player = m_characters.at(i);
-		if (player->getChartletName() == chartletName)
+	for (int j = 0;j < m_controllers.size(); j++){
+		Controller* controller = m_controllers[j];
+		ControllerListener* listener = controller->getControllerListener();
+		Character* player = static_cast<Character*>(listener);
+		if (player->getChartletName() == chartletName) {
+			i = j;
 			break;
+		}
 	}
-	*/
 	return i;
 }
 

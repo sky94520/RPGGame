@@ -82,6 +82,11 @@ SpriteFrame* StaticData::getIconSpriteFrame(int id) const
 	return SpriteFrame::createWithTexture(texture, rect);
 }
 
+SpriteFrame* StaticData::getFaceSpriteFrame(const string& chartletName)
+{
+	return m_pCharacterData->getFaceSpriteFrame(chartletName);
+}
+
 const Json::Value& StaticData::getValueForKey(const string& key)
 {
 	Json::Value& data = m_jsonData[key];

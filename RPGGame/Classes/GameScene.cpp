@@ -257,6 +257,11 @@ vector<Character*> GameScene::getCharacterList()
 { 
 	return m_pPlayerManager->getCharacterList(); 
 }
+
+LuaStack* GameScene::getLuaStack() const
+{
+	return m_pScriptManager->getLuaStack();
+}
 //---OperationDelegate---
 void GameScene::openBag()
 {

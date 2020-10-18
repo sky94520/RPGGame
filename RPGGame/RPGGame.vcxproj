@@ -127,19 +127,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Classes\battle\Actor.cpp" />
+    <ClCompile Include="Classes\battle\BattleLayer.cpp" />
+    <ClCompile Include="Classes\battle\BattlePanelLayer.cpp" />
+    <ClCompile Include="Classes\battle\BattleResult.cpp" />
+    <ClCompile Include="Classes\battle\BattleScene.cpp" />
+    <ClCompile Include="Classes\battle\Enemy.cpp" />
+    <ClCompile Include="Classes\battle\Fighter.cpp" />
+    <ClCompile Include="Classes\battle\HpBar.cpp" />
+    <ClCompile Include="Classes\battle\PriorityQueue.cpp" />
     <ClCompile Include="Classes\data\CharacterData.cpp" />
     <ClCompile Include="Classes\data\DynamicData.cpp" />
     <ClCompile Include="Classes\data\StaticData.cpp" />
     <ClCompile Include="Classes\data\UserRecord.cpp" />
     <ClCompile Include="Classes\dist\jsoncpp.cpp" />
-    <ClCompile Include="Classes\entity\Actor.cpp" />
     <ClCompile Include="Classes\entity\AStar.cpp" />
     <ClCompile Include="Classes\entity\AStarController.cpp" />
     <ClCompile Include="Classes\entity\Character.cpp" />
     <ClCompile Include="Classes\entity\Controller.cpp" />
-    <ClCompile Include="Classes\entity\Enemy.cpp" />
     <ClCompile Include="Classes\entity\Entity.cpp" />
-    <ClCompile Include="Classes\entity\Fighter.cpp" />
     <ClCompile Include="Classes\entity\FollowController.cpp" />
     <ClCompile Include="Classes\entity\Good.cpp" />
     <ClCompile Include="Classes\entity\LuaObject.cpp" />
@@ -162,21 +168,27 @@
     <ClCompile Include="Classes\ui\OperationLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Classes\battle\Actor.h" />
+    <ClInclude Include="Classes\battle\BattleLayer.h" />
+    <ClInclude Include="Classes\battle\BattlePanelLayer.h" />
+    <ClInclude Include="Classes\battle\BattleResult.h" />
+    <ClInclude Include="Classes\battle\BattleScene.h" />
+    <ClInclude Include="Classes\battle\Enemy.h" />
+    <ClInclude Include="Classes\battle\Fighter.h" />
+    <ClInclude Include="Classes\battle\HpBar.h" />
+    <ClInclude Include="Classes\battle\PriorityQueue.h" />
     <ClInclude Include="Classes\data\CharacterData.h" />
     <ClInclude Include="Classes\data\DynamicData.h" />
     <ClInclude Include="Classes\data\StaticData.h" />
     <ClInclude Include="Classes\data\UserRecord.h" />
     <ClInclude Include="Classes\dist\json\json-forwards.h" />
     <ClInclude Include="Classes\dist\json\json.h" />
-    <ClInclude Include="Classes\entity\Actor.h" />
     <ClInclude Include="Classes\entity\AStar.h" />
     <ClInclude Include="Classes\entity\AStarController.h" />
     <ClInclude Include="Classes\entity\Character.h" />
     <ClInclude Include="Classes\entity\Controller.h" />
     <ClInclude Include="Classes\entity\ControllerListener.h" />
-    <ClInclude Include="Classes\entity\Enemy.h" />
     <ClInclude Include="Classes\entity\Entity.h" />
-    <ClInclude Include="Classes\entity\Fighter.h" />
     <ClInclude Include="Classes\entity\FollowController.h" />
     <ClInclude Include="Classes\entity\Good.h" />
     <ClInclude Include="Classes\entity\GoodInterface.h" />

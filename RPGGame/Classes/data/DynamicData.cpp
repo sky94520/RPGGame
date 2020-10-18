@@ -241,23 +241,7 @@ bool DynamicData::removeGood(Good* good, int number)
 
 void DynamicData::equip(const string&playerName, int uniqueId, Good* good)
 {
-	PlayerData* data = m_pUserRecord->players[playerName];
-	auto& equipments = data->equipments;
-	auto equipmentType = good->getEquipmentType();
-	//获取用户
-	auto iter = equipments.find(equipmentType);
-	//原来装备不为空,卸下
-	if (iter != equipments.end())
-	{
-		auto oldGood = iter->second;
-		oldGood->unequip();
-		SDL_SAFE_RELEASE(oldGood);
-		equipments.erase(iter);
-	}
-	//更换装备
-	good->equip(uniqueId);
-	SDL_SAFE_RETAIN(good);
-	equipments.insert(make_pair(equipmentType, good));
+	m_pUserRecord->equip(playerName, uniqueId, good);
 }
 
 void DynamicData::unequip(const string& playerName, EquipmentType equipmentType)

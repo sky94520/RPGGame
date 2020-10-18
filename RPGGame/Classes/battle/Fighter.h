@@ -1,7 +1,7 @@
 #ifndef __Fighter_H__
 #define __Fighter_H__
 
-#include "Entity.h"
+#include "../entity/Entity.h"
 #include "../GameMacros.h"
 
 class Properties;

@@ -1,5 +1,5 @@
 #include "Actor.h"
-#include "Good.h"
+#include "../entity/Good.h"
 
 #include "../data/StaticData.h"
 #include "../data/DynamicData.h"

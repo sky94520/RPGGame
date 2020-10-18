@@ -1,7 +1,9 @@
 #include "Fighter.h"
+
 #include "../data/DynamicData.h"
 #include "../data/StaticData.h"
 #include "../data/CharacterData.h"
+
 //#include "BattleLayer.h"
 
 const float Fighter::SPEED = 550.f;

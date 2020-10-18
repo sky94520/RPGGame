@@ -1,6 +1,5 @@
 {
-  "sky": 
-  {
+  "sky": {
     "face": {
       "filename": "img/faces/Actor1.png",
       "index": 0
@@ -16,7 +15,7 @@
     "turn_name": "Actor01_turn.png",
     "level_up_filename": "data/sky.csv"
   },
-  "moon":{
+  "moon": {
     "face": {
       "filename": "img/faces/Actor1.png",
       "index": 1
@@ -32,7 +31,7 @@
     "turn_name": "Actor02_turn.png",
     "level_up_filename": "data/moon.csv"
   },
-  "Door1_0":{
+  "Door1_0": {
     "walk": {
       "filename": "img/characters/Door1.png",
       "delay": 0.03,
@@ -50,13 +49,44 @@
       "index": 4
     }
   },
-  "Portal_1":{
+  //传送门1
+  "Portal_1": {
     "walk": {
       "filename": "img/characters/Door2.png",
       "delay": 0.03,
       "loops": 1,
       "restoreOriginalFrame": false,
       "index": 4
+    }
+  },
+  //带弓骑士
+  "BowKnight": {
+    "walk": {
+      "filename": "img/characters/People1.png",
+      "delay": 0.15,
+      "loops": -1,
+      "restoreOriginalFrame": false,
+      "index": 5
+    }
+  },
+  //骷髅
+  "Skeleton01": {
+    "walk": {
+      "filename": "img/characters/People1.png",
+      "delay": 0.15,
+      "loops": -1,
+      "restoreOriginalFrame": false,
+      "index": 1
+    }
+  },
+  //宝箱0
+  "Chest00": {
+    "walk": {
+      "filename": "img/characters/Chest.png",
+      "delay": 0.03,
+      "loops": 1,
+      "restoreOriginalFrame": false,
+      "index": 0
     }
   }
 }

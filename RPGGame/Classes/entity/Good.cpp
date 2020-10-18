@@ -6,7 +6,7 @@
 #include "../data/DynamicData.h"
 #include "../data/StaticData.h"
 #include "../GameMacros.h"
-#include "Actor.h"
+#include "../battle/Actor.h"
 
 Good::Good()
 {

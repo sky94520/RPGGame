@@ -37,6 +37,7 @@ public:
 	string toString(PropertyType type);
 	//icon
 	SpriteFrame* getIconSpriteFrame(int iconId)const;
+	SpriteFrame* getFaceSpriteFrame(const string& chartletName);
 private:
 	StaticData();
 	~StaticData();
