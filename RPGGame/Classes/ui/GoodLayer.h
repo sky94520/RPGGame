@@ -103,6 +103,12 @@ public:
 
 	bool isShowing() const;
 	void setShowing(bool showing);
+	RadioButton* getSelectedButton() { return m_pGoodGroup->getSelectedButton(); }
+	void reselectedButton(RadioButton* btn) 
+	{
+		m_pGoodGroup->unselectedButton(); 
+		m_pGoodGroup->setSelectedButton(btn);
+	}
 	/**
 	 * 根据物品数组更新对应单选按钮，如果单选按钮个数少于物品数组，将会报错
 	 * @param vec 物品数组
@@ -173,7 +179,7 @@ public:
 			selectedBtn = group->getRadioButtonByIndex(selectedIndex);
 
 		if (selectedBtn != nullptr)
-			selectedItem = static_cast<T>(selectedBtn->getUserData());
+			selectedItem = static_cast<T>(selectedBtn->getUserObject());
 
 		//没有选中项或者物品个数<=索引或者不匹配 则应该更新
 		if (selectedItem == nullptr

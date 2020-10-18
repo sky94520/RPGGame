@@ -240,7 +240,6 @@ int Good::getProperty(PropertyType type) const
 
 Properties Good::getProperties() const
 {
-	//TODO
 	Properties propStruct;
 	//只有在是装备时才会获取
 	auto goodType = this->getGoodType();

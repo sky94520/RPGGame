@@ -9,7 +9,7 @@ USING_NS_SDL;
 /**
  * GoodLayer所需要的抽象类
  */
-class GoodInterface
+class GoodInterface: public Object
 {
 public:
 	/*获取icon*/

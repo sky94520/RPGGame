@@ -201,7 +201,7 @@ void GoodLayer::updateRadioButton(RadioButton* radioBtn, GoodInterface* good)
 {
 	bool ret = (good != nullptr);
 
-	radioBtn->setUserData(good);
+	radioBtn->setUserObject(good);
 	radioBtn->setVisible(ret);
 	radioBtn->setTouchEnabled(ret);
 
@@ -283,7 +283,7 @@ void GoodLayer::equipBtnCallback(Object* sender)
 void GoodLayer::selectGoodCallback(RadioButton* radioBtn, int index, RadioButtonGroup::EventType)
 {
 	//获取该按钮对应的good
-	auto good = static_cast<GoodInterface*>(radioBtn->getUserData());
+	auto good = static_cast<GoodInterface*>(radioBtn->getUserObject());
 	if (good == nullptr) {
 		LOG("selectGoodCallback: good=nullptr\n");
 		return;

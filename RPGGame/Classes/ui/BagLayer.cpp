@@ -130,6 +130,7 @@ void BagLayer::updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, 
 	if (m_type == Type::Skill)
 	{
 		pCostLabel->setVisible(false);
+		pNumberLabel->setVisible(false);
 	}
 	else
 	{
@@ -138,6 +139,7 @@ void BagLayer::updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, 
 		if (m_type == Type::ShopSell)
 			cost = int(cost * ratio);
 
+		pNumberLabel->setVisible(true);
 		pCostLabel->setVisible(true);
 		pCostLabel->setString(StringUtils::toString(cost));
 	}
@@ -145,11 +147,79 @@ void BagLayer::updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, 
 
 void BagLayer::useBtnCallback(GoodLayer* goodLayer)
 {
-
 }
 
 void BagLayer::equipBtnCallback(GoodLayer* goodLayer)
 {
+	auto dynamicData = DynamicData::getInstance();
+	//获取当前选中的装备
+	RadioButton* selectedBtn = m_pGoodLayer->getSelectedButton();
+	Good* good = static_cast<Good*>(selectedBtn->getUserObject());
+	int goodNum = good->getNumber();
+	auto equipmentType = good->getEquipmentType();
+	//获取当前选中角色
+	auto player = m_pAttributeLayer->getSelectedPlayer();
+	auto chartletName = player->getChartletName();
+	//获取当前对应部件的装备
+	auto oldGood = dynamicData->getEquipment(chartletName, equipmentType);
+	bool isStackable = false;
+	bool bSuccess = false;
+	//可叠加
+	if (oldGood != nullptr
+		&& good->getPrototype() == oldGood->getPrototype()
+		&& equipmentType == EquipmentType::OffHand
+		&& oldGood->getOffHandType() == OffHandType::Arrow)
+	{
+		isStackable = true;
+	}
+	SDL_SAFE_RETAIN(oldGood);
+	//卸下装备 此时oldGood == good
+	if (nullptr != oldGood)
+	{
+		//卸下一个当前的装备到物品栏中
+		if (isStackable && good == oldGood)
+		{
+			dynamicData->splitEquipment(chartletName, equipmentType, oldGood, 1);
+			bSuccess = true;
+		}
+		else if (!isStackable)
+		{
+			//添加装备到背包中
+			dynamicData->addGood(oldGood->getPrototype(), oldGood->getNumber());
+			dynamicData->unequip(chartletName, equipmentType);
+			bSuccess = true;
+		}
+	}
+	//进行装备
+	if (good != oldGood)
+	{
+		//副手存在且为弓箭 则表示可以叠加
+		if (isStackable)
+		{
+			dynamicData->overlyingEquipment(chartletName, oldGood, 1);
+		}
+		else
+		{
+			dynamicData->equip(chartletName, player->getUniqueID(), Good::create(good->getPrototype()));
+		}
+		bSuccess = true;
+		//从背包中移除一个项
+		dynamicData->removeGood(good->getPrototype(), 1);
+	}
+	SDL_SAFE_RELEASE(oldGood);
+	//更新属性
+	m_pAttributeLayer->updateLabelOfProp(player);
+	this->pageBtnCallback(m_pGoodLayer, 0);
+	//重新选中，只有在当前的物品个数大于1时才会主动刷新delta属性值
+	if (goodNum > 1)
+	{
+		m_pGoodLayer->reselectedButton(selectedBtn);
+	}
+	//操作成功才会播放音效
+	if (bSuccess)
+	{
+		SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("equip_se"), 0);
+	}
 }
 
 void BagLayer::closeBtnCallback(GoodLayer* goodLayer)
@@ -157,9 +227,58 @@ void BagLayer::closeBtnCallback(GoodLayer* goodLayer)
 	this->setVisibleofBagLayer(false);
 }
 
-void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good)
+void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* item)
 {
-	//是否能点击装备按钮
+	Good* good = static_cast<Good*>(item);
+	auto dynamicData = DynamicData::getInstance();
+	auto goodType = good->getGoodType();
+	//是否可以装备
+	bool bEquipTouchEnable = false;
+	//是否不可点击
+	bool bUseBtnEnabled = true;
+	string equipFrameName;
+
+	Properties propStruct = good->getProperties();
+	Character* player = m_pAttributeLayer->getSelectedPlayer();
+	//如果物品不可装备
+	if (goodType == GoodType::Item)
+	{
+		bEquipTouchEnable = false;
+	}//当选中装备时，和当前装备进行比较，获取差值
+	else if (goodType == GoodType::Equipment)
+	{
+		bEquipTouchEnable = true;
+		Good* oldEquip = nullptr;
+		//获取装备属性
+		if (player != nullptr)
+		{
+			auto chartletName = player->getChartletName();
+			oldEquip = dynamicData->getEquipment(chartletName, good->getEquipmentType());
+		}
+		//更改按钮显示 装备 or 卸下
+		//点击了已经装备的武器，显示卸下 并设置装备属性相反
+		if (good == oldEquip)
+		{
+			equipFrameName = STATIC_DATA_STRING("unequip_frame_name");
+
+			propStruct = Properties() - propStruct;
+			//当前为购买商品且选中了装备栏，则购买按钮不可点击
+			bUseBtnEnabled = m_type == Type::ShopBuy ? false : true;
+		}
+		else//获取装备之间的差值
+		{
+			equipFrameName = STATIC_DATA_STRING("equip_frame_name");
+
+			if (oldEquip != nullptr)
+				propStruct -= oldEquip->getProperties();
+		}
+	}
+	//设置装备按钮
+	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(bEquipTouchEnable, bEquipTouchEnable, equipFrameName));
+	//更新属性差值
+	m_pAttributeLayer->updateLabelOfDeltaProp(propStruct);
+	//当前为购买商品且选中了装备栏，则购买按钮不可点击
+	m_pGoodLayer->updateShowingBtn(BtnType::Use, BtnParamSt(bUseBtnEnabled, bUseBtnEnabled, ""));
 }
 
 bool BagLayer::touchOutsideCallback(GoodLayer* goodLayer)
@@ -180,7 +299,7 @@ void BagLayer::showGoodLayer(const string& titleFrameName, const string& useBtnF
 	if (equipBtnFrameName.empty())
 		m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(false, false));
 	else
-	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(true, true, equipBtnFrameName));
+		m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(true, true, equipBtnFrameName));
 
 	//更新页码
 	int size = vec.size();
@@ -198,16 +317,26 @@ void BagLayer::showGoodLayer(const string& titleFrameName, const string& useBtnF
 	if (m_nCurPage <= 0)
 		m_nCurPage = 1;
 
-	//切片处理
-	vector<GoodInterface*> content;
-	for (int i = 0; i < 4; i++)
+	//TODO切片处理
+	vector<GoodInterface*> content(8);
+	int i = 0;
+	for (i = 0; i < 4; i++)
 	{
 		int index = (m_nCurPage - 1) * 4 + i;
 
 		if (index >= size)
 			break;
 		Good* good = vec.at(index);
-		content.push_back(dynamic_cast<GoodInterface*>(good));
+		content[i] = dynamic_cast<GoodInterface*>(good);
+	}
+	//更新装备
+	auto player = m_pAttributeLayer->getSelectedPlayer();
+	auto dynamicData = DynamicData::getInstance();
+
+	for (; i < content.size() && player != nullptr; i++)
+	{
+		auto equipmentType = static_cast<EquipmentType>(i - 4);
+		content[i] = dynamicData->getEquipment(player->getChartletName(), equipmentType);
 	}
 	//更新页码并填充物品
 	m_pGoodLayer->updateShowingPage(m_nCurPage, totalPage);

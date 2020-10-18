@@ -10,5 +10,6 @@
   </player>
   <bag>
     <good name="Herbs" number="2"/>
+    <good name="WoodenStick" number="1"/>
   </bag>
 </root>

@@ -1,10 +1,10 @@
 #ifndef __DynamicData_H__
 #define __DynamicData_H__
 
-#include <unordered_map>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 #include <SDL_Engine/SDL_Engine.h>
 
 #include "UserRecord.h"
@@ -32,7 +32,23 @@ public:
 	int getLevel(const string& playerName) const;
 	int getExp(const string& playerName) const;
 	float getSellRatio() const;
+
 	vector<Good*>& getSkills(const string& playerName);
+
+	//获取玩家的装备
+	Good* getEquipment(const string& playerName, EquipmentType equipmentType);
+	//拆分装备
+	bool splitEquipment(const string& playerName, EquipmentType type, Good* good, int number);
+	void overlyingEquipment(const string& playerName, Good* good, int number);
+	//添加物品到背包
+	Good* addGood(const string& goodName, int number);
+	//移除背包中的物品
+	bool removeGood(const string& goodName, int number);
+	bool removeGood(Good* good, int number);
+	//装备
+	void equip(const string&playerName, int uniqueId, Good* good);
+	void unequip(const string& playerName, EquipmentType equipmentType);
+
 	//获取存档的所在地图名
 	const string& getMapFilename() const;
 	//获取角色的位置

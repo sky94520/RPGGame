@@ -66,7 +66,7 @@ enum class UsageOccasion
 	All,/*随时可用*/
 };
 
-class Good : public Object, public GoodInterface
+class Good : public GoodInterface
 {
 	//一个Good对象对应一个lua脚本对象
 	SDL_SYNTHESIZE_READONLY(string, m_tableName, TableName);//本物品所对应的table名
