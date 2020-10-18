@@ -95,6 +95,11 @@ int DynamicData::getExp(const string& playerName) const
 	return data->exp;
 }
 
+float DynamicData::getSellRatio() const
+{
+	return m_pUserRecord->sellRatio;
+}
+
 vector<Good*>& DynamicData::getSkills(const string& playerName)
 {
 	PlayerData* data = m_pUserRecord->players.at(playerName);

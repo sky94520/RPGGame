@@ -274,6 +274,11 @@ void GameScene::pageBtnCallback(GoodLayer* goodLayer, int value)
 	m_pBagLayer->pageBtnCallback(goodLayer, value);
 }
 
+void GameScene::updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number)
+{
+	m_pBagLayer->updateGoodHook(pCostLabel, pNumberLabel, cost, number);
+}
+
 void GameScene::useBtnCallback(GoodLayer* goodLayer)
 {
 	m_pBagLayer->useBtnCallback(goodLayer);

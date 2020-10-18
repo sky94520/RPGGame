@@ -22,7 +22,8 @@ public:
 		None,
 		Bag, //背包
 		Skill,//技能
-		Shop, //商店
+		ShopBuy, //商店购买
+		ShopSell,//商店出售
 		SeedBag, //种子背包
 	};
 public:
@@ -38,13 +39,14 @@ public:
 	void toggle(Object* sender);
 
 	virtual void pageBtnCallback(GoodLayer* goodLayer, int value);
+	virtual void updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number);
 	virtual void useBtnCallback(GoodLayer* goodLayer);
 	virtual void equipBtnCallback(GoodLayer* goodLayer);
 	virtual void closeBtnCallback(GoodLayer* goodLayer);
 	virtual void selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good);
 	virtual bool touchOutsideCallback(GoodLayer* goodLayer);
 private:
-	void showGoodLayer(const string& titleFrameName, const string& btnFrameName, const vector<Good*>& vec, int curPage);
+	void showGoodLayer(const string& titleFrameName, const string& useBtnFrameName, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage);
 private:
 	Type m_type;//类型(玩家背包、商店等)
 	unsigned int m_nCurPage;//当前页

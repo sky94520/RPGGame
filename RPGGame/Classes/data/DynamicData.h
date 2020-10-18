@@ -31,6 +31,7 @@ public:
 	Properties getTotalProperties(const string& playerName);
 	int getLevel(const string& playerName) const;
 	int getExp(const string& playerName) const;
+	float getSellRatio() const;
 	vector<Good*>& getSkills(const string& playerName);
 	//获取存档的所在地图名
 	const string& getMapFilename() const;

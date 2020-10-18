@@ -217,15 +217,13 @@ void GoodLayer::updateRadioButton(RadioButton* radioBtn, GoodInterface* good)
 	auto pNameLabel = radioBtn->getChildByName<LabelBMFont*>("name");
 	auto pCostLabel = radioBtn->getChildByName<LabelAtlas*>("cost");
 	auto pNumberLabel = radioBtn->getChildByName<LabelAtlas*>("number");
-	//更新
-	pNameLabel->setString(name);
-	pNumberLabel->setString(StringUtils::toString(number));
-	pCostLabel->setString(StringUtils::toString(cost));
-	//设置图标
+	//更新 设置图标 图标大小固定
 	pIconSprite->setSpriteFrame(iconFrame);
-	//图标大小固定
 	auto size = pIconSprite->getContentSize();
 	pIconSprite->setScale(24 / size.width, 24 / size.height);
+	pNameLabel->setString(name);
+	//调用钩子函数，进行更新
+	m_pDelegate->updateGoodHook(pCostLabel, pNumberLabel, cost, number);
 }
 
 //------------------------------一系列回调函数-------------------------------

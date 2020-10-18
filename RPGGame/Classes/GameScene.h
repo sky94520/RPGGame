@@ -54,6 +54,7 @@ public: //OperationDelegate
 	virtual void saveProgress();
 public: //GoodLayerDelegate
 	virtual void pageBtnCallback(GoodLayer* goodLayer, int value);
+	virtual void updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number);
 	virtual void useBtnCallback(GoodLayer* goodLayer);
 	virtual void equipBtnCallback(GoodLayer* goodLayer);
 	virtual void closeBtnCallback(GoodLayer* goodLayer);

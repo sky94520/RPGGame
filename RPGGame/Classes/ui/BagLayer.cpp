@@ -87,7 +87,7 @@ void BagLayer::setType(Type type)
 
 void BagLayer::toggle(Object* sender)
 {
-	if (m_type == Type::Shop || m_type == Type::SeedBag)
+	if (m_type == Type::ShopBuy || m_type == Type::ShopSell || m_type == Type::SeedBag)
 		return;
 
 	if (m_type == Type::Bag)
@@ -102,33 +102,48 @@ void BagLayer::toggle(Object* sender)
 
 void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 {
-	bool bEquipVisible = true;
 	switch (m_type)
 	{
 		case Type::Bag:
 		{
 			const vector<Good*>& goodList = DynamicData::getInstance()->getBagGoodList();
-			this->showGoodLayer("bag_title_txt1.png", "use_text.png", goodList, m_nCurPage+delta);
+			this->showGoodLayer("bag_title_txt1.png", "use_text.png", "equip_text.png", goodList, m_nCurPage+delta);
 
 			m_pAttributeLayer->changeToggleBtnFrame("sbt2_1.png");
-			m_pGoodLayer->updateShowingTitle("bag_title_txt1.png");
 		}break;
 		case Type::Skill:
 		{
 			Character* player = m_pAttributeLayer->getSelectedPlayer();
 			string name = player->getChartletName();
 			const vector<Good*>& goodList = DynamicData::getInstance()->getSkills(name);
-			this->showGoodLayer("bag_title_txt2.png", "use_text.png", goodList, m_nCurPage + delta);
+			this->showGoodLayer("bag_title_txt2.png", "use_text.png", "", goodList, m_nCurPage + delta);
 
 			m_pAttributeLayer->changeToggleBtnFrame("sbt2_2.png");
-			m_pGoodLayer->updateShowingTitle("bag_title_txt2.png");
-			bEquipVisible = false;
 		}
 		break;
 		default:
 			LOG("BagLayer::setType the type has not handled\n");
 	}
-	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(bEquipVisible, bEquipVisible));
+}
+
+void BagLayer::updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number)
+{
+	pNumberLabel->setString(StringUtils::toString(number));
+	//价钱的更新受到当前的出售比例和打开类型有关
+	if (m_type == Type::Skill)
+	{
+		pCostLabel->setVisible(false);
+	}
+	else
+	{
+		auto ratio = DynamicData::getInstance()->getSellRatio();
+		//在出售时才会有出售的比率
+		if (m_type == Type::ShopSell)
+			cost = int(cost * ratio);
+
+		pCostLabel->setVisible(true);
+		pCostLabel->setString(StringUtils::toString(cost));
+	}
 }
 
 void BagLayer::useBtnCallback(GoodLayer* goodLayer)
@@ -155,16 +170,20 @@ bool BagLayer::touchOutsideCallback(GoodLayer* goodLayer)
 	return false;
 }
 
-void BagLayer::showGoodLayer(const string& titleFrameName, const string& btnFrameName
-	, const vector<Good*>& vec, int curPage)
+void BagLayer::showGoodLayer(const string& titleFrameName, const string& useBtnFrameName
+	, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage)
 {
 	this->setVisibleofBagLayer(true);
 	//设置title
 	m_pGoodLayer->updateShowingTitle(titleFrameName);
 	//设置使用按钮
-	m_pGoodLayer->updateShowingBtn(BtnType::Use, BtnParamSt(true, true, btnFrameName));
+	m_pGoodLayer->updateShowingBtn(BtnType::Use, BtnParamSt(true, true, useBtnFrameName));
 	//隐藏装备按钮
-	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(false, false));
+	if (equipBtnFrameName.empty())
+		m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(false, false));
+	else
+	m_pGoodLayer->updateShowingBtn(BtnType::Use, BtnParamSt(true, true, equipBtnFrameName));
+
 	//更新页码
 	int size = vec.size();
 	unsigned int totalPage = size / 4;

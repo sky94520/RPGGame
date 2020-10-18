@@ -28,6 +28,10 @@ public:
 	 */
 	virtual void pageBtnCallback(GoodLayer* goodLayer, int value) = 0;
 	/**
+	 * 更新物品钩子函数
+	*/
+	virtual void updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number) = 0;
+	/**
 	 * 使用按钮回调函数
 	 * @param goodLayer 对应的物品层
 	 */

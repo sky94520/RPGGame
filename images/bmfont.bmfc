@@ -2,14 +2,14 @@
 fileVersion=1
 
 # font settings
-fontName=宋体
+fontName=楷体
 fontFile=
 charSet=0
-fontSize=20
+fontSize=23
 aa=1
 scaleH=100
 useSmoothing=1
-isBold=0
+isBold=1
 isItalic=0
 useUnicode=1
 disableBoxChars=1
