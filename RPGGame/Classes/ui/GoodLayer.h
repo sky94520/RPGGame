@@ -107,7 +107,7 @@ public:
 	 * 根据物品数组更新对应单选按钮，如果单选按钮个数少于物品数组，将会报错
 	 * @param vec 物品数组
 	 */
-	void updateShowingGoods(vector<GoodInterface*>& vec);
+	void updateShowingGoods(vector<GoodInterface*>& vec, int number=-1);
 	/**
 	 * 更新显示的标题
 	 * @param filename 标题对应的帧文件名
@@ -155,9 +155,10 @@ public:
 	//更新物品显示
 	template<typename T>
 	static void updateRadioButtons(RadioButtonGroup* group, vector<T>& vec
-		, const function<void(RadioButton*, T)>& updateRadioBtn)
+		, const function<void(RadioButton*, T)>& updateRadioBtn, int number=-1)
 	{
-		auto number = group->getRadioButtonList().size();
+		if (number == -1)
+			number = group->getRadioButtonList().size();
 		//是否应该更新 即重新选中按钮
 		auto selectedIndex = group->getSelectedIndex();
 

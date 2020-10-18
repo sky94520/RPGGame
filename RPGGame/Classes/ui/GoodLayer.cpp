@@ -103,10 +103,10 @@ void GoodLayer::setShowing(bool showing)
 	m_pNextPageBtn->setTouchEnabled(m_bShowing);
 }
 
-void GoodLayer::updateShowingGoods(vector<GoodInterface*>& vec)
+void GoodLayer::updateShowingGoods(vector<GoodInterface*>& vec, int number)
 {
 	auto func = SDL_CALLBACK_2(GoodLayer::updateRadioButton, this);
-	GoodLayer::updateRadioButtons<GoodInterface*>(m_pGoodGroup, vec, func);
+	GoodLayer::updateRadioButtons<GoodInterface*>(m_pGoodGroup, vec, func, number);
 	//如果为空，则按钮不可用
 	if (vec.size() == 0)
 	{

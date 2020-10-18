@@ -87,9 +87,6 @@ void BagLayer::setType(Type type)
 
 void BagLayer::toggle(Object* sender)
 {
-	if (m_type == Type::ShopBuy || m_type == Type::ShopSell || m_type == Type::SeedBag)
-		return;
-
 	if (m_type == Type::Bag)
 	{
 		this->setType(Type::Skill);
@@ -162,6 +159,7 @@ void BagLayer::closeBtnCallback(GoodLayer* goodLayer)
 
 void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good)
 {
+	//是否能点击装备按钮
 }
 
 bool BagLayer::touchOutsideCallback(GoodLayer* goodLayer)
@@ -182,7 +180,7 @@ void BagLayer::showGoodLayer(const string& titleFrameName, const string& useBtnF
 	if (equipBtnFrameName.empty())
 		m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(false, false));
 	else
-	m_pGoodLayer->updateShowingBtn(BtnType::Use, BtnParamSt(true, true, equipBtnFrameName));
+	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(true, true, equipBtnFrameName));
 
 	//更新页码
 	int size = vec.size();
