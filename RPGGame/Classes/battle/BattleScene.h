@@ -7,24 +7,17 @@
 #include <unordered_map>
 #include <SDL_Engine/SDL_Engine.h>
 
+#include "BattleLayer.h"
+
 using namespace std;
 using namespace SDL;
 using namespace SDL::ui;
 
 class Good;
 struct Turn;
-class BattleLayer;
 class BattleResult;
 class BattlePanelLayer;
 
-class BattleDelegate
-{
-public:
-	virtual ~BattleDelegate() {}
-	virtual void setVisibilityOfActionBtns(bool visibility) = 0;
-	virtual void setVisibilityOfUndoBtn(bool visibility) = 0;
-	virtual void battleResult(bool victory) = 0;
-};
 class BattleScene : public Scene
 {
 public:
@@ -32,7 +25,7 @@ public:
 	~BattleScene();
 	CREATE_FUNC(BattleScene);
 	bool init();
-
+	//开始战斗
 	void startBattle(const unordered_map<string, int>& enemyData);
 
 	void update(float dt);
@@ -42,6 +35,8 @@ public:
 	bool onTouchBegan(Touch* touch, SDL_Event* event);
 	//清除函数
 	void clear();
+private:
+	void fighterDeadCallback(EventCustom* eventCustom);
 private:
 	Sprite* m_battleBacks[2];//战斗背景
 	BattleLayer* m_pBattleLayer; //战斗层

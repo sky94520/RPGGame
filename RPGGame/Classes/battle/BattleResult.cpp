@@ -38,7 +38,7 @@ bool BattleResult::init(const string& xmlPath)
 	return true;
 }
 
-void BattleResult::battleResult(int victory)
+void BattleResult::showSummary(int victory)
 {
 	//获取战斗对应图片
 	const Json::Value& array = StaticData::getInstance()->getValueForKey("battle_result_sp");
@@ -57,12 +57,19 @@ void BattleResult::battleResult(int victory)
 
 	if (victory)
 	{
-		//this->battleWin(goldLabel, expLabel, dropLabel);
+		this->battleWin(goldLabel, expLabel, dropLabel);
 	}
 	else
 	{
-		//this->battleFailure(goldLabel, expLabel, dropLabel);
+		this->battleFailure(goldLabel, expLabel, dropLabel);
 	}
+}
+
+void BattleResult::clear()
+{
+	m_nExp = 0;
+	m_nGold = 0;
+	m_dropGoods.clear();
 }
 
 void BattleResult::setBattleOver(bool var)
@@ -117,11 +124,6 @@ void BattleResult::battleWin(LabelAtlas* goldLabel, LabelAtlas* expLabel, LabelB
 	goldLabel->setString(StringUtils::toString(m_nGold));
 	expLabel->setString(StringUtils::toString(m_nExp));
 
-	/*
-	auto gameScene = GameScene::getInstance();
-	gameScene->addGold(m_nGold);
-	gameScene->addExp(m_nExp);
-	*/
 	//添加掉落物品TODO
 	stringstream stream;
 	int length = 0;

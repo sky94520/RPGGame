@@ -7,8 +7,8 @@
 using namespace std;
 using namespace SDL;
 
-class Fighter;
 class HpBar;
+class Fighter;
 
 /*搜索类型*/
 enum class SearchType
@@ -63,7 +63,7 @@ public:
 	//回合结束
 	void roundOver();
 	//战斗结束
-	void endBattle();
+	vector<string> endBattle();
 	void clear();
 
 	int getOurNumber() const { return m_nOurNumber; }
@@ -72,7 +72,7 @@ public:
 	void insertTurnOrderly(Turn* turn);
 	void insertTurnOrderly(TurnType turnType, Fighter* fighter, LabelBMFont* label=nullptr, HpBar* hpBar=nullptr, LabelAtlas* atlas=nullptr);
 	//fighter死亡回调函数
-	void fighterDeadCallback(EventCustom* eventCustom);
+	void fighterDead(Fighter* fighter);
 private:
 	//出手循环队列TODO
 	Turn* m_turnQueue[8];

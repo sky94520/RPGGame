@@ -4,7 +4,8 @@
 BattlePanelLayer::BattlePanelLayer()
 	:m_pXmlNode(nullptr)
 	,m_pStateNode(nullptr)
-	,m_bVisibility(true)
+	,m_bVisibileOfActionBtn(true)
+	,m_bVisibleOfUndoBtn(false)
 	,m_clickedType(ClickedType::None)
 	,m_pGood(nullptr)
 {
@@ -40,25 +41,26 @@ bool BattlePanelLayer::init(const string& xmlPath)
 	auto guardBtn = actionNode->getChildByName<ui::Button*>("guard_btn");
 	auto escapeBtn = actionNode->getChildByName<ui::Button*>("escape_btn");
 
-	attackBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::attackCallback, this));
-	magicBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::magicCallback, this));
-	goodBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::goodCallback, this));
-	guardBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::guardCallback, this));
-	escapeBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::escapeCallback, this));
+	attackBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::attackBtnCallback, this));
+	magicBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::magicBtnCallback, this));
+	goodBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::goodBtnCallback, this));
+	guardBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::guardBtnCallback, this));
+	escapeBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::escapeBtnCallback, this));
 
-	m_pXmlNode->getChildByName<ui::Button*>("undo_btn")->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::undoCallback, this));
+	auto undoBtn = m_pXmlNode->getChildByName<ui::Button*>("undo_btn");
+	undoBtn->addClickEventListener(SDL_CALLBACK_1(BattlePanelLayer::clickUndoBtnCallback, this));
 	return true;
 }
 
-void BattlePanelLayer::setVisibilityOfActionBtns(bool visibility)
+void BattlePanelLayer::setVisibileOfActionBtns(bool visibility)
 {
-	if (m_bVisibility != visibility)
+	if (m_bVisibileOfActionBtn != visibility)
 	{
 		Point pos;
 		auto node = m_pXmlNode->getChildByName("battle_action_layer");
-		m_bVisibility = visibility;
+		m_bVisibileOfActionBtn = visibility;
 
-		pos.x += m_bVisibility ? 0.f : 100.f;
+		pos.x += m_bVisibileOfActionBtn ? 0.f : 100.f;
 		//行动按钮
 		MoveTo* move = MoveTo::create(0.8f, pos);
 		EaseExponentialOut*action = EaseExponentialOut::create(move);
@@ -69,15 +71,16 @@ void BattlePanelLayer::setVisibilityOfActionBtns(bool visibility)
 	}
 }
 
-void BattlePanelLayer::setVisibilityOfUndoBtn(bool visibility)
+void BattlePanelLayer::setVisibileOfUndoBtn(bool visibility)
 {
+	m_bVisibleOfUndoBtn = visibility;
 	auto undoBtn = m_pXmlNode->getChildByName<ui::Button*>("undo_btn");
 
 	undoBtn->setTouchEnabled(visibility);
 	undoBtn->setVisible(visibility);
 }
 
-void BattlePanelLayer::setVisibilityOfStatePanel(int index, bool visibility)
+void BattlePanelLayer::setVisibileOfStatePanel(int index, bool visibility)
 {
 	auto node = m_pStateNode->getChildByTag(index);
 	node->setVisible(visibility);
@@ -124,25 +127,19 @@ Good* BattlePanelLayer::getGood()
 	return m_pGood;
 }
 
-void BattlePanelLayer::attackCallback(Object* sender)
+void BattlePanelLayer::attackBtnCallback(Object* sender)
 {
-	//TODO:清空
-	/*
-	m_nExp = 0;
-	m_nGold = 0;
-	m_dropGoods.clear();
-	*/
 	//隐藏行动按钮，出现撤销按钮
-	this->setVisibilityOfActionBtns(false);
-	this->setVisibilityOfUndoBtn(true);
+	this->setVisibileOfActionBtns(false);
+	this->setVisibileOfUndoBtn(true);
 
 	m_clickedType = ClickedType::Attack;
 }
 
-void BattlePanelLayer::magicCallback(Object* sender)
+void BattlePanelLayer::magicBtnCallback(Object* sender)
 {
 	//隐藏行动按钮，出现撤销按钮
-	this->setVisibilityOfActionBtns(false);
+	this->setVisibileOfActionBtns(false);
 	//打开背包，并锁定角色
 	/*
 	auto goodLayer = GameScene::getInstance()->getGoodLayer();
@@ -154,10 +151,10 @@ void BattlePanelLayer::magicCallback(Object* sender)
 	m_clickedType = ClickedType::Good;
 }
 
-void BattlePanelLayer::goodCallback(Object* sender)
+void BattlePanelLayer::goodBtnCallback(Object* sender)
 {
 	//隐藏行动按钮，出现撤销按钮
-	this->setVisibilityOfActionBtns(false);
+	this->setVisibileOfActionBtns(false);
 	//打开背包，并锁定角色
 	/*
 	auto goodLayer = GameScene::getInstance()->getGoodLayer();
@@ -170,10 +167,10 @@ void BattlePanelLayer::goodCallback(Object* sender)
 	m_clickedType = ClickedType::Good;
 }
 
-void BattlePanelLayer::guardCallback(Object* sender)
+void BattlePanelLayer::guardBtnCallback(Object* sender)
 {
 	//隐藏行动按钮
-	this->setVisibilityOfActionBtns(false);
+	this->setVisibileOfActionBtns(false);
 	//获取当前的turn
 	/*
 	auto turn = m_pBattleLayer->getTopTurn();
@@ -184,10 +181,10 @@ void BattlePanelLayer::guardCallback(Object* sender)
 	*/
 }
 
-void BattlePanelLayer::escapeCallback(Object* sender)
+void BattlePanelLayer::escapeBtnCallback(Object* sender)
 {
 	//隐藏行动按钮
-	this->setVisibilityOfActionBtns(false);
+	this->setVisibileOfActionBtns(false);
 	/*
 	//主角逃跑
 	m_pBattleLayer->getTopTurn()->fighter->escape();
@@ -196,10 +193,10 @@ void BattlePanelLayer::escapeCallback(Object* sender)
 	*/
 }
 
-void BattlePanelLayer::undoCallback(Object* sender)
+void BattlePanelLayer::clickUndoBtnCallback(Object* sender)
 {
-	//隐藏行动按钮
-	this->setVisibilityOfActionBtns(true);
+	//显示行动按钮
+	this->setVisibileOfActionBtns(true);
 	//存在物品，则释放引用
 	if (m_pGood != nullptr)
 	{

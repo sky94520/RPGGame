@@ -106,9 +106,6 @@ PriorityQueue::~PriorityQueue()
 
 bool PriorityQueue::init()
 {
-	//添加监听 fighter死亡监听
-	_eventDispatcher->addEventCustomListener(BATTLE_FIGHTER_DEAD_EVENT, SDL_CALLBACK_1(PriorityQueue::fighterDeadCallback, this), this);
-
 	return true;
 }
 
@@ -256,10 +253,12 @@ void PriorityQueue::roundOver()
 	this->insertTurnOrderly(turn);
 }
 
-void PriorityQueue::endBattle()
+vector<string> PriorityQueue::endBattle()
 {
 	//敌人全部死亡，战斗胜利
 	bool victory = (m_nEnemyNumber == 0);
+	//返回已经死亡的友军的名字
+	vector<string> results;
 	//设置
 	for (auto it = m_deadTurnList.begin(); it != m_deadTurnList.end(); it++)
 	{
@@ -267,11 +266,7 @@ void PriorityQueue::endBattle()
 		//设置死亡友军的血量为1
 		if (turn->type != TurnType::Enemy)
 		{
-			//TODO
-			/*
-			DynamicData::getInstance()->setProperty(turn->fighter->getFighterName(), PropertyType::Hp, 1);
-			GameScene::getInstance()->getGoodLayer()->updateShownOfProps();
-			*/
+			results.push_back(turn->fighter->getFighterName());
 			continue;
 		}
 		//调用对应脚本的清除函数
@@ -307,6 +302,8 @@ void PriorityQueue::endBattle()
 	}
 	m_nFront = 0;
 	m_nRear = -1;
+
+	return results;
 }
 
 void PriorityQueue::clear()
@@ -400,9 +397,8 @@ void PriorityQueue::insertTurnOrderly(TurnType turnType, Fighter* fighter, Label
 	}
 }
 
-void PriorityQueue::fighterDeadCallback(EventCustom* eventCustom)
+void PriorityQueue::fighterDead(Fighter* fighter)
 {
-	auto fighter = static_cast<Fighter*>(eventCustom->getUserData());
 	//遍历获取对应的turn，并移除
 	int count = m_nEnemyNumber + m_nOurNumber;
 	int front = m_nFront;
@@ -451,9 +447,4 @@ void PriorityQueue::fighterDeadCallback(EventCustom* eventCustom)
 	}
 	//个数少一个
 	m_nRear = (m_nRear - 1) % m_nQueueLength;
-	//任何一方人数为0，战斗结束
-	if (m_nEnemyNumber == 0 || m_nOurNumber == 0)
-	{
-		this->endBattle();
-	}
 }

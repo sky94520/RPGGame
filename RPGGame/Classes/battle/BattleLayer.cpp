@@ -17,7 +17,7 @@ BattleLayer::BattleLayer()
 	:m_pCurInitialFighter(nullptr)
 	,m_bRoundOver(true)
 	,m_pPriorityQueue(nullptr)
-	,m_pDelegate(nullptr)
+	,m_bReadyPlayer(false)
 {
 }
 
@@ -43,7 +43,7 @@ void BattleLayer::update(float dt)
 	}
 	//获取队列头
 	auto top = m_pPriorityQueue->getTop();
-	int n = lua_gettop(GameScene::getInstance()->getLuaStack()->getLuaState());
+	//int n = lua_gettop(GameScene::getInstance()->getLuaStack()->getLuaState());
 	//等待动作完成
 	if (top->fighter->getActionByTag(Fighter::ACTION_TAG) != nullptr)
 		return;
@@ -58,9 +58,7 @@ void BattleLayer::update(float dt)
 		//改变主角状态
 		auto player = static_cast<Actor*>(top->fighter);
 		player->ready();
-		//出现行动按钮
-		m_pDelegate->setVisibilityOfActionBtns(true);
-		m_pDelegate->setVisibilityOfUndoBtn(false);
+		m_bReadyPlayer = true;
 	}
 }
 
@@ -145,29 +143,32 @@ Turn* BattleLayer::getClickedTurn(const Point& pos)
 
 void BattleLayer::roundOver()
 {
-	this->setRoundOver(true);
+	m_bRoundOver = true;
 	m_pPriorityQueue->roundOver();
 }
 
-void BattleLayer::setRoundOver(bool var)
+vector<string> BattleLayer::endBattle()
 {
-	m_bRoundOver = var;
+	return m_pPriorityQueue->endBattle();
 }
 
-void BattleLayer::endBattle()
+void BattleLayer::fighterDead(Fighter* fighter)
 {
-	m_pPriorityQueue->endBattle();
-	//TODO:战斗结束
-	m_pDelegate->battleResult(1);
+	m_pPriorityQueue->fighterDead(fighter);
+}
+
+int BattleLayer::getOurNumber() const
+{
+	return m_pPriorityQueue->getOurNumber();
+}
+
+int BattleLayer::getEnemyNumber() const
+{
+	return m_pPriorityQueue->getEnemyNumber();
 }
 
 void BattleLayer::clear()
 {
 	m_pPriorityQueue->clear();
-}
-
-void BattleLayer::setDelegate(BattleDelegate* pDelegate)
-{
-	m_pDelegate = pDelegate;
 }
 

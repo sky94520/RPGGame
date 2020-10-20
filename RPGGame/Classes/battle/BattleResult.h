@@ -18,7 +18,8 @@ public:
 	static BattleResult* create(const string& xmlPath);
 	bool init(const string& xmlPath);
 	//战斗结算
-	void battleResult(int victory);
+	void showSummary(int victory);
+	void clear();
 	//设置战斗是否结束
 	bool isBattleOver()const { return m_bBattleOver; }
 	void setBattleOver(bool var);

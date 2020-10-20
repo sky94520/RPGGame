@@ -42,6 +42,8 @@ bool BattleScene::init()
 	//战斗结果层
 	m_pBattleResult = BattleResult::create("scene/battle/battle_result_layer.xml");
 	this->addChild(m_pBattleResult);
+	//添加fighter死亡监听
+	_eventDispatcher->addEventCustomListener(BATTLE_FIGHTER_DEAD_EVENT, SDL_CALLBACK_1(BattleScene::fighterDeadCallback, this), this);
 
 	return true;
 }
@@ -51,7 +53,7 @@ void BattleScene::startBattle(const unordered_map<string, int>& enemyData)
 	//初始化
 	m_pBattleResult->setBattleOver(false);
 	m_pBattleResult->setVisible(false);
-	m_pBattleLayer->setRoundOver(true);
+	m_pBattleLayer->roundOver();
 	//上场我方人员 最多4人
 	vector<Character*> characterList = GameScene::getInstance()->getCharacterList();
 	for (unsigned i = 0; i < 4; i++)
@@ -70,17 +72,17 @@ void BattleScene::startBattle(const unordered_map<string, int>& enemyData)
 			m_pBattleLayer->addOur(actor);
 			//更新
 			int hp = actor->getProperty(PropertyType::Hp);
-			int maxHp = actor->getMaxHitPoint();
 			int mp = actor->getProperty(PropertyType::Mp);
+			int maxHp = actor->getMaxHitPoint();
 			int maxMp = actor->getMaxManaPoint();
 			auto faceSpriteFrame = StaticData::getInstance()->getFaceSpriteFrame(chartletName);
 
-			m_pPanelLayer->setVisibilityOfStatePanel(i, true);
+			m_pPanelLayer->setVisibileOfStatePanel(i, true);
 			m_pPanelLayer->updateStateOfPlayer(i, chartletName, hp, maxHp, mp, maxMp, faceSpriteFrame);
 		}
 		else//隐藏不需要的状态面板
 		{
-			m_pPanelLayer->setVisibilityOfStatePanel(i, false);
+			m_pPanelLayer->setVisibileOfStatePanel(i, false);
 		}
 	}
 	//添加敌人
@@ -96,6 +98,13 @@ void BattleScene::update(float dt)
 	if (!m_pBattleResult->isBattleOver())
 	{
 		m_pBattleLayer->update(dt);
+		//玩家可以出手 出现行动按钮
+		if (m_pBattleLayer->isReadyPlayer() 
+			&& (!m_pPanelLayer->isVisibileOfActionBtns() && !m_pPanelLayer->isVisibleOfUndoBtn()))
+		{
+			m_pPanelLayer->setVisibileOfActionBtns(true);
+			m_pPanelLayer->setVisibileOfUndoBtn(false);
+		}
 	}
 }
 
@@ -142,11 +151,11 @@ void BattleScene::updateStateOfTurn(Turn* turn)
 
 bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 {
-	//结算面版显示，表示战斗结束
+	//已经显示结算面版，表示战斗结束
 	if (m_pBattleResult->isVisible())
 	{
 		m_pBattleResult->setVisible(false);
-		//TODO:战斗结束
+		//TODO:战斗结束 清除BattleScene
 		//GameScene::getInstance()->endBattle();
 	}
 	auto type = m_pPanelLayer->getClickedType();
@@ -159,7 +168,7 @@ bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 
 	if (turn == nullptr)
 		return false;
-
+	//当前“活动”的玩家
 	auto player = m_pBattleLayer->getTopTurn()->fighter;
 	//点击到活着的敌人才会进行攻击
 	if (type == BattlePanelLayer::ClickedType::Attack
@@ -199,7 +208,7 @@ bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 
 	if (bSuccess)
 	{
-		m_pPanelLayer->setVisibilityOfUndoBtn(false);
+		m_pPanelLayer->setVisibileOfUndoBtn(false);
 	}
 	return true;
 }
@@ -207,4 +216,37 @@ bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 void BattleScene::clear()
 {
 	m_pBattleLayer->clear();
+}
+
+void BattleScene::fighterDeadCallback(EventCustom* eventCustom)
+{
+	auto fighter = static_cast<Fighter*>(eventCustom->getUserData());
+	m_pBattleLayer->fighterDead(fighter);
+	//任何一方人数为0，战斗结束
+	int nEnemyNumber = m_pBattleLayer->getEnemyNumber();
+	int nOurNumber = m_pBattleLayer->getOurNumber();
+	//战斗还未结束
+	if (nOurNumber != 0 && nEnemyNumber != 0)
+		return;
+	//胜利或失败
+	int victory = (nEnemyNumber == 0)? 1 : 0;
+	vector<string> deadOurNames = m_pBattleLayer->endBattle();
+	//TODO:死亡的友军，设置为1滴血
+	for (auto& name : deadOurNames)
+	{
+		/*
+		DynamicData::getInstance()->setProperty(turn->fighter->getFighterName(), PropertyType::Hp, 1);
+		GameScene::getInstance()->getGoodLayer()->updateShownOfProps();
+		*/
+	}
+	m_pBattleResult->showSummary(victory);
+	//增加经验、金币 掉落物品
+	if (victory == 1)
+	{
+	/*
+		auto gameScene = GameScene::getInstance();
+		gameScene->addGold(m_nGold);
+		gameScene->addExp(m_nExp);
+	*/
+	}
 }

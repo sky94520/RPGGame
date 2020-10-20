@@ -158,3 +158,4 @@
 购买/出售功能
 战斗功能
 对话功能
+struct Properties绑定到lua中

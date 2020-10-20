@@ -6,9 +6,9 @@
 using namespace std;
 USING_NS_SDL;
 
-class Turn;
 class HpBar;
 class Actor;
+struct Turn;
 class Fighter;
 class BattleDelegate;
 class PriorityQueue;
@@ -35,20 +35,21 @@ public:
 	Turn* getClickedTurn(const Point& pos);
 	//回合结束
 	void roundOver();
-	//设置回合
-	void setRoundOver(bool var);
-	//战斗结束
-	void endBattle();
+	//战斗结束 返回死了的友方的名字
+	vector<string> endBattle();
+	void fighterDead(Fighter* fighter);
+	int getOurNumber() const;
+	int getEnemyNumber() const;
 	//清除函数
 	void clear();
-	//设置委托
-	void setDelegate(BattleDelegate* pDelegate);
+	bool isReadyPlayer()const { return m_bReadyPlayer; }
 private:
 	//当前正在初始化 主要用于脚本初始化
 	Fighter* m_pCurInitialFighter;
 	//是否回合结束
 	bool m_bRoundOver;
 	PriorityQueue* m_pPriorityQueue;
-	BattleDelegate* m_pDelegate;
+	//是否等待玩家出手
+	bool m_bReadyPlayer;
 };
 #endif
