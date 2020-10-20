@@ -31,13 +31,23 @@ public:
 	virtual ~BagLayer();
 	CREATE_FUNC(BagLayer);
 	bool init();
-	void setVisibleofBagLayer(bool visible);
+	//重写
+	void setVisible(bool visible);
 	bool isShowing() const { return m_bVisible; }
 	void setDelegate(GoodLayerDelegate* pDelegate) { m_pGoodLayer->setDelegate(pDelegate); }
+	Type getType() const { return m_type; }
 	void setType(Type type);
 	//锁定角色
 	void lockPlayer(int uniqueID);
 	void unlockPlayer();
+	Character* getSelectedPlayer()const;
+	//更新显示的物品
+	void updateGoods();
+	//金币
+	void addGold(int num);
+	bool removeGold(int num);
+	//exp
+	void addExp(int exp);
 
 	virtual void pageBtnCallback(GoodLayer* goodLayer, int value);
 	virtual void updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number);

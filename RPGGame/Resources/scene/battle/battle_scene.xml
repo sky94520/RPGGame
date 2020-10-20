@@ -3,7 +3,7 @@
 	<!--行动按钮-->
 	<Xml name="battle_action_layer">
 		<properties>
-			<property name="filename" value="scene/battle_action_layer.xml"/>
+			<property name="filename" value="scene/battle/battle_action_layer.xml"/>
 		</properties>
 	</Xml>
 	<!--撤销按钮-->
@@ -17,7 +17,7 @@
 	<!--角色状态-->
 	<Xml name="battle_state_layer">
 		<properties>
-			<property name="filename" value="scene/battle_state_layer.xml"/>
+			<property name="filename" value="scene/battle/battle_state_layer.xml"/>
 		</properties>
 	</Xml>
 </Layer>

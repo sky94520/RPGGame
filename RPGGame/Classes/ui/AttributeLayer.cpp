@@ -124,6 +124,26 @@ void AttributeLayer::unlockPlayer()
 	}
 }
 
+void AttributeLayer::updateShownOfExp()
+{
+	auto player = this->getSelectedPlayer();
+
+	if (player == nullptr)
+		return;
+	auto chartletName = player->getChartletName();
+
+	//更新经验值 等级上限
+	auto level = DynamicData::getInstance()->getLevel(chartletName);
+	CharacterData* characterData = StaticData::getInstance()->getCharacterData();
+	auto &nextLvSt = characterData->getDataByLevel(chartletName, level + 1);
+
+	auto exp = DynamicData::getInstance()->getExp(chartletName);
+	auto format = STATIC_DATA_STRING("level_exp_format");
+	auto text = StringUtils::format(format.c_str(), level, exp, nextLvSt.exp);
+
+	m_pStatusNode->getChildByName<LabelBMFont*>("exp")->setString(text);
+}
+
 void AttributeLayer::updateRadioButton(RadioButton* radioBtn, Character* player)
 {
 	bool ret = (player != nullptr);
@@ -257,22 +277,3 @@ void AttributeLayer::updatePropLabels(const string& chartletName, const Properti
 	}
 }
 
-void AttributeLayer::updateShownOfExp()
-{
-	auto player = this->getSelectedPlayer();
-
-	if (player == nullptr)
-		return;
-	auto chartletName = player->getChartletName();
-
-	//更新经验值 等级上限
-	auto level = DynamicData::getInstance()->getLevel(chartletName);
-	CharacterData* characterData = StaticData::getInstance()->getCharacterData();
-	auto &nextLvSt = characterData->getDataByLevel(chartletName, level + 1);
-
-	auto exp = DynamicData::getInstance()->getExp(chartletName);
-	auto format = STATIC_DATA_STRING("level_exp_format");
-	auto text = StringUtils::format(format.c_str(), level, exp, nextLvSt.exp);
-
-	m_pStatusNode->getChildByName<LabelBMFont*>("exp")->setString(text);
-}

@@ -31,6 +31,13 @@ public:
 	void update(float dt);
 	//设置战斗背景
 	void setBattleBack(const string& back, int index);
+
+	void setVisibileOfActionBtns(bool visibile);
+	void setVisibileOfUndoBtn(bool visibile);
+
+	Good* getGood()const;
+	void setGood(Good* good);
+
 	void updateStateOfTurn(Turn* turn);
 	bool onTouchBegan(Touch* touch, SDL_Event* event);
 	//清除函数

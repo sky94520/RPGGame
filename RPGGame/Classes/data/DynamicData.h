@@ -27,12 +27,26 @@ public:
 	bool save(const string& map,const Point& tilePos, int nDir);
 	
 	int getMaxHitPoint(const string& playerName)const;
+	void setMaxHitPoint(const string& playerName, int var);
+
 	int getMaxManaPoint(const string& playerName)const;
+	void setMaxManaPoint(const string& playerName, int var);
+
 	Properties getTotalProperties(const string& playerName);
+	void setTotalProperties(const string& playerName, const Properties& properties);
+
 	int getLevel(const string& playerName) const;
+	void setLevel(const string& playerName, int var);
+
 	int getExp(const string& playerName) const;
+	void setExp(const string& playerName, int var);
+
+	int getGoldNumber() const;
+	void setGoldNumber(int number);
+
 	float getSellRatio() const;
 
+	bool studySkill(const string& playerName, const string& skillName);
 	vector<Good*>& getSkills(const string& playerName);
 
 	//获取玩家的装备
@@ -42,6 +56,7 @@ public:
 	void overlyingEquipment(const string& playerName, Good* good, int number);
 	//添加物品到背包
 	Good* addGood(const string& goodName, int number);
+	void updateGood(Good* good);
 	//移除背包中的物品
 	bool removeGood(const string& goodName, int number);
 	bool removeGood(Good* good, int number);

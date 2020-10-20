@@ -150,6 +150,9 @@
     <ClCompile Include="Classes\battle\PriorityQueue.cpp">
       <Filter>Classes\battle\entity</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\layer\MessageLayer.cpp">
+      <Filter>Classes\layer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\HelloWorldScene.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="Classes\battle\PriorityQueue.h">
       <Filter>Classes\battle\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\layer\MessageLayer.h">
+      <Filter>Classes\layer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -30,6 +30,9 @@ public:
 	Properties getTotalProperties(const string& playerName);
 	//装备
 	void equip(const string&playerName, int uniqueId, Good* good);
+	void unequip(const string& playerName, EquipmentType equipmentType);
+	//技能
+	bool studySkill(const string& playerName, const string& skillName);
 private:
 	void parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame);
 	void parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData);

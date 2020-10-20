@@ -35,7 +35,7 @@ bool BattleScene::init()
 	m_pBattleLayer = BattleLayer::create();
 	this->addChild(m_pBattleLayer);
 	//ui层
-	m_pPanelLayer = BattlePanelLayer::create("scene/battle_scene.xml");
+	m_pPanelLayer = BattlePanelLayer::create("scene/battle/battle_scene.xml");
 	m_pPanelLayer->setDelegate(this);
 	this->addChild(m_pPanelLayer);
 	//战斗结果层
@@ -105,6 +105,26 @@ void BattleScene::update(float dt)
 void BattleScene::setBattleBack(const string& back, int index)
 {
 	m_pBattleLayer->setBattleBack(back, index);
+}
+
+void BattleScene::setVisibileOfActionBtns(bool visibile)
+{
+	m_pPanelLayer->setVisibileOfActionBtns(visibile);
+}
+
+void BattleScene::setVisibileOfUndoBtn(bool visibile)
+{
+	m_pPanelLayer->setVisibileOfUndoBtn(visibile);
+}
+
+Good* BattleScene::getGood() const
+{
+	return m_pPanelLayer->getGood();
+}
+
+void BattleScene::setGood(Good* good)
+{
+	m_pPanelLayer->setGood(good);
 }
 
 void BattleScene::updateStateOfTurn(Turn* turn)

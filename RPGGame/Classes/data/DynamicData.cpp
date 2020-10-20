@@ -74,15 +74,33 @@ int DynamicData::getMaxHitPoint(const string& playerName)const
 	return data->maxHp;
 }
 
+void DynamicData::setMaxHitPoint(const string& playerName, int var)
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	data->maxHp = var;
+}
+
 int DynamicData::getMaxManaPoint(const string& playerName)const
 {
 	PlayerData* data = m_pUserRecord->players.at(playerName);
 	return data->maxMp;
 }
 
+void DynamicData::setMaxManaPoint(const string& playerName, int var)
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	data->maxMp = var;
+}
+
 Properties DynamicData::getTotalProperties(const string& playerName)
 {
 	return m_pUserRecord->getTotalProperties(playerName);
+}
+
+void DynamicData::setTotalProperties(const string& playerName, const Properties& properties)
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	data->properties = properties;
 }
 
 int DynamicData::getLevel(const string& playerName) const
@@ -91,15 +109,42 @@ int DynamicData::getLevel(const string& playerName) const
 	return data->level;
 }
 
+void DynamicData::setLevel(const string& playerName, int var)
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	data->level = var;
+}
+
 int DynamicData::getExp(const string& playerName) const
 {
 	PlayerData* data = m_pUserRecord->players.at(playerName);
 	return data->exp;
 }
 
+void DynamicData::setExp(const string& playerName, int var)
+{
+	PlayerData* data = m_pUserRecord->players.at(playerName);
+	data->exp = var;
+}
+
+int DynamicData::getGoldNumber() const
+{
+	return m_pUserRecord->goldNumber;
+}
+
+void DynamicData::setGoldNumber(int number)
+{
+	m_pUserRecord->goldNumber = number;
+}
+
 float DynamicData::getSellRatio() const
 {
 	return m_pUserRecord->sellRatio;
+}
+
+bool DynamicData::studySkill(const string& playerName, const string& skillName)
+{
+	return m_pUserRecord->studySkill(playerName, skillName);
 }
 
 vector<Good*>& DynamicData::getSkills(const string& playerName)
@@ -175,6 +220,17 @@ Good* DynamicData::addGood(const string& goodName, int number)
 	return good;
 }
 
+void DynamicData::updateGood(Good* good)
+{
+	if (good->getNumber() > 0)
+		return;
+	//移除
+	vector<Good*>& goodList = m_pUserRecord->m_bagGoodList;
+	auto it = find(goodList.begin(), goodList.end(), good);
+	goodList.erase(it);
+	SDL_SAFE_RELEASE(good);
+}
+
 bool DynamicData::removeGood(const string& goodName, int number)
 {
 	bool ret = false;
@@ -246,19 +302,7 @@ void DynamicData::equip(const string&playerName, int uniqueId, Good* good)
 
 void DynamicData::unequip(const string& playerName, EquipmentType equipmentType)
 {
-	PlayerData* data = m_pUserRecord->players[playerName];
-	auto &equipments = data->equipments;
-	//获取用户
-	auto iter = equipments.find(equipmentType);
-
-	if (iter == equipments.end())
-		return;
-	auto good = iter->second;
-	good->unequip();
-	good->setNumber(good->getNumber() - 1);
-	SDL_SAFE_RELEASE(good);
-
-	equipments.erase(iter);
+	m_pUserRecord->unequip(playerName, equipmentType);
 }
 
 const string& DynamicData::getMapFilename() const

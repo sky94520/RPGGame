@@ -1,5 +1,6 @@
 #include "BagLayer.h"
 #include "AttributeLayer.h"
+#include "../GameScene.h"
 
 #include "../entity/Good.h"
 #include "../entity/Character.h"
@@ -7,6 +8,7 @@
 #include "../data/StaticData.h"
 #include "../data/DynamicData.h"
 #include "../data/CharacterData.h"
+#include "../manager/PlayerManager.h"
 
 
 BagLayer::BagLayer()
@@ -24,21 +26,20 @@ BagLayer::~BagLayer()
 
 bool BagLayer::init()
 {
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-	
 	m_pAttributeLayer = AttributeLayer::create("scene/bag/bag_layer.xml", SDL_CALLBACK_1(BagLayer::toggle, this));
 	this->addChild(m_pAttributeLayer);
 	//物品层
 	m_pGoodLayer = GoodLayer::create();
 	this->addChild(m_pGoodLayer);
 	//隐藏
+	Size visibleSize = Director::getInstance()->getVisibleSize();
 	m_pGoodLayer->setPositionY(-visibleSize.height);
 	m_pAttributeLayer->setPositionY(-visibleSize.height);
 
 	return true;
 }
 
-void BagLayer::setVisibleofBagLayer(bool visible)
+void BagLayer::setVisible(bool visible)
 {
 	if (m_bVisible == visible)
 		return;
@@ -95,6 +96,98 @@ void BagLayer::unlockPlayer()
 	m_pAttributeLayer->unlockPlayer();
 }
 
+Character* BagLayer::getSelectedPlayer()const
+{
+	return m_pAttributeLayer->getSelectedPlayer();
+}
+
+void BagLayer::updateGoods()
+{
+	this->pageBtnCallback(m_pGoodLayer, 0);
+}
+
+void BagLayer::addGold(int num)
+{
+	auto dynamicData = DynamicData::getInstance();
+
+	int number = dynamicData->getGoldNumber();
+	int afterGold = num + number;
+	//最大金币为99999
+	if (afterGold > 99999)
+		afterGold = 99999;
+	//更改金币
+	dynamicData->setGoldNumber(afterGold);
+	//更新显示
+	m_pGoodLayer->updateShowingGold(afterGold);
+}
+
+bool BagLayer::removeGold(int num)
+{
+	auto dynamicData = DynamicData::getInstance();
+
+	int number = dynamicData->getGoldNumber();
+	int afterGold = number - num;
+	//现有金钱足够 减少成功
+	if (afterGold >= 0)
+	{
+		dynamicData->setGoldNumber(afterGold);
+		m_pGoodLayer->updateShowingGold(afterGold);
+		return true;
+	}//减少失败
+	return false;
+}
+
+void BagLayer::addExp(int exp)
+{
+	//获取角色列表
+	auto playerManager = GameScene::getInstance()->getPlayerManager();
+	auto& list = playerManager->getCharacterList();
+	//数据
+	auto dynamicData = DynamicData::getInstance();
+	auto characterData = StaticData::getInstance()->getCharacterData();
+	//TODO:有的可能无法获得经验值
+	for (auto player : list)
+	{
+		auto chartletName = player->getChartletName();
+
+		auto curExp = dynamicData->getExp(chartletName);
+		auto curLevel = dynamicData->getLevel(chartletName);
+		//获取本级的应有属性
+		auto& lvStruct = characterData->getDataByLevel(chartletName, curLevel);
+		//获取下一等级的应有属性
+		auto& nextLvStruct = characterData->getDataByLevel(chartletName, curLevel + 1);
+		//增加经验
+		curExp += exp;
+		//升级
+		if (curExp >= nextLvStruct.exp)
+		{
+			curExp -= nextLvStruct.exp;
+			curLevel++;
+
+			auto deltaProperties = nextLvStruct.properties - lvStruct.properties;
+			auto maxHp = deltaProperties.hp + dynamicData->getMaxHitPoint(chartletName);
+			auto maxMp = deltaProperties.mp + dynamicData->getMaxManaPoint(chartletName);
+			//修改角色属性
+			auto properties = dynamicData->getTotalProperties(chartletName);
+			dynamicData->setTotalProperties(chartletName, properties + deltaProperties);
+			dynamicData->setMaxHitPoint(chartletName, maxHp);
+			dynamicData->setMaxManaPoint(chartletName, maxMp);
+			//是否有技能学习 TODO
+			if (!nextLvStruct.skill.empty())
+			{
+				dynamicData->studySkill(chartletName, nextLvStruct.skill);
+			}
+			printf("%s:level up\n", chartletName.c_str());
+		}
+		dynamicData->setLevel(chartletName, curLevel);
+		dynamicData->setExp(chartletName, curExp);
+	}
+	m_pAttributeLayer->updateShownOfExp();
+	//更新属性
+	auto player = m_pAttributeLayer->getSelectedPlayer();
+	m_pAttributeLayer->updateLabelOfProp(player);
+}
+
 void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 {
 	switch (m_type)
@@ -145,6 +238,33 @@ void BagLayer::updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, 
 
 void BagLayer::useBtnCallback(GoodLayer* goodLayer)
 {
+	//获取选中的按钮
+	auto radioBtn = m_pGoodLayer->getSelectedButton();
+	if (radioBtn == nullptr)
+		return;
+
+	auto good = static_cast<Good*>(radioBtn->getUserObject());
+	auto gameScene = GameScene::getInstance();
+	//根据不同类型 =》不同行为
+	switch (m_type)
+	{
+		//使用 在战斗状态下会消耗此次行动
+	case BagLayer::Type::Bag:
+	case BagLayer::Type::Skill:
+		gameScene->useGood(good);
+		break;
+	case BagLayer::Type::ShopBuy:
+		gameScene->buyGood(good);
+		break;
+	case BagLayer::Type::ShopSell:
+		gameScene->sellGood(good);
+		break;
+	case BagLayer::Type::SeedBag:
+		//gameScene->sowSeed(good);
+		break;
+	default:
+		break;
+	}
 }
 
 void BagLayer::equipBtnCallback(GoodLayer* goodLayer)
@@ -222,7 +342,7 @@ void BagLayer::equipBtnCallback(GoodLayer* goodLayer)
 
 void BagLayer::closeBtnCallback(GoodLayer* goodLayer)
 {
-	this->setVisibleofBagLayer(false);
+	this->setVisible(false);
 }
 
 void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* item)
@@ -300,7 +420,7 @@ void BagLayer::toggle(Object* sender)
 void BagLayer::showGoodLayer(const string& titleFrameName, const string& useBtnFrameName
 	, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage)
 {
-	this->setVisibleofBagLayer(true);
+	this->setVisible(true);
 	//设置title
 	m_pGoodLayer->updateShowingTitle(titleFrameName);
 	//设置使用按钮

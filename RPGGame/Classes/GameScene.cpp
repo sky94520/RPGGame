@@ -4,6 +4,7 @@
 #include "layer/MapLayer.h"
 #include "layer/EffectLayer.h"
 #include "layer/SpritePool.h"
+#include "layer/MessageLayer.h"
 
 #include "manager/PlayerManager.h"
 #include "manager/ScriptManager.h"
@@ -13,11 +14,14 @@
 
 #include "data/StaticData.h"
 #include "data/DynamicData.h"
+#include "entity/Good.h"
 #include "entity/AStar.h"
 #include "entity/Character.h"
 #include "entity/AStarController.h"
 
 #include "script/LuaStack.h"
+
+#include "battle/BattleScene.h"
 
 //static
 GameScene* GameScene::s_pInstance = nullptr;
@@ -45,7 +49,9 @@ GameScene::GameScene()
 	:m_pMapLayer(nullptr)
 	,m_pEffectLayer(nullptr)
 	,m_pOperationLayer(nullptr)
+	,m_pBattleScene(nullptr)
 	,m_pBagLayer(nullptr)
+	,m_pMsgLayer(nullptr)
 	,m_pPlayerManager(nullptr)
 	,m_pScriptManager(nullptr)
 	,m_gameState(GameState::Normal)
@@ -70,10 +76,16 @@ bool GameScene::init()
 	m_pOperationLayer = OperationLayer::create();
 	m_pOperationLayer->setDelegate(this);
 	this->addChild(m_pOperationLayer);
+	//战斗层
+	m_pBattleScene = BattleScene::create();
+	this->addChild(m_pBattleScene);
 	//ui/背包层
 	m_pBagLayer = BagLayer::create();
 	m_pBagLayer->setDelegate(this);
 	this->addChild(m_pBagLayer);
+	//文本显示层
+	m_pMsgLayer = MessageLayer::create();
+	this->addChild(m_pMsgLayer);
 	//玩家层
 	m_pPlayerManager = PlayerManager::create();
 	this->addChild(m_pPlayerManager);
@@ -91,6 +103,7 @@ bool GameScene::init()
 	//添加角色移动结束触发器
 	_eventDispatcher->addEventCustomListener(AStarController::CHARACTER_MOVE_TO_TILE,
 		SDL_CALLBACK_1(GameScene::moveToTile, this), this);
+	this->endBattle();
 
 	this->scheduleUpdate();
 
@@ -267,7 +280,7 @@ void GameScene::openBag()
 {
 	m_pOperationLayer->setTouchEnabled(false);
 	m_pBagLayer->setType(BagLayer::Type::Bag);
-	m_pBagLayer->setVisibleofBagLayer(true);
+	m_pBagLayer->setVisible(true);
 }
 
 void GameScene::saveProgress()
@@ -339,4 +352,179 @@ void GameScene::changeMap(const string& mapFilename, const Point& tileCoodinate)
 	{
 		m_pScriptManager->getLuaStack()->executeScriptFile(scriptName.asString(), true);
 	}
+}
+
+void GameScene::closeBag()
+{
+	m_pBagLayer->setVisible(false);
+	if (m_gameState == GameState::Normal)
+	{
+		m_pOperationLayer->setTouchEnabled(true);
+	}
+	auto type = m_pBagLayer->getType();
+	switch (type)
+	{
+	case BagLayer::Type::Bag:
+	case BagLayer::Type::Skill:
+		//在战斗状态下且未点击使用按钮，才会呼出行动菜单
+		if (m_gameState == GameState::Fighting
+			&& m_pBattleScene->getGood() == nullptr)
+		{
+			m_pBattleScene->setVisibileOfActionBtns(true);
+		}
+		break;
+	case BagLayer::Type::ShopBuy:
+	case BagLayer::Type::ShopSell://TODO:恢复协程
+		m_pScriptManager->resumeCoroutine(WaitType::Button, 0);
+		break;
+	case BagLayer::Type::SeedBag:
+		break;
+	default:
+		break;
+	}
+}
+void GameScene::startBattle(const unordered_map<string, int>& enemyData)
+{
+	//设置状态
+	this->setGameState(GameState::Fighting);
+	//出现战斗场景
+	m_pBattleScene->setVisible(true);
+	//隐藏地图
+	m_pMapLayer->setVisible(false);
+	//添加我方和敌人
+	m_pBattleScene->startBattle(enemyData);
+	//播放战斗音乐
+	SoundManager::getInstance()->playBackgroundMusic(STATIC_DATA_STRING("battle_bgm"), -1);
+	SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("battle_me"), 0);
+}
+
+void GameScene::endBattle()
+{
+	//恢复 TODO
+	this->setGameState(GameState::Normal);
+	//战斗场景消失
+	m_pBattleScene->setVisible(false);
+	m_pBattleScene->clear();
+	//显示地图
+	m_pMapLayer->setVisible(true);
+	//操作层
+	m_pOperationLayer->setVisible(true);
+	m_pOperationLayer->setPosition(Point::ZERO);
+	//解锁
+	m_pBagLayer->unlockPlayer();
+	//播放原来的bgm
+	auto bgm = m_pMapLayer->getBGMFilename();
+
+	if (!bgm.empty())
+	{
+		SoundManager::getInstance()->playBackgroundMusic(bgm, -1);
+	}
+}
+
+Good* GameScene::addGood(const string& goodName, int number)
+{
+	auto good = DynamicData::getInstance()->addGood(goodName, number);
+	//更新背包层
+	m_pBagLayer->updateGoods();
+	return good;
+}
+
+bool GameScene::removeGood(const string& goodName, int number)
+{
+	bool ret = DynamicData::getInstance()->removeGood(goodName, number);
+	m_pBagLayer->updateGoods();
+	return ret;
+}
+
+void GameScene::useGood(Good* good)
+{
+	//获取可用场合
+	auto usageOccasion = good->getUsageOccasion();
+	auto usageRange = good->getUsageRange();
+
+	if (usageOccasion == UsageOccasion::All
+		|| (usageOccasion == UsageOccasion::Fighting && m_gameState == GameState::Fighting)
+		|| (usageOccasion == UsageOccasion::Normal && m_gameState == GameState::Normal))
+	{
+		auto player = m_pBagLayer->getSelectedPlayer();
+		auto id = player->getUniqueID();
+
+		if (m_gameState == GameState::Normal)
+		{
+			good->execute(id, id);
+			//更新物品状态
+			DynamicData::getInstance()->updateGood(good);
+			m_pBagLayer->updateGoods();
+		}
+		else if (m_gameState == GameState::Fighting)
+		{
+			m_pBattleScene->setGood(good);
+			//关闭背包
+			this->closeBag();
+			//显示撤销按钮
+			m_pBattleScene->setVisibileOfUndoBtn(true);
+		}
+	}
+	else
+	{
+		m_pMsgLayer->showTip(STATIC_DATA_STRING("use_default_text"), TextPosition::Middle, 1.f);
+	}
+}
+
+bool GameScene::buyGood(Good* good)
+{
+	//获取价钱并扣除
+	auto cost = good->getCost();
+	bool ret = m_pBagLayer->removeGold(cost);
+
+	auto goodName = good->getPrototype();
+	const Json::Value& array = StaticData::getInstance()->getValueForKey("buy_text");
+	string text = array[ret].asString();
+	//购买成功
+	if (ret)
+	{
+		this->addGood(goodName, 1);
+		//对应物品减少一
+		//DynamicData::getInstance()->subShopGood(good, 1);
+		m_pBagLayer->updateGoods();
+	}
+	//提示文本
+	m_pMsgLayer->showTip(text, TextPosition::Middle, 1.f);
+
+	return ret;
+}
+
+bool GameScene::sellGood(Good* good)
+{
+	auto dynamicData = DynamicData::getInstance();
+	auto sellRatio = dynamicData->getSellRatio();
+	int cost = int(good->getCost() * sellRatio);
+	//为0则不可出售
+	bool ret = (cost != 0);
+	const Json::Value& array = StaticData::getInstance()->getValueForKey("sell_text");
+	auto text = array[ret].asString();
+	//出售成功 减少物品 增加金钱
+	if (ret)
+	{
+		//是装备着的装备 先卸下
+		if (good->getGoodType() == GoodType::Equipment
+			&& good->isEquiped())
+		{
+			auto player = m_pBagLayer->getSelectedPlayer();
+			auto chartletName = player->getChartletName();
+			auto equipType = good->getEquipmentType();
+
+			dynamicData->unequip(chartletName, equipType);
+		}
+		else
+		{
+			dynamicData->removeGood(good, 1);
+		}
+		m_pBagLayer->addGold(cost);
+		m_pBagLayer->updateGoods();
+	}
+	//提示文本
+	m_pMsgLayer->showTip(text, TextPosition::Middle, 1.f);
+
+	return ret;
 }

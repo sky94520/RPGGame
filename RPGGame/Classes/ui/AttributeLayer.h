@@ -31,12 +31,13 @@ public:
 	//锁定角色
 	void lockPlayer(int uniqueID);
 	void unlockPlayer();
+	//更新exp
+	void updateShownOfExp();
 private:
 	void updateRadioButton(RadioButton* radioBtn, Character* player);
 	void initializeUI(Node* pXmlNode);
 	void selectPlayer(RadioButton*, int, RadioButtonGroup::EventType);
 	void updatePropLabels(const string& chartletName, const Properties& properties, bool bPlayerProperties);
-	void updateShownOfExp();
 private:
 	Node* m_pStatusNode;//状态节点
 	ui::RadioButtonGroup* m_pPlayerGroup;//玩家组

@@ -154,6 +154,7 @@
     <ClCompile Include="Classes\HelloWorldScene.cpp" />
     <ClCompile Include="Classes\layer\EffectLayer.cpp" />
     <ClCompile Include="Classes\layer\MapLayer.cpp" />
+    <ClCompile Include="Classes\layer\MessageLayer.cpp" />
     <ClCompile Include="Classes\layer\SpritePool.cpp" />
     <ClCompile Include="Classes\layer\Text.cpp" />
     <ClCompile Include="Classes\main.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Classes\HelloWorldScene.h" />
     <ClInclude Include="Classes\layer\EffectLayer.h" />
     <ClInclude Include="Classes\layer\MapLayer.h" />
+    <ClInclude Include="Classes\layer\MessageLayer.h" />
     <ClInclude Include="Classes\layer\SpritePool.h" />
     <ClInclude Include="Classes\layer\Text.h" />
     <ClInclude Include="Classes\manager\PlayerManager.h" />

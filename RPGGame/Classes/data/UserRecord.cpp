@@ -127,6 +127,45 @@ void UserRecord::equip(const string&playerName, int uniqueId, Good* good)
 	equipments.insert(make_pair(equipmentType, good));
 }
 
+void UserRecord::unequip(const string& playerName, EquipmentType equipmentType)
+{
+	PlayerData* data = players[playerName];
+	auto &equipments = data->equipments;
+	//获取用户
+	auto iter = equipments.find(equipmentType);
+
+	if (iter == equipments.end())
+		return;
+	auto good = iter->second;
+	good->unequip();
+	good->setNumber(good->getNumber() - 1);
+	SDL_SAFE_RELEASE(good);
+
+	equipments.erase(iter);
+}
+
+bool UserRecord::studySkill(const string& playerName, const string& skillName)
+{
+	//检测是否学习了该技能
+	PlayerData* data = players[playerName];
+	auto &skills = data->skills;
+
+	auto it = find_if(skills.begin(), skills.end(), [skillName](Good* good)
+	{
+		return good->getPrototype() == skillName;
+	});
+	if (it != skills.end())
+	{
+		printf("the player has studied the skill\n");
+		return false;
+	}
+	//学习技能
+	Good* good = Good::create(skillName);
+	skills.push_back(good);
+	SDL_SAFE_RETAIN(good);
+	return true;
+}
+
 void UserRecord::parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame)
 {
 	string playerName;

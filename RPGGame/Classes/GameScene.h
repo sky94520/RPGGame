@@ -2,6 +2,7 @@
 #define __GameScene_H__
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include <SDL_Engine/SDL_Engine.h>
 
 #include "entity/AStar.h"
@@ -11,14 +12,17 @@
 using namespace std;
 USING_NS_SDL;
 
+class Good;
 class MapLayer;
 class EffectLayer;
 class PlayerManager;
 class ScriptManager;
 class OperationLayer;
+class BattleScene;
 class BagLayer;
 class Character;
 class LuaStack;
+class MessageLayer;
 enum class GameState;
 
 class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLayerDelegate
@@ -26,7 +30,9 @@ class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLa
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
 	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//特效层
 	SDL_SYNTHESIZE_READONLY(OperationLayer*, m_pOperationLayer, OperationLayer);//操作层
+	SDL_SYNTHESIZE_READONLY(BattleScene*, m_pBattleScene, BattleScene); //战斗层
 	SDL_SYNTHESIZE_READONLY(BagLayer*, m_pBagLayer, BagLayer);//物品层
+	SDL_SYNTHESIZE_READONLY(MessageLayer*, m_pMsgLayer, MessageLayer);//文本层
 
 	SDL_SYNTHESIZE_READONLY(PlayerManager*, m_pPlayerManager, PlayerManager);//玩家层
 	SDL_SYNTHESIZE_READONLY(ScriptManager*, m_pScriptManager, ScriptManager);//脚本层
@@ -65,6 +71,17 @@ public: //GoodLayerDelegate
 public:
 	//改变场景
 	void changeMap(const string& mapFilename, const Point& tileCoodinate);
+	void closeBag();
+	//战斗
+	void startBattle(const unordered_map<string, int>& enemy);
+	void endBattle();
+
+	Good* addGood(const string& goodName, int number);
+	bool removeGood(const string& goodName, int number);
+	//使用物品
+	void useGood(Good* good);
+	bool buyGood(Good* good);
+	bool sellGood(Good* good);
 private:
 	static GameScene* s_pInstance;
 	GameState m_gameState; //游戏状态
