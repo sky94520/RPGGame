@@ -10,7 +10,6 @@
 #include "../data/CharacterData.h"
 #include "../manager/PlayerManager.h"
 
-
 BagLayer::BagLayer()
 	:m_type(Type::None)
 	,m_nCurPage(1)

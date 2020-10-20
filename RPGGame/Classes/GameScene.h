@@ -6,6 +6,9 @@
 #include <SDL_Engine/SDL_Engine.h>
 
 #include "entity/AStar.h"
+#include "layer/SpritePool.h"
+#include "data/StaticData.h"
+#include "data/DynamicData.h"
 #include "ui/GoodLayer.h"
 #include "ui/OperationLayer.h"
 
@@ -37,8 +40,23 @@ class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLa
 	SDL_SYNTHESIZE_READONLY(PlayerManager*, m_pPlayerManager, PlayerManager);//玩家层
 	SDL_SYNTHESIZE_READONLY(ScriptManager*, m_pScriptManager, ScriptManager);//脚本层
 public:
-	static GameScene* getInstance();
-	static void purge();
+	static GameScene* getInstance()
+	{
+		//仅在场景在运行时才会分配新的对象
+		if (s_pInstance == nullptr && Director::getInstance()->isRunning())
+		{
+			s_pInstance = new GameScene();
+			s_pInstance->init();
+		}
+		return s_pInstance;
+	}
+	static void purge()
+	{
+		SDL_SAFE_RELEASE_NULL(s_pInstance);
+		StaticData::purge();
+		DynamicData::purge();
+		SpritePool::purge();
+	}
 private:
 	GameScene();
 	~GameScene();

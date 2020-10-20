@@ -1,49 +1,20 @@
 #include "GameScene.h"
 #include "GameMacros.h"
-
 #include "layer/MapLayer.h"
 #include "layer/EffectLayer.h"
-#include "layer/SpritePool.h"
 #include "layer/MessageLayer.h"
-
 #include "manager/PlayerManager.h"
 #include "manager/ScriptManager.h"
-
-#include "ui/OperationLayer.h"
 #include "ui/BagLayer.h"
-
-#include "data/StaticData.h"
-#include "data/DynamicData.h"
+#include "ui/OperationLayer.h"
 #include "entity/Good.h"
 #include "entity/AStar.h"
 #include "entity/Character.h"
 #include "entity/AStarController.h"
-
 #include "script/LuaStack.h"
-
 #include "battle/BattleScene.h"
 
-//static
 GameScene* GameScene::s_pInstance = nullptr;
-
-GameScene* GameScene::getInstance()
-{
-	//仅在场景在运行时才会分配新的对象
-	if (s_pInstance == nullptr && Director::getInstance()->isRunning())
-	{
-		s_pInstance = new GameScene();
-		s_pInstance->init();
-	}
-	return s_pInstance;
-}
-
-void GameScene::purge()
-{
-	SDL_SAFE_RELEASE_NULL(s_pInstance);
-	StaticData::purge();
-	DynamicData::purge();
-	SpritePool::purge();
-}
 
 GameScene::GameScene()
 	:m_pMapLayer(nullptr)
@@ -262,7 +233,7 @@ void GameScene::setGameState(GameState state)
 	//TODO: 从脚本中结束，尝试恢复行走
 	if (m_gameState == GameState::Normal)
 	{
-		//m_pPlayerLayer->getPlayer()->popStepAndAnimate();
+		//m_pPlayerManager->getPlayer()->popStepAndAnimate();
 	}
 }
 
