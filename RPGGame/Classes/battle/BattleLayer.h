@@ -16,8 +16,6 @@ class PriorityQueue;
 class BattleLayer : public Layer
 {
 public:
-	static const string BATTLE_FIGHTER_DEAD_EVENT;
-public:
 	BattleLayer();
 	~BattleLayer();
 	CREATE_FUNC(BattleLayer);
@@ -40,16 +38,16 @@ public:
 	void fighterDead(Fighter* fighter);
 	int getOurNumber() const;
 	int getEnemyNumber() const;
+	//设置战斗背景
+	void setBattleBack(const string& back, int index);
 	//清除函数
 	void clear();
-	bool isReadyPlayer()const { return m_bReadyPlayer; }
 private:
 	//当前正在初始化 主要用于脚本初始化
 	Fighter* m_pCurInitialFighter;
 	//是否回合结束
 	bool m_bRoundOver;
 	PriorityQueue* m_pPriorityQueue;
-	//是否等待玩家出手
-	bool m_bReadyPlayer;
+	Sprite* m_battleBacks[2];//战斗背景
 };
 #endif

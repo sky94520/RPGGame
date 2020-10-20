@@ -84,6 +84,46 @@ void AttributeLayer::updateLabelOfDeltaProp(const Properties& deltaProp)
 	this->updatePropLabels("", deltaProp, false);
 }
 
+void AttributeLayer::lockPlayer(int uniqueID)
+{
+	auto& list = m_pPlayerGroup->getRadioButtonList();
+
+	for (auto radioBtn : list)
+	{
+		auto player = static_cast<Character*>(radioBtn->getUserObject());
+		//没有绑定角色，则跳过
+		if (player == nullptr)
+			continue;
+
+		if (player->getUniqueID() == uniqueID)
+		{
+			radioBtn->setTouchEnabled(true);
+			m_pPlayerGroup->setSelectedButton(radioBtn);
+		}
+		else
+		{
+			radioBtn->setTouchEnabled(false);
+		}
+	}
+}
+
+void AttributeLayer::unlockPlayer()
+{
+	if (m_pPlayerGroup == nullptr)
+		return;
+	auto& list = m_pPlayerGroup->getRadioButtonList();
+
+	for (auto radioBtn : list)
+	{
+		auto player = static_cast<Character*>(radioBtn->getUserObject());
+		//没有绑定角色，则跳过
+		if (player == nullptr)
+			continue;
+		//设置按钮可选择
+		radioBtn->setTouchEnabled(true);
+	}
+}
+
 void AttributeLayer::updateRadioButton(RadioButton* radioBtn, Character* player)
 {
 	bool ret = (player != nullptr);

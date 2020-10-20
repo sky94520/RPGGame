@@ -28,6 +28,9 @@ public:
 	//更新属性面板
 	void updateLabelOfProp(Character* player);
 	void updateLabelOfDeltaProp(const Properties& deltaProp);
+	//锁定角色
+	void lockPlayer(int uniqueID);
+	void unlockPlayer();
 private:
 	void updateRadioButton(RadioButton* radioBtn, Character* player);
 	void initializeUI(Node* pXmlNode);

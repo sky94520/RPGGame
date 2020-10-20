@@ -35,8 +35,9 @@ public:
 	bool isShowing() const { return m_bVisible; }
 	void setDelegate(GoodLayerDelegate* pDelegate) { m_pGoodLayer->setDelegate(pDelegate); }
 	void setType(Type type);
-	//物品 技能切换回调函数
-	void toggle(Object* sender);
+	//锁定角色
+	void lockPlayer(int uniqueID);
+	void unlockPlayer();
 
 	virtual void pageBtnCallback(GoodLayer* goodLayer, int value);
 	virtual void updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number);
@@ -46,6 +47,8 @@ public:
 	virtual void selectGoodCallback(GoodLayer* goodLayer, GoodInterface* good);
 	virtual bool touchOutsideCallback(GoodLayer* goodLayer);
 private:
+	//物品 技能切换回调函数
+	void toggle(Object* sender);
 	void showGoodLayer(const string& titleFrameName, const string& useBtnFrameName, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage);
 private:
 	Type m_type;//类型(玩家背包、商店等)

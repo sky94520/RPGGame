@@ -85,16 +85,14 @@ void BagLayer::setType(Type type)
 	this->pageBtnCallback(m_pGoodLayer, 0);
 }
 
-void BagLayer::toggle(Object* sender)
+void BagLayer::lockPlayer(int uniqueID)
 {
-	if (m_type == Type::Bag)
-	{
-		this->setType(Type::Skill);
-	}
-	else if (m_type == Type::Skill)
-	{
-		this->setType(Type::Bag);
-	}
+	m_pAttributeLayer->lockPlayer(uniqueID);
+}
+
+void BagLayer::unlockPlayer()
+{
+	m_pAttributeLayer->unlockPlayer();
 }
 
 void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
@@ -285,6 +283,18 @@ bool BagLayer::touchOutsideCallback(GoodLayer* goodLayer)
 {
 	//TODO:点击了外面，暂时不处理
 	return false;
+}
+
+void BagLayer::toggle(Object* sender)
+{
+	if (m_type == Type::Bag)
+	{
+		this->setType(Type::Skill);
+	}
+	else if (m_type == Type::Skill)
+	{
+		this->setType(Type::Bag);
+	}
 }
 
 void BagLayer::showGoodLayer(const string& titleFrameName, const string& useBtnFrameName

@@ -132,6 +132,7 @@ void BattlePanelLayer::attackBtnCallback(Object* sender)
 	//隐藏行动按钮，出现撤销按钮
 	this->setVisibileOfActionBtns(false);
 	this->setVisibileOfUndoBtn(true);
+	m_pDelegate->attackBtnCallback();
 
 	m_clickedType = ClickedType::Attack;
 }
@@ -140,14 +141,8 @@ void BattlePanelLayer::magicBtnCallback(Object* sender)
 {
 	//隐藏行动按钮，出现撤销按钮
 	this->setVisibileOfActionBtns(false);
-	//打开背包，并锁定角色
-	/*
-	auto goodLayer = GameScene::getInstance()->getGoodLayer();
-	auto curTurn = m_pBattleLayer->getTopTurn();
-
-	goodLayer->show(GoodLayer::Type::Skill);
-	goodLayer->lockPlayer(curTurn->fighter->getFighterID());
-	*/
+	this->setVisibileOfUndoBtn(true);
+	m_pDelegate->magicBtnCallback();
 	m_clickedType = ClickedType::Good;
 }
 
@@ -155,15 +150,7 @@ void BattlePanelLayer::goodBtnCallback(Object* sender)
 {
 	//隐藏行动按钮，出现撤销按钮
 	this->setVisibileOfActionBtns(false);
-	//打开背包，并锁定角色
-	/*
-	auto goodLayer = GameScene::getInstance()->getGoodLayer();
-	auto curTurn = m_pBattleLayer->getTopTurn();
-
-	goodLayer->show(GoodLayer::Type::Bag);
-	goodLayer->lockPlayer(curTurn->fighter->getFighterID());
-	*/
-
+	m_pDelegate->goodBtnCallback();
 	m_clickedType = ClickedType::Good;
 }
 
@@ -171,26 +158,14 @@ void BattlePanelLayer::guardBtnCallback(Object* sender)
 {
 	//隐藏行动按钮
 	this->setVisibileOfActionBtns(false);
-	//获取当前的turn
-	/*
-	auto turn = m_pBattleLayer->getTopTurn();
-	//防御
-	turn->fighter->guard();
-	//回合结束
-	m_pBattleLayer->roundOver();
-	*/
+	m_pDelegate->guardBtnCallback();
 }
 
 void BattlePanelLayer::escapeBtnCallback(Object* sender)
 {
 	//隐藏行动按钮
 	this->setVisibileOfActionBtns(false);
-	/*
-	//主角逃跑
-	m_pBattleLayer->getTopTurn()->fighter->escape();
-	//结束战斗
-	m_pBattleLayer->endBattle();
-	*/
+	m_pDelegate->escapeBtnCallback();
 }
 
 void BattlePanelLayer::clickUndoBtnCallback(Object* sender)

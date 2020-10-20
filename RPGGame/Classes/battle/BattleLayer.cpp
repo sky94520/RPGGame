@@ -11,14 +11,12 @@
 #include "../script/LuaStack.h"
 #include "../ui/GoodLayer.h"
 
-const string BattleLayer::BATTLE_FIGHTER_DEAD_EVENT = "fighter dead";
-
 BattleLayer::BattleLayer()
 	:m_pCurInitialFighter(nullptr)
 	,m_bRoundOver(true)
 	,m_pPriorityQueue(nullptr)
-	,m_bReadyPlayer(false)
 {
+	memset(m_battleBacks, NULL, sizeof(m_battleBacks));
 }
 
 BattleLayer::~BattleLayer()
@@ -58,7 +56,9 @@ void BattleLayer::update(float dt)
 		//改变主角状态
 		auto player = static_cast<Actor*>(top->fighter);
 		player->ready();
-		m_bReadyPlayer = true;
+		//发送事件
+		auto eventDispatcher = Director::getInstance()->getEventDispatcher();
+		eventDispatcher->dispatchCustomEvent(BATTLE_PLAYER_OPERATION, this);
 	}
 }
 
@@ -165,6 +165,22 @@ int BattleLayer::getOurNumber() const
 int BattleLayer::getEnemyNumber() const
 {
 	return m_pPriorityQueue->getEnemyNumber();
+}
+
+void BattleLayer::setBattleBack(const string& back, int index)
+{
+	if (m_battleBacks[index] == nullptr)
+	{
+		m_battleBacks[index] = Sprite::create(back);
+		this->addChild(m_battleBacks[index], -1);
+
+		Size visibleSize = Director::getInstance()->getVisibleSize();
+		m_battleBacks[index]->setPosition(visibleSize.width / 2, visibleSize.height / 2);
+	}
+	else
+	{
+		m_battleBacks[index]->setTexture(back);
+	}
 }
 
 void BattleLayer::clear()

@@ -5,11 +5,13 @@
 #include "BattleLayer.h"
 #include "BattleResult.h"
 #include "PriorityQueue.h"
-#include "BattlePanelLayer.h"
 
 #include "../GameScene.h"
 #include "../manager/PlayerManager.h"
+
+#include "../ui/BagLayer.h"
 #include "../ui/GoodLayer.h"
+
 #include "../entity/Good.h"
 #include "../entity/Character.h"
 
@@ -21,7 +23,6 @@ BattleScene::BattleScene()
 	,m_pPanelLayer(nullptr)
 	,m_pBattleResult(nullptr)
 {
-	memset(m_battleBacks, NULL, sizeof(m_battleBacks));
 }
 
 BattleScene::~BattleScene()
@@ -30,20 +31,20 @@ BattleScene::~BattleScene()
 
 bool BattleScene::init()
 {
-	Size visibleSize = Director::getInstance()->getVisibleSize();
-
 	//战斗层
 	m_pBattleLayer = BattleLayer::create();
-	//m_pBattleLayer->setDelegate(this);
 	this->addChild(m_pBattleLayer);
 	//ui层
 	m_pPanelLayer = BattlePanelLayer::create("scene/battle_scene.xml");
+	m_pPanelLayer->setDelegate(this);
 	this->addChild(m_pPanelLayer);
 	//战斗结果层
 	m_pBattleResult = BattleResult::create("scene/battle/battle_result_layer.xml");
 	this->addChild(m_pBattleResult);
 	//添加fighter死亡监听
 	_eventDispatcher->addEventCustomListener(BATTLE_FIGHTER_DEAD_EVENT, SDL_CALLBACK_1(BattleScene::fighterDeadCallback, this), this);
+	//显示玩家操作按钮监听
+	_eventDispatcher->addEventCustomListener(BATTLE_PLAYER_OPERATION, SDL_CALLBACK_1(BattleScene::showOperationBtnCallback, this), this);
 
 	return true;
 }
@@ -98,30 +99,12 @@ void BattleScene::update(float dt)
 	if (!m_pBattleResult->isBattleOver())
 	{
 		m_pBattleLayer->update(dt);
-		//玩家可以出手 出现行动按钮
-		if (m_pBattleLayer->isReadyPlayer() 
-			&& (!m_pPanelLayer->isVisibileOfActionBtns() && !m_pPanelLayer->isVisibleOfUndoBtn()))
-		{
-			m_pPanelLayer->setVisibileOfActionBtns(true);
-			m_pPanelLayer->setVisibileOfUndoBtn(false);
-		}
 	}
 }
 
 void BattleScene::setBattleBack(const string& back, int index)
 {
-	if (m_battleBacks[index] == nullptr)
-	{
-		m_battleBacks[index] = Sprite::create(back);
-		this->addChild(m_battleBacks[index], -1);
-
-		Size visibleSize = Director::getInstance()->getVisibleSize();
-		m_battleBacks[index]->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-	}
-	else
-	{
-		m_battleBacks[index]->setTexture(back);
-	}
+	m_pBattleLayer->setBattleBack(back, index);
 }
 
 void BattleScene::updateStateOfTurn(Turn* turn)
@@ -137,8 +120,8 @@ void BattleScene::updateStateOfTurn(Turn* turn)
 		int maxMp = fighter->getMaxManaPoint();
 		auto sName = fighter->getFighterName();
 
-		auto playerLayer = GameScene::getInstance()->getPlayerManager();
-		int index = playerLayer->getIndexOfCharacter(fighter->getChartletName());
+		auto playerManager = GameScene::getInstance()->getPlayerManager();
+		int index = playerManager->getIndexOfCharacter(fighter->getChartletName());
 
 		m_pPanelLayer->updateStateOfPlayer(index, sName, hp, maxHp, mp, maxMp, nullptr);
 	}//是敌人，仅进行血量更新
@@ -216,6 +199,56 @@ bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 void BattleScene::clear()
 {
 	m_pBattleLayer->clear();
+	m_pBattleResult->clear();
+}
+
+void BattleScene::attackBtnCallback()
+{
+	//什么也不做
+}
+
+void BattleScene::magicBtnCallback()
+{
+	//打开背包，并锁定角色
+	auto curTurn = m_pBattleLayer->getTopTurn();
+	auto layer = GameScene::getInstance()->getBagLayer();
+	layer->setType(BagLayer::Type::Skill);
+	layer->lockPlayer(curTurn->fighter->getFighterID());
+}
+
+void BattleScene::goodBtnCallback()
+{
+	//打开背包，并锁定角色
+	auto curTurn = m_pBattleLayer->getTopTurn();
+	auto layer = GameScene::getInstance()->getBagLayer();
+	layer->setType(BagLayer::Type::Bag);
+	layer->lockPlayer(curTurn->fighter->getFighterID());
+}
+
+void BattleScene::guardBtnCallback()
+{
+	//防御，然后回合结束
+	auto turn = m_pBattleLayer->getTopTurn();
+	turn->fighter->guard();
+	m_pBattleLayer->roundOver();
+}
+
+void BattleScene::escapeBtnCallback()
+{
+	//主角逃跑
+	m_pBattleLayer->getTopTurn()->fighter->escape();
+	//TODO:结束战斗
+	m_pBattleLayer->endBattle();
+}
+
+void BattleScene::undoBtnCallback()
+{
+}
+
+void BattleScene::showOperationBtnCallback(EventCustom* eventCustom)
+{
+	m_pPanelLayer->setVisibileOfActionBtns(true);
+	m_pPanelLayer->setVisibileOfUndoBtn(false);
 }
 
 void BattleScene::fighterDeadCallback(EventCustom* eventCustom)

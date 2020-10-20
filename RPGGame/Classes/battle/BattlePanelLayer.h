@@ -10,6 +10,17 @@ using namespace SDL::ui;
 
 class Good;
 
+class ClickButtonDelegate
+{
+public:
+	virtual void attackBtnCallback()=0;
+	virtual void magicBtnCallback()=0;
+	virtual void goodBtnCallback()=0;
+	virtual void guardBtnCallback()=0;
+	virtual void escapeBtnCallback()=0;
+	virtual void undoBtnCallback()=0;
+};
+
 class BattlePanelLayer : public Layer
 {
 public:
@@ -24,6 +35,7 @@ public:
 	~BattlePanelLayer();
 	static BattlePanelLayer* create(const string& xmlPath);
 	bool init(const string& xmlPath);
+	void setDelegate(ClickButtonDelegate* pDelegate) { m_pDelegate = pDelegate; }
 	//是否显示行动按钮
 	bool isVisibileOfActionBtns() const { return m_bVisibileOfActionBtn; }
 	void setVisibileOfActionBtns(bool visibility);
@@ -58,6 +70,7 @@ private:
 	ClickedType m_clickedType;
 	//待使用的物品
 	Good* m_pGood;
+	ClickButtonDelegate* m_pDelegate;
 };
 
 #endif
