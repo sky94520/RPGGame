@@ -141,6 +141,16 @@ Turn* BattleLayer::getClickedTurn(const Point& pos)
 	return m_pPriorityQueue->getClickedTurn(pos);
 }
 
+Turn* BattleLayer::getTurnByID(int uniqueID)
+{
+	return m_pPriorityQueue->getTurnByID(uniqueID);
+}
+
+Fighter* BattleLayer::searchFighter(TurnType turnType, SearchType searchType)
+{
+	return m_pPriorityQueue->searchFighter(turnType, searchType);
+}
+
 void BattleLayer::roundOver()
 {
 	m_bRoundOver = true;

@@ -40,6 +40,8 @@ public:
 	//锁定角色
 	void lockPlayer(int uniqueID);
 	void unlockPlayer();
+	//更新属性面板
+	void updateShownOfProp();
 	Character* getSelectedPlayer()const;
 	//更新显示的物品
 	void updateGoods();

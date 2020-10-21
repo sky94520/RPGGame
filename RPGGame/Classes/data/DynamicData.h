@@ -35,6 +35,9 @@ public:
 	Properties getTotalProperties(const string& playerName);
 	void setTotalProperties(const string& playerName, const Properties& properties);
 
+	int getProperty(const string& playerName, PropertyType type);
+	void setProperty(const string& playerName, PropertyType type, unsigned int value);
+
 	int getLevel(const string& playerName) const;
 	void setLevel(const string& playerName, int var);
 
@@ -51,12 +54,15 @@ public:
 
 	//获取玩家的装备
 	Good* getEquipment(const string& playerName, EquipmentType equipmentType);
+	bool removeEquipment(const string& playerName, const string& goodName, int number);
 	//拆分装备
 	bool splitEquipment(const string& playerName, EquipmentType type, Good* good, int number);
 	void overlyingEquipment(const string& playerName, Good* good, int number);
 	//添加物品到背包
 	Good* addGood(const string& goodName, int number);
 	void updateGood(Good* good);
+	//获取背包中物品
+	Good* getGood(const string& goodName);
 	//移除背包中的物品
 	bool removeGood(const string& goodName, int number);
 	bool removeGood(Good* good, int number);

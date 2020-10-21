@@ -1,7 +1,11 @@
 #ifndef __BattleScript_H__
 #define __BattleScript_H__
 
+#include <string>
+#include <unordered_map>
+
 #include "lua.hpp"
+
 using namespace std;
 
 extern int open_battle(lua_State* pL);

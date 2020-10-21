@@ -196,6 +196,22 @@ LuaObject* ScriptManager::getClickedNPC(const Rect& r, int priority) const
 	return luaObject;
 }
 
+LuaObject* ScriptManager::getNPCByID(int id) const
+{
+	LuaObject* npc = nullptr;
+
+	auto callback = [&id](const pair<string, LuaObject*>& pair)
+	{
+		auto npc = pair.second;
+		return npc->getUniqueID() == id;
+	};
+	auto it = find_if(m_objects.begin(), m_objects.end(), callback);
+
+	if (it != m_objects.end())
+		npc = it->second;
+	return npc;
+}
+
 LuaObject* ScriptManager::getLuaObject(const string& name)
 {
 	LuaObject* object = nullptr;

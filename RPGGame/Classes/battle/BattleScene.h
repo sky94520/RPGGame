@@ -15,8 +15,11 @@ using namespace SDL::ui;
 
 class Good;
 struct Turn;
+class Fighter;
 class BattleLayer;
 class BattleResult;
+enum class TurnType;
+enum class SearchType;
 
 class BattleScene : public Scene, public ClickButtonDelegate
 {
@@ -28,9 +31,16 @@ public:
 	//开始战斗
 	void startBattle(const unordered_map<string, int>& enemyData);
 
+	void roundOver();
 	void update(float dt);
+	void addReward(int exp, int gold);
+	void addReward(const string& name, int number);
 	//设置战斗背景
 	void setBattleBack(const string& back, int index);
+	Fighter* getFighterByID(int uniqueID);
+	Turn* getTurnByID(int uniqueID);
+	Fighter* searchFighter(TurnType turnType, SearchType searchType);
+	BattleLayer* getBattleLayer() const { return m_pBattleLayer; }
 
 	void setVisibileOfActionBtns(bool visibile);
 	void setVisibileOfUndoBtn(bool visibile);

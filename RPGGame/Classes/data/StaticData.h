@@ -4,8 +4,9 @@
 #include <vector>
 #include <functional>
 #include <sstream>
+#include <SDL_Engine/SDL_Engine.h>
 
-#include "SDL_Engine/SDL_Engine.h"
+#include "lua.hpp"
 #include "../entity/AStar.h"
 #include "../dist/json/json.h"
 
@@ -33,6 +34,8 @@ public:
 	const Json::Value& getValueForKey(const string& key);
 	Point getPointForKey(const string& key);
 	Size getSizeForKey(const string& key);
+
+	Animation* getAnimation(const string& animationName);
 
 	string toString(PropertyType type);
 	//icon

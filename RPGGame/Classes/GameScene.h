@@ -27,6 +27,7 @@ class Character;
 class LuaStack;
 class MessageLayer;
 enum class GameState;
+class Controller;
 
 class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLayerDelegate
 {
@@ -64,6 +65,7 @@ private:
 	bool initializeMap();
 	//加载资源
 	void preloadResources();
+public:
 	bool isPassing(const SDL_Point& tilePos) const;
 	bool isPassing4(const SDL_Point& tilePos, Direction direction) const;
 	void moveToTile(EventCustom* eventCustom);
@@ -100,6 +102,9 @@ public:
 	void useGood(Good* good);
 	bool buyGood(Good* good);
 	bool sellGood(Good* good);
+
+	Character* getCharacterByID(int id);
+	Controller* getControllerByCharacterID(int id);
 private:
 	static GameScene* s_pInstance;
 	GameState m_gameState; //游戏状态

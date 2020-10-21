@@ -93,6 +93,11 @@ void BattleScene::startBattle(const unordered_map<string, int>& enemyData)
 	}
 }
 
+void BattleScene::roundOver()
+{
+	m_pBattleLayer->roundOver();
+}
+
 void BattleScene::update(float dt)
 {
 	//只有战斗未结束，才进行出手更新
@@ -102,9 +107,34 @@ void BattleScene::update(float dt)
 	}
 }
 
+void BattleScene::addReward(int exp, int gold)
+{
+	m_pBattleResult->addReward(exp, gold);
+}
+
+void BattleScene::addReward(const string& name, int number)
+{
+	m_pBattleResult->addReward(name, number);
+}
+
 void BattleScene::setBattleBack(const string& back, int index)
 {
 	m_pBattleLayer->setBattleBack(back, index);
+}
+
+Fighter* BattleScene::getFighterByID(int uniqueID)
+{
+	return m_pBattleLayer->getFighterByID(uniqueID);
+}
+
+Turn* BattleScene::getTurnByID(int uniqueID)
+{
+	return m_pBattleLayer->getTurnByID(uniqueID);
+}
+
+Fighter* BattleScene::searchFighter(TurnType turnType, SearchType searchType)
+{
+	return m_pBattleLayer->searchFighter(turnType, searchType);
 }
 
 void BattleScene::setVisibileOfActionBtns(bool visibile)

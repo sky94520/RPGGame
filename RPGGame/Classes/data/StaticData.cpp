@@ -1,6 +1,10 @@
 #include "StaticData.h"
-#include "../GameMacros.h"
 #include "CharacterData.h"
+
+#include "../GameMacros.h"
+#include "../GameScene.h"
+#include "../manager/ScriptManager.h"
+#include "../script/LuaStack.h"
 
 StaticData* StaticData::s_pInstance = nullptr;
 
@@ -115,4 +119,39 @@ Size StaticData::getSizeForKey(const string& key)
 		size = SizeFromString(value.asString());
 	}
 	return size;
+}
+
+Animation* StaticData::getAnimation(const string& animationName)
+{
+	auto animation = AnimationCache::getInstance()->getAnimation(animationName);
+	//进行加载
+	auto gameScene = GameScene::getInstance();
+	auto luaStack = gameScene->getScriptManager()->getLuaStack();
+	//获取对应table
+	int nType = luaStack->getLuaGlobal(animationName.c_str());
+
+	if (nType != LUA_TNIL)
+	{
+		//获取需要监听的帧索引
+		luaStack->getLuaField(-1, "monitorFrames");
+		//获取table长度
+		int len = luaStack->getLuaLen(-1);
+
+		ValueMap dict;
+		dict["animationName"] = Value(animationName);
+
+		for (int i = 1; i <= len; i++)
+		{
+			luaStack->getLuaIndex(-1, i);
+			int index = luaStack->checkLuaInt(-1);
+			luaStack->pop(1);
+
+			dict["index"] = Value(index);
+
+			animation->getFrames().at(index)->setUserInfo(dict);
+		}
+		luaStack->pop(1);
+	}
+
+	return animation;
 }

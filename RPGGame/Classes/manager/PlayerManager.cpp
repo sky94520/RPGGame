@@ -103,29 +103,39 @@ int PlayerManager::getIndexOfCharacter(const string& chartletName)
 Character* PlayerManager::getPlayerOfID(int id)
 {
 	//遍历寻找
-	/*
-	for (unsigned int i = 0;i < m_characters.size();i++)
-	{
-		auto player = m_characters.at(i);
-		
+	for (int j = 0;j < m_controllers.size(); j++){
+		Controller* controller = m_controllers[j];
+		ControllerListener* listener = controller->getControllerListener();
+		Character* player = static_cast<Character*>(listener);
 		if (player->getUniqueID() == id)
 			return player;
 	}
-	*/
+	return nullptr;
+}
+
+Controller* PlayerManager::getControllerOfPlayerID(int id)
+{
+	//遍历寻找
+	for (int j = 0;j < m_controllers.size(); j++){
+		Controller* controller = m_controllers[j];
+		ControllerListener* listener = controller->getControllerListener();
+		Character* player = static_cast<Character*>(listener);
+		if (player->getUniqueID() == id)
+			return controller;
+	}
 	return nullptr;
 }
 
 bool PlayerManager::isCollidedWithCharacter(const Rect& rect)
 {
-	/*
-	for (unsigned int i = 0;i < m_characters.size();i++)
-	{
-		auto r = m_characters.at(i)->getBoundingBox();
-
+	for (int j = 0;j < m_controllers.size(); j++){
+		Controller* controller = m_controllers[j];
+		ControllerListener* listener = controller->getControllerListener();
+		Character* player = static_cast<Character*>(listener);
+		Rect r = player->getBoundingBox();
 		if (r.intersectRect(rect))
 			return true;
 	}
-	*/
 	return false;
 }
 

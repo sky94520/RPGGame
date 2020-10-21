@@ -95,6 +95,13 @@ void BagLayer::unlockPlayer()
 	m_pAttributeLayer->unlockPlayer();
 }
 
+void BagLayer::updateShownOfProp()
+{
+	auto player = m_pAttributeLayer->getSelectedPlayer();
+	if (player != nullptr)
+		m_pAttributeLayer->updateLabelOfProp(player);
+}
+
 Character* BagLayer::getSelectedPlayer()const
 {
 	return m_pAttributeLayer->getSelectedPlayer();

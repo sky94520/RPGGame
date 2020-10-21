@@ -33,6 +33,11 @@ public:
 	void unequip(const string& playerName, EquipmentType equipmentType);
 	//技能
 	bool studySkill(const string& playerName, const string& skillName);
+	//属性
+	int getProperty(const string& playerName, PropertyType type);
+	void setProperty(const string& playerName, PropertyType type, unsigned int value);
+	//获取物品
+	Good* getGood(const string& goodName);
 private:
 	void parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame);
 	void parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData);

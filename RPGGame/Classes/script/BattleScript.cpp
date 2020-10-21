@@ -1,11 +1,13 @@
-#include "BaseScript.h"
+#include "BattleScript.h"
 
 #include "../GameScene.h"
+#include "../ui/BagLayer.h"
 #include "../ui/GoodLayer.h"
 
 #include "../battle/Fighter.h"
 #include "../battle/BattleScene.h"
 #include "../battle/BattleLayer.h"
+#include "../battle/PriorityQueue.h"
 
 #include "../data/StaticData.h"
 #include "../data/DynamicData.h"
@@ -17,6 +19,16 @@
 
 #include "../layer/MapLayer.h"
 #include "../layer/EffectLayer.h"
+//私有函数
+
+//获取战斗场景中的fighter
+static Fighter* getBattleFighter(int id)
+{
+	auto gameScene = GameScene::getInstance();
+	auto battleScene = gameScene->getBattleScene();
+	auto fighter = battleScene->getFighterByID(id);
+	return fighter;
+}
 
 //------------------------------battle------------------------------------
 int open_battle(lua_State* pL)
@@ -54,7 +66,6 @@ int open_battle(lua_State* pL)
 	return 1;
 }
 
-/*
 int specifyBattleback(lua_State* pL)
 {
 	auto battleScene = GameScene::getInstance()->getBattleScene();
@@ -69,59 +80,8 @@ int specifyBattleback(lua_State* pL)
 
 int startBattle(lua_State* pL)
 {
-	auto gameScene = GameScene::getInstance();
-	auto playerLayer = gameScene->getPlayerLayer();
-	auto battleScene = gameScene->getBattleScene();
-	auto battleLayer = battleScene->getBattleLayer();
-	auto dynamicData = DynamicData::getInstance();
-	//设置状态
-	gameScene->setGameState(GameState::Fighting);
-	//出现战斗场景
-	battleScene->setVisible(true);
-	//隐藏地图
-	gameScene->getMapLayer()->setVisible(false);
-	//设置战斗未结束标识
-	battleScene->setBattleOver(false);
-	//开始回合
-	battleLayer->setRoundOver(true);
-	//播放战斗音乐
-	SoundManager::getInstance()->playBackgroundMusic(STATIC_DATA_STRING("battle_bgm"), -1);
-	SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("battle_me"), 0);
-	//主角进入战斗状态，并更新状态 TODO
-	auto& characterList = playerLayer->getCharacterList();
-	//最多上场4个人物
-	for (unsigned i = 0; i < 4; i++)
-	{
-		Character* player = nullptr;
-		Actor* actor = nullptr;
-
-		if (i < characterList.size())
-		{
-			//获取主角
-			player = characterList.at(i);
-			auto chartletName = player->getChartletName();
-			int uniqueID = player->getUniqueID();
-
-			actor = Actor::create(chartletName, uniqueID);
-			//添加主角
-			battleLayer->addOur(actor);
-			//更新
-			int hp = actor->getProperty(PropertyType::Hp);
-			int maxHp = actor->getMaxHitPoint();
-			int mp = actor->getProperty(PropertyType::Mp);
-			int maxMp = actor->getMaxManaPoint();
-
-			auto faceSpriteFrame = StaticData::getInstance()->getFaceSpriteFrame(chartletName);
-
-			battleScene->setVisibilityOfStatePanel(i, true);
-			battleScene->updateStateOfPlayer(i, chartletName, hp, maxHp, mp, maxMp, faceSpriteFrame);
-		}
-		else//隐藏不需要的状态面板
-		{
-			battleScene->setVisibilityOfStatePanel(i, false);
-		}
-	}
-	//添加敌人
+	//敌人
+	unordered_map<string, int> enemyData;
 	size_t n = lua_rawlen(pL, -1);
 
 	for (size_t i = 1; i <= n; i++)
@@ -134,10 +94,12 @@ int startBattle(lua_State* pL)
 		auto name = luaL_checkstring(pL, -1);
 		int number = (int)luaL_checkinteger(pL, -2);
 		//添加敌人
-		battleLayer->addEnemy(name, number);
+		enemyData.insert(make_pair(name, number));
 
 		lua_pop(pL, 3);
 	}
+	//开始战斗
+	GameScene::getInstance()->startBattle(enemyData);
 	return 0;
 }
 
@@ -145,11 +107,8 @@ int showEnemyAnimation(lua_State* pL)
 {
 	int id = (int)luaL_checkinteger(pL, 1);
 	auto animationName = luaL_checkstring(pL, 2);
-
-	auto gameScene = GameScene::getInstance();
-	auto battleLayer = gameScene->getBattleScene()->getBattleLayer();
-	auto fighter = battleLayer->getFighterByID(id);
-
+	//获取fighter
+	Fighter* fighter = getBattleFighter(id);
 	if (fighter == nullptr)
 		return 0;
 
@@ -167,9 +126,8 @@ int showEnemyAnimation(lua_State* pL)
 		fighter->getSprite()->stopActionByTag(Entity::ANIMATION_TAG);
 		fighter->getSprite()->runAction(animate);
 	}
-	//放入动画持续时间
+	//返回动画持续时间
 	lua_pushnumber(pL, animation->getDuration());
-
 	return 1;
 }
 
@@ -185,11 +143,10 @@ int showBattleAnimation(lua_State* pL)
 	}
 
 	auto gameScene = GameScene::getInstance();
-	auto battleLayer = gameScene->getBattleScene()->getBattleLayer();
+	auto battleScene = gameScene->getBattleScene();
 	auto effectLayer = gameScene->getEffectLayer();
 	//获取对应id的Fighter
-	auto fighter = battleLayer->getFighterByID(id);
-
+	auto fighter = battleScene->getFighterByID(id);
 	if (fighter == nullptr)
 	{
 		printf("LUA_showBattleAnimation:fighter not found\n");
@@ -197,10 +154,10 @@ int showBattleAnimation(lua_State* pL)
 	}
 	auto pos = fighter->getPosition();
 	//显示动画
-	float duration = effectLayer->showAnimationEffect(animationName, pos, flipX, battleLayer);
-	//放入持续时间
+	auto layer = battleScene->getBattleLayer();
+	float duration = effectLayer->showAnimationEffect(animationName, pos, flipX, layer);
+	//返回持续时间
 	lua_pushnumber(pL, duration);
-
 	return 1;
 }
 
@@ -212,8 +169,8 @@ int showBullet(lua_State* pL)
 
 	auto gameScene = GameScene::getInstance();
 	auto battleScene = gameScene->getBattleScene();
-	auto fighter1 = battleScene->getBattleLayer()->getFighterByID(id1);
-	auto fighter2 = battleScene->getBattleLayer()->getFighterByID(id2);
+	auto fighter1 = battleScene->getFighterByID(id1);
+	auto fighter2 = battleScene->getFighterByID(id2);
 
 	if (fighter1 == nullptr || fighter2 == nullptr)
 		return 0;
@@ -250,10 +207,8 @@ int hurt(lua_State* pL)
 			hurtType = static_cast<HurtType>(luaL_checkinteger(pL, 4));
 		}
 		//获取对应fighter
-		auto battleScene = gameScene->getBattleScene();
-		auto effectLayer = gameScene->getEffectLayer();
-
-		auto turn = gameScene->getBattleScene()->getBattleLayer()->getTurnByID(uniqueID);
+		BattleScene* battleScene = gameScene->getBattleScene();
+		Turn* turn = gameScene->getBattleScene()->getTurnByID(uniqueID);
 		auto fighter = turn->fighter;
 
 		if (fighter == nullptr)
@@ -263,11 +218,11 @@ int hurt(lua_State* pL)
 		}
 		auto size = fighter->getContentSize();
 		auto pos = fighter->getPosition() - Point(0.f, size.height / 2);
-		//获取伤害值
+		//获取伤害值 并显示飘字
 		auto afterDamage = fighter->hurt(damage, attributeType, hurtType);
-		//显示飘字
+		auto effectLayer = gameScene->getEffectLayer();
 		effectLayer->showWord(-afterDamage, pos, hurtType);
-		//更新对应控件
+		//更新控件
 		battleScene->updateStateOfTurn(turn);
 	}
 	return 0;
@@ -284,9 +239,8 @@ int heal(lua_State* pL)
 	//获取人物
 	if (gameState == GameState::Script || gameState == GameState::Normal)
 	{
-		auto playerLayer = gameScene->getPlayerLayer();
-		auto goodLayer = gameScene->getGoodLayer();
-		auto player = playerLayer->getPlayerOfID(uniqueID);
+		auto playerManager = gameScene->getPlayerManager();
+		auto player = playerManager->getPlayerOfID(uniqueID);
 
 		if (player == nullptr)
 		{
@@ -295,17 +249,17 @@ int heal(lua_State* pL)
 		}
 		auto name = player->getChartletName();
 		auto curHp = dynamicData->getProperty(name, PropertyType::Hp);
-
 		dynamicData->setProperty(name, PropertyType::Hp, value + curHp);
 		//更新显示
-		goodLayer->updateShownOfGoods();
-		goodLayer->updateShownOfProps();
+		auto bagLayer = gameScene->getBagLayer();
+		bagLayer->updateGoods();
+		bagLayer->updateShownOfProp();
 	}
 	else if (gameState == GameState::Fighting)
 	{
 		auto battleScene = gameScene->getBattleScene();
 		auto effectLayer = gameScene->getEffectLayer();
-		auto turn = battleScene->getBattleLayer()->getTurnByID(uniqueID);
+		auto turn = battleScene->getTurnByID(uniqueID);
 
 		if (turn == nullptr)
 		{
@@ -336,7 +290,7 @@ int searchFighter(lua_State* pL)
 	TurnType turnType = static_cast<TurnType>(luaL_checkinteger(pL, 1));
 	SearchType searchType = static_cast<SearchType>(luaL_checkinteger(pL, 2));
 
-	auto fighter = gameScene->getBattleScene()->getBattleLayer()->searchFighter(turnType, searchType);
+	auto fighter = gameScene->getBattleScene()->searchFighter(turnType, searchType);
 
 	if (fighter != nullptr)
 	{
@@ -350,8 +304,7 @@ int searchFighter(lua_State* pL)
 
 int roundOver(lua_State* pL)
 {
-	GameScene::getInstance()->getBattleScene()->getBattleLayer()->roundOver();
-
+	GameScene::getInstance()->getBattleScene()->roundOver();
 	return 0;
 }
 
@@ -389,7 +342,7 @@ int getProperty(lua_State* pL)
 	//正常 或脚本状态下
 	if (gameState == GameState::Normal || gameState == GameState::Script)
 	{
-		auto player = gameScene->getPlayerLayer()->getPlayerOfID(id);
+		auto player = gameScene->getPlayerManager()->getPlayerOfID(id);
 
 		if (player == nullptr)
 		{
@@ -405,7 +358,7 @@ int getProperty(lua_State* pL)
 	}
 	else if (gameState == GameState::Fighting)
 	{
-		auto turn = gameScene->getBattleScene()->getBattleLayer()->getTurnByID(id);
+		auto turn = gameScene->getBattleScene()->getTurnByID(id);
 		auto fighter = turn->fighter;
 		auto value = fighter->getProperty(type);
 		//返回属性
@@ -426,8 +379,7 @@ int setProperty(lua_State* pL)
 
 	if (gameState == GameState::Normal || gameState == GameState::Script)
 	{
-		auto goodLayer = gameScene->getGoodLayer();
-		auto player = gameScene->getPlayerLayer()->getPlayerOfID(id);
+		auto player = gameScene->getPlayerManager()->getPlayerOfID(id);
 
 		if (player == nullptr)
 		{
@@ -438,12 +390,13 @@ int setProperty(lua_State* pL)
 		auto chartletName = player->getChartletName();
 		DynamicData::getInstance()->setProperty(chartletName, type, value);
 		//更新显示
-		//goodLayer->updateProperties();
+		auto bagLayer = gameScene->getBagLayer();
+		bagLayer->updateShownOfProp();
 	}
 	else if (gameState == GameState::Fighting)
 	{
 		auto battleScene = gameScene->getBattleScene();
-		auto turn = battleScene->getBattleLayer()->getTurnByID(id);
+		auto turn = battleScene->getTurnByID(id);
 
 		auto fighter = turn->fighter;
 		fighter->setProperty(type, value);
@@ -457,10 +410,7 @@ int getHitRate(lua_State* pL)
 {
 	auto id = (int)luaL_checkinteger(pL, 1);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
 	auto value = fighter->getHitRate();
 
 	lua_pushnumber(pL, value);
@@ -471,10 +421,7 @@ int getEvasionRate(lua_State* pL)
 {
 	auto id = (int)luaL_checkinteger(pL, 1);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
 	auto value = fighter->getEvasionRate();
 
 	lua_pushnumber(pL, value);
@@ -485,10 +432,7 @@ int getCriticalRate(lua_State* pL)
 {
 	auto id = (int)luaL_checkinteger(pL, 1);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
 	auto value = fighter->getCriticalRate();
 
 	lua_pushnumber(pL, value);
@@ -499,10 +443,7 @@ int getAttackScale(lua_State* pL)
 {
 	auto id = (int)luaL_checkinteger(pL, 1);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
 	auto value = fighter->getAttackScale();
 
 	lua_pushnumber(pL, value);
@@ -514,12 +455,9 @@ int setAttackScale(lua_State* pL)
 	auto id = (int)luaL_checkinteger(pL, 1);
 	auto scale = (float)luaL_checknumber(pL, 2);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
+	Fighter* fighter = getBattleFighter(id);
 
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
 	fighter->setAttackScale(scale);
-
 	return 0;
 }
 
@@ -527,12 +465,9 @@ int getDefenseScale(lua_State* pL)
 {
 	auto id = (int)luaL_checkinteger(pL, 1);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
+	Fighter* fighter = getBattleFighter(id);
 
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
 	auto value = fighter->getDefenseRate();
-
 	lua_pushnumber(pL, value);
 	return 1;
 }
@@ -542,12 +477,8 @@ int setDefenseScale(lua_State* pL)
 	auto id = (int)luaL_checkinteger(pL, 1);
 	auto scale = (float)luaL_checknumber(pL, 2);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
 	fighter->setDefenseRate(scale);
-
 	return 0;
 }
 
@@ -555,16 +486,12 @@ int changeFightState(lua_State* pL)
 {
 	auto id = (int)luaL_checkinteger(pL, 1);
 	int nState = (int)luaL_checkinteger(pL, 2);
-	auto state = static_cast<FightState>(nState);
-
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	//change fight state
+	FightState state = static_cast<FightState>(nState);
+	Fighter* fighter = getBattleFighter(id);
 
 	auto action = fighter->changeFightState(state);
 	auto duration = action->getDuration();
-
 	lua_pushnumber(pL, duration);
 	return 1;
 }
@@ -574,23 +501,17 @@ int setFlipX(lua_State* pL)
 	auto id = (int)luaL_checkinteger(pL, 1);
 	bool flipX = lua_toboolean(pL, 2) == 1;
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
 	fighter->getSprite()->setFlipX(flipX);
-
 	return 0;
 }
 
 int isFlipX(lua_State* pL)
 {
 	auto id = (int)luaL_checkinteger(pL, 1);
-	bool flipX = lua_toboolean(pL, 2) == 1;
+	bool flipX = (lua_toboolean(pL, 2) == 1);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
 
 	lua_pushboolean(pL, fighter->getSprite()->isFlipX());
 	return 1;
@@ -601,11 +522,8 @@ int moveToTarget(lua_State* pL)
 	auto id1 = (int)luaL_checkinteger(pL, 1);
 	auto id2 = (int)luaL_checkinteger(pL, 2);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-	auto fighter1 = battleScene->getBattleLayer()->getFighterByID(id1);
-	auto fighter2 = battleScene->getBattleLayer()->getFighterByID(id2);
-
+	Fighter* fighter1 = getBattleFighter(id1);
+	Fighter* fighter2 = getBattleFighter(id2);
 	if (fighter1 == nullptr || fighter2 == nullptr)
 		return 0;
 
@@ -617,40 +535,30 @@ int moveToTarget(lua_State* pL)
 
 int backTo(lua_State* pL)
 {
-	auto id = (int)luaL_checkinteger(pL, 1);
+	int id = (int)luaL_checkinteger(pL, 1);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	Fighter* fighter = getBattleFighter(id);
+	float duration = fighter->backTo();
 
-	auto duration = fighter->backTo();
 	lua_pushnumber(pL, duration);
-
 	return 1;
 }
 
 int setChartletName(lua_State* pL)
 {
-	auto id = (int)luaL_checkinteger(pL, 1);
-	auto chartletName = luaL_checkstring(pL, 2);
+	int id = (int)luaL_checkinteger(pL, 1);
+	string chartletName = luaL_checkstring(pL, 2);
 
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
-
+	Fighter* fighter = getBattleFighter(id);
 	fighter->setChartletName(chartletName);
 	return 0;
 }
 
 int getChartletName(lua_State* pL)
 {
-	auto id = (int)luaL_checkinteger(pL, 1);
-
-	auto gameScene = GameScene::getInstance();
-	auto battleScene = gameScene->getBattleScene();
-	auto fighter = battleScene->getBattleLayer()->getFighterByID(id);
+	int id = (int)luaL_checkinteger(pL, 1);
+	Fighter* fighter = getBattleFighter(id);
 
 	lua_pushstring(pL, fighter->getChartletName().c_str());
 	return 1;
 }
-*/

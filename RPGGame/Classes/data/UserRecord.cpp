@@ -166,6 +166,101 @@ bool UserRecord::studySkill(const string& playerName, const string& skillName)
 	return true;
 }
 
+int UserRecord::getProperty(const string& playerName, PropertyType type)
+{
+	auto properties = this->getTotalProperties(playerName);
+	int value = 0;
+
+	switch (type)
+	{
+	case PropertyType::Hp:
+		value = properties.hp;
+		break;
+	case PropertyType::Mp:
+		value = properties.mp;
+		break;
+	case PropertyType::Attack:
+		value = properties.attack;
+		break;
+	case PropertyType::Defense:
+		value = properties.defense;
+		break;
+	case PropertyType::MagicAttack:
+		value = properties.magicAttack;
+		break;
+	case PropertyType::MagicDefense:
+		value = properties.magicDefense;
+		break;
+	case PropertyType::Agility:
+		value = properties.agility;
+		break;
+	case PropertyType::Luck:
+		value = properties.luck;
+		break;
+	default:
+		break;
+	}
+	return value;
+}
+
+void UserRecord::setProperty(const string& playerName, PropertyType type, unsigned int value)
+{
+	PlayerData* data = players[playerName];
+	auto& properties = data->properties;
+
+	switch (type)
+	{
+	case PropertyType::Hp:
+	{
+		//设置最大值限制
+		if (data->maxHp < value)
+			value = data->maxHp;
+		properties.hp = value;
+	}break;
+	case PropertyType::Mp:
+	{
+		//设置最大值限制
+		if (data->maxMp < value)
+			value = data->maxMp;
+		properties.mp = value;
+	}break;
+	case PropertyType::Attack:
+		properties.attack = value;
+		break;
+	case PropertyType::Defense:
+		properties.defense = value;
+		break;
+	case PropertyType::MagicAttack:
+		properties.magicAttack = value;
+		break;
+	case PropertyType::MagicDefense:
+		properties.magicDefense = value;
+		break;
+	case PropertyType::Agility:
+		properties.agility = value;
+		break;
+	case PropertyType::Luck:
+		properties.luck = value;
+		break;
+	default:
+		break;
+	}
+}
+
+Good* UserRecord::getGood(const string& goodName)
+{
+	Good* good = nullptr;
+	auto it = find_if(m_bagGoodList.begin(), m_bagGoodList.end(), [&goodName](Good* good)
+	{
+		return good->getPrototype() == goodName;
+	});
+	if (it != m_bagGoodList.end())
+	{
+		good = *it;
+	}
+	return good;
+}
+
 void UserRecord::parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame)
 {
 	string playerName;

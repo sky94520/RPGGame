@@ -153,6 +153,27 @@
     <ClCompile Include="Classes\layer\MessageLayer.cpp">
       <Filter>Classes\layer</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\script\BattleScript.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\RotateSpeedSprite.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\entity\FlowWord.cpp">
+      <Filter>Classes\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\script\CharacterScript.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\script\PartyScript.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\script\MsgScript.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
+    <ClCompile Include="Classes\script\SoundScript.cpp">
+      <Filter>Classes\script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\HelloWorldScene.h">
@@ -283,6 +304,27 @@
     </ClInclude>
     <ClInclude Include="Classes\layer\MessageLayer.h">
       <Filter>Classes\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\BattleScript.h">
+      <Filter>Classes\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\RotateSpeedSprite.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\entity\FlowWord.h">
+      <Filter>Classes\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\CharacterScript.h">
+      <Filter>Classes\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\PartyScript.h">
+      <Filter>Classes\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\MsgScript.h">
+      <Filter>Classes\script</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\script\SoundScript.h">
+      <Filter>Classes\script</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

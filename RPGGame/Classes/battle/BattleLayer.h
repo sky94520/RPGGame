@@ -12,6 +12,8 @@ struct Turn;
 class Fighter;
 class BattleDelegate;
 class PriorityQueue;
+enum class TurnType;
+enum class SearchType;
 
 class BattleLayer : public Layer
 {
@@ -31,6 +33,8 @@ public:
 	Turn* getTopTurn();
 	//获取点击到的turn
 	Turn* getClickedTurn(const Point& pos);
+	Turn* getTurnByID(int uniqueID);
+	Fighter* searchFighter(TurnType turnType, SearchType searchType);
 	//回合结束
 	void roundOver();
 	//战斗结束 返回死了的友方的名字

@@ -103,6 +103,16 @@ void DynamicData::setTotalProperties(const string& playerName, const Properties&
 	data->properties = properties;
 }
 
+int DynamicData::getProperty(const string& playerName, PropertyType type)
+{
+	return m_pUserRecord->getProperty(playerName, type);
+}
+
+void DynamicData::setProperty(const string& playerName, PropertyType type, unsigned int value)
+{
+	m_pUserRecord->setProperty(playerName, type, value);
+}
+
 int DynamicData::getLevel(const string& playerName) const
 {
 	PlayerData* data = m_pUserRecord->players.at(playerName);
@@ -167,6 +177,41 @@ Good* DynamicData::getEquipment(const string& playerName, EquipmentType equipmen
 		return iter->second;
 }
 
+bool DynamicData::removeEquipment(const string& playerName, const string& goodName, int number)
+{
+	bool ret = false;
+	PlayerData* data = m_pUserRecord->players[playerName];
+	auto& equipments = data->equipments;
+
+	auto it = find_if(equipments.begin(), equipments.end(), [&goodName](const pair<EquipmentType, Good*>& it)
+	{
+		return (it.second)->getTableName() == goodName;
+	});
+	//找到对应的装备
+	if (it != equipments.end())
+	{
+		auto good = it->second;
+		auto num = good->getNumber() - number;
+
+		SDL_SAFE_RETAIN(good);
+
+		if (num > 0)
+		{
+			good->setNumber(num);
+		}
+		else if (num == 0)
+		{
+			good->unequip();
+			good->setNumber(0);
+			SDL_SAFE_RELEASE(good);
+
+			equipments.erase(it);
+		}
+		SDL_SAFE_RELEASE(good);
+	}
+	return ret;
+}
+
 bool DynamicData::splitEquipment(const string& playerName, EquipmentType type, Good* good, int number)
 {
 	SDL_SAFE_RETAIN(good);
@@ -229,6 +274,11 @@ void DynamicData::updateGood(Good* good)
 	auto it = find(goodList.begin(), goodList.end(), good);
 	goodList.erase(it);
 	SDL_SAFE_RELEASE(good);
+}
+
+Good* DynamicData::getGood(const string& goodName)
+{
+	return m_pUserRecord->getGood(goodName);
 }
 
 bool DynamicData::removeGood(const string& goodName, int number)

@@ -10,8 +10,10 @@
 #include "entity/Good.h"
 #include "entity/AStar.h"
 #include "entity/Character.h"
+#include "entity/Controller.h"
 #include "entity/AStarController.h"
 #include "script/LuaStack.h"
+#include "entity/LuaObject.h"
 #include "battle/BattleScene.h"
 
 GameScene* GameScene::s_pInstance = nullptr;
@@ -498,4 +500,44 @@ bool GameScene::sellGood(Good* good)
 	m_pMsgLayer->showTip(text, TextPosition::Middle, 1.f);
 
 	return ret;
+}
+
+Character* GameScene::getCharacterByID(int uniqueID)
+{
+	Character* character = nullptr;
+	//TODO:0 1 2 3表示主角
+	auto& list = m_pPlayerManager->getCharacterList();
+	if (uniqueID < list.size())
+	{
+		character = list[uniqueID];
+	}
+	else
+	{
+		character = m_pScriptManager->getNPCByID(uniqueID);
+		if (character == nullptr)
+		{
+			character = m_pPlayerManager->getPlayerOfID(uniqueID);
+		}
+	}
+	return character;
+}
+
+Controller* GameScene::getControllerByCharacterID(int id)
+{
+	Controller* controller = nullptr;
+	//TODO:0 1 2 3表示主角
+	auto& list = m_pPlayerManager->getControllers();
+	if (id < list.size())
+	{
+		controller = list[id];
+	}
+	else
+	{
+		//character = static_cast<Character*>(m_pScriptManager->getNPCByID(id));
+		if (controller == nullptr)
+		{
+			controller = m_pPlayerManager->getControllerOfPlayerID(id);
+		}
+	}
+	return controller;
 }

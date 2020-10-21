@@ -38,6 +38,7 @@ public:
 
 	//获取点击了npc
 	LuaObject* getClickedNPC(const Rect& r, int priority) const;
+	LuaObject* getNPCByID(int id) const;
 	LuaObject* getLuaObject(const string& name);
 
 	//恢复协程

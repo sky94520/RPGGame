@@ -27,6 +27,7 @@ public:
 	//获取角色对应的索引
 	int getIndexOfCharacter(const string& chartletName);
 	Character* getPlayerOfID(int id);
+	Controller* getControllerOfPlayerID(int id);
 	//是否与角色发生碰撞
 	bool isCollidedWithCharacter(const Rect& rect);
 	void movePlayer(const SDL_Point& toTile);
@@ -34,6 +35,7 @@ public:
 	void changeLayerOfPlayer(Node* layer, const Point& location);
 	//获取所有的玩家角色
 	vector<Character*> getCharacterList();
+	const vector<Controller*>& getControllers()const { return m_controllers; }
 private:
 	vector<Controller*> m_controllers;
 };
