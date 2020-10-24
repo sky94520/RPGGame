@@ -57,17 +57,14 @@ int setViewpointCenter(lua_State* pL)
 int setViewpointFollow(lua_State* pL)
 {
 	//以name在ScriptLayer和PlayerLayer里寻找
-	/*
 	int id = (int)luaL_checkinteger(pL, 1);
 	auto gameScene = GameScene::getInstance();
 
 	auto character = gameScene->getCharacterByID(id);
-
 	if (character != nullptr)
 	{
-		gameScene->setViewpointFollow(character);
+		gameScene->getMapLayer()->setViewpointFollow(character);
 	}
-	*/
 	return 0;
 }
 

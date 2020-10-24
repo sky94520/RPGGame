@@ -174,7 +174,7 @@ void BagLayer::addExp(int exp)
 			auto maxHp = deltaProperties.hp + dynamicData->getMaxHitPoint(chartletName);
 			auto maxMp = deltaProperties.mp + dynamicData->getMaxManaPoint(chartletName);
 			//修改角色属性
-			auto properties = dynamicData->getTotalProperties(chartletName);
+			Properties&& properties = dynamicData->getTotalProperties(chartletName);
 			dynamicData->setTotalProperties(chartletName, properties + deltaProperties);
 			dynamicData->setMaxHitPoint(chartletName, maxHp);
 			dynamicData->setMaxManaPoint(chartletName, maxMp);

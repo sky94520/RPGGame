@@ -2,9 +2,15 @@
 #include "../GameMacros.h"
 #include "../entity/LuaObject.h"
 #include "../entity/AStarController.h"
+#include "../script/LuaStack.h"
+
 #include "../script/BaseScript.h"
 #include "../script/ObjectScript.h"
-#include "../script/LuaStack.h"
+#include "../script/BattleScript.h"
+#include "../script/SoundScript.h"
+#include "../script/CharacterScript.h"
+#include "../script/MsgScript.h"
+#include "../script/PartyScript.h"
 
 ScriptManager::ScriptManager()
 	:m_waitType(WaitType::None)
@@ -57,6 +63,7 @@ bool ScriptManager::init()
 	m_pLuaStack->executeScriptFile("item.lua");
 	m_pLuaStack->executeScriptFile("weapon.lua");
 	m_pLuaStack->executeScriptFile("skill.lua");
+	m_pLuaStack->executeScriptFile("enemy.lua");
 	return true;
 }
 
@@ -258,12 +265,18 @@ void ScriptManager::clear()
 
 void ScriptManager::registerFuncs(lua_State* pL)
 {
-	static const luaL_Reg cpplibs[] = {
+	static const luaL_Reg cpplibs[] = 
+	{
 		{"base", open_base},
 		{"movement", open_movement},
 		{"screen", open_screen},
 		{"timer", open_timer},
 		{"object", open_object},
+		{"battle", open_battle},
+		{"character", open_character},
+		{"message", open_message},
+		{"party", open_party},
+		{"sound", open_sound},
 		{NULL, NULL}
 	};
 	const luaL_Reg* lib = nullptr;

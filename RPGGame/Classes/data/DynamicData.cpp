@@ -94,7 +94,8 @@ void DynamicData::setMaxManaPoint(const string& playerName, int var)
 
 Properties DynamicData::getTotalProperties(const string& playerName)
 {
-	return m_pUserRecord->getTotalProperties(playerName);
+	Properties&& properties = m_pUserRecord->getTotalProperties(playerName);
+	return properties;
 }
 
 void DynamicData::setTotalProperties(const string& playerName, const Properties& properties)

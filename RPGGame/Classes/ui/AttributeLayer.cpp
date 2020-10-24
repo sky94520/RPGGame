@@ -74,9 +74,9 @@ void AttributeLayer::updateLabelOfProp(Character* player)
 	auto dynamicData = DynamicData::getInstance();
 	auto chartletName = player->getChartletName();
 	//获取属性
-	auto propStruct = dynamicData->getTotalProperties(chartletName);
+	Properties&& properties = dynamicData->getTotalProperties(chartletName);
 	//更新
-	this->updatePropLabels(chartletName, propStruct, true);
+	this->updatePropLabels(chartletName, properties, true);
 }
 
 void AttributeLayer::updateLabelOfDeltaProp(const Properties& deltaProp)
