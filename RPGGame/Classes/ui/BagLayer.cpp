@@ -196,6 +196,7 @@ void BagLayer::addExp(int exp)
 
 void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 {
+	m_pAttributeLayer->updatePlayerGroup();
 	switch (m_type)
 	{
 		case Type::Bag:

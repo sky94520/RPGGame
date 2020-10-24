@@ -80,7 +80,7 @@ void Enemy::dead()
 	Fighter::dead();
 
 	this->getSprite()->setOpacity(255);
-	this->setVisible(true);
+	this->setVisible(false);
 }
 
 FiniteTimeAction* Enemy::changeFightState(FightState state)

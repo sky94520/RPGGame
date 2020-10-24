@@ -64,6 +64,7 @@ bool ScriptManager::init()
 	m_pLuaStack->executeScriptFile("weapon.lua");
 	m_pLuaStack->executeScriptFile("skill.lua");
 	m_pLuaStack->executeScriptFile("enemy.lua");
+	m_pLuaStack->executeScriptFile("animation.lua");
 	return true;
 }
 

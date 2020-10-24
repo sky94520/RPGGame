@@ -229,10 +229,9 @@ bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 		{
 			auto userId = player->getFighterID();
 			auto targetId = turn->fighter->getFighterID();
-
-			good->execute(userId, targetId);
 			//使用道具
-			player->useItem(good);
+			good->execute(userId, targetId);
+			//player->useItem(good);
 			m_pPanelLayer->setGood(nullptr);
 
 			bSuccess = true;

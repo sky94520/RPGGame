@@ -151,8 +151,10 @@ void Actor::useItem(Good* good)
 {
 	//对应的物品是否有getFightState函数，有，则获取
 	FightState fightState = good->getFightState();
-
-	this->changeFightState(fightState);
+	if (fightState != FightState::None)
+	{
+		this->changeFightState(fightState);
+	}
 }
 
 void Actor::victory()

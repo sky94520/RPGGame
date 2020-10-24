@@ -81,3 +81,7 @@ function Good:getUniqueID(bAdding)
 
 	return var;
 end
+
+function Good:getFightState()
+	return FightState.Item;
+end

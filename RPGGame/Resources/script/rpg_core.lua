@@ -72,6 +72,7 @@ UsageOccasion.Fighting = 1;
 UsageOccasion.All = 2;
 --战斗状态
 FightState = {};
+FightState.None = -1;
 FightState.Idle = 0;
 FightState.Thrust = 1;
 FightState.Escape = 2;

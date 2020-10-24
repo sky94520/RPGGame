@@ -76,6 +76,8 @@ function HitPointItem:execute(userID, targetID, value, anim, afterCallback)
 		local duration = battle.showBattleAnimation(targetID, anim);
 		--显示文本
 		message.showTip("治疗", TextPosition.Top, duration);
+		--持有者改变自身行为
+		battle.changeFightState(userID, self:getFightState());
 		--等待
 		timer.delay(duration / 2);
 		--治疗
