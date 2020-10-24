@@ -32,9 +32,9 @@ class Controller;
 class GameScene : public Scene, public AStartDelegate, OperationDelegate, GoodLayerDelegate
 {
 	SDL_SYNTHESIZE_READONLY(MapLayer*, m_pMapLayer, MapLayer);//地图层
-	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//特效层
 	SDL_SYNTHESIZE_READONLY(OperationLayer*, m_pOperationLayer, OperationLayer);//操作层
 	SDL_SYNTHESIZE_READONLY(BattleScene*, m_pBattleScene, BattleScene); //战斗层
+	SDL_SYNTHESIZE_READONLY(EffectLayer*, m_pEffectLayer, EffectLayer);//特效层
 	SDL_SYNTHESIZE_READONLY(BagLayer*, m_pBagLayer, BagLayer);//物品层
 	SDL_SYNTHESIZE_READONLY(MessageLayer*, m_pMsgLayer, MessageLayer);//文本层
 

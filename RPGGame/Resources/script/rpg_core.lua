@@ -150,3 +150,8 @@ Value.Type.FLOAT = 3;
 Value.Type.DOUBLE = 4;
 Value.Type.BOOLEAN = 5;
 Value.Type.STRING = 6;
+--文本类型
+TextPosition = {}
+TextPosition.Bottom = 0;
+TextPosition.Middle = 1;
+TextPosition.Top = 2;

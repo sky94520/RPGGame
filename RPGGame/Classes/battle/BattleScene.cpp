@@ -217,7 +217,7 @@ bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 		bSuccess = true;
 		m_pPanelLayer->setClickedType(BattlePanelLayer::ClickedType::None);
 	}
-	//使用道具
+	//使用道具 or 技能
 	auto good = m_pPanelLayer->getGood();
 	if (type == BattlePanelLayer::ClickedType::Good && good != nullptr)
 	{

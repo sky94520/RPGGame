@@ -349,6 +349,12 @@ void BagLayer::equipBtnCallback(GoodLayer* goodLayer)
 void BagLayer::closeBtnCallback(GoodLayer* goodLayer)
 {
 	this->setVisible(false);
+	//战斗关闭背包 发送玩家操作事件
+	auto gameState = GameScene::getInstance()->getGameState();
+	if (gameState == GameState::Fighting)
+	{
+		_eventDispatcher->dispatchCustomEvent(BATTLE_PLAYER_OPERATION, this);
+	}
 }
 
 void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* item)

@@ -20,9 +20,9 @@ GameScene* GameScene::s_pInstance = nullptr;
 
 GameScene::GameScene()
 	:m_pMapLayer(nullptr)
-	,m_pEffectLayer(nullptr)
 	,m_pOperationLayer(nullptr)
 	,m_pBattleScene(nullptr)
+	,m_pEffectLayer(nullptr)
 	,m_pBagLayer(nullptr)
 	,m_pMsgLayer(nullptr)
 	,m_pPlayerManager(nullptr)
@@ -42,9 +42,6 @@ bool GameScene::init()
 	//地图层
 	m_pMapLayer = MapLayer::create();
 	this->addChild(m_pMapLayer);
-	//特效层
-	m_pEffectLayer = EffectLayer::create();
-	this->addChild(m_pEffectLayer);
 	//ui/展示层
 	m_pOperationLayer = OperationLayer::create();
 	m_pOperationLayer->setDelegate(this);
@@ -52,6 +49,9 @@ bool GameScene::init()
 	//战斗层
 	m_pBattleScene = BattleScene::create();
 	this->addChild(m_pBattleScene);
+	//特效层
+	m_pEffectLayer = EffectLayer::create();
+	this->addChild(m_pEffectLayer);
 	//ui/背包层
 	m_pBagLayer = BagLayer::create();
 	m_pBagLayer->setDelegate(this);
@@ -349,8 +349,8 @@ void GameScene::startBattle(const unordered_map<string, int>& enemyData)
 	//添加我方和敌人
 	m_pBattleScene->startBattle(enemyData);
 	//播放战斗音乐
-	SoundManager::getInstance()->playBackgroundMusic(STATIC_DATA_STRING("battle_bgm"), -1);
-	SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("battle_me"), 0);
+	//SoundManager::getInstance()->playBackgroundMusic(STATIC_DATA_STRING("battle_bgm"), -1);
+	//SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("battle_me"), 0);
 }
 
 void GameScene::endBattle()

@@ -116,7 +116,7 @@ string Actor::getThumbnail() const
 
 void Actor::execute(Fighter* fighter)
 {
-	//TODO:获取装备的武器
+	//获取装备的武器
 	PlayerData* data = DynamicData::getInstance()->getPlayerData(m_chartletName);
 	Good* weapon = DynamicData::getInstance()->getEquipment(m_chartletName, EquipmentType::Weapon);
 	//不同的武器对应不同的出手类型
@@ -144,7 +144,7 @@ void Actor::execute(Fighter* fighter)
 	//执行函数
 	int ret = luaStack->resumeFunction(3);
 	//不同的武器对应不同的出手类型
-	this->changeFightState(fightState);
+	//this->changeFightState(fightState);
 }
 
 void Actor::useItem(Good* good)
