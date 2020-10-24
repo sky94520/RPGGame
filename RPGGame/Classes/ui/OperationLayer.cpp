@@ -39,10 +39,10 @@ bool OperationLayer::init()
 
 void OperationLayer::setTouchEnabled(bool enable)
 {
-	m_pBagBtn->setTouchEnabled(!enable);
-	m_pTaskBtn->setTouchEnabled(!enable);
-	m_pSaveBtn->setTouchEnabled(!enable);
-	m_pArrowBtn->setTouchEnabled(!enable);
+	m_pBagBtn->setTouchEnabled(enable);
+	m_pTaskBtn->setTouchEnabled(enable);
+	m_pSaveBtn->setTouchEnabled(enable);
+	m_pArrowBtn->setTouchEnabled(enable);
 }
 
 float OperationLayer::setVisible(bool visible)

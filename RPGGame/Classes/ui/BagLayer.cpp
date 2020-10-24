@@ -439,10 +439,7 @@ void BagLayer::updateGoodLayer(const string& titleFrameName, const string& useBt
 	//设置使用按钮
 	m_pGoodLayer->updateShowingBtn(BtnType::Use, BtnParamSt(true, true, useBtnFrameName));
 	//隐藏装备按钮
-	if (equipBtnFrameName.empty())
-		m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(false, false));
-	else
-		m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(true, true, equipBtnFrameName));
+	m_pGoodLayer->updateShowingBtn(BtnType::Equip, BtnParamSt(false, false, equipBtnFrameName));
 
 	//更新页码
 	int size = vec.size();

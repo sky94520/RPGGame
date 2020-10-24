@@ -13,7 +13,7 @@ function Skill.consumeMP(userID, delta)
 	local value = battle.getProperty(userID, PropertyType.Mp) - delta;
 	--使用失败 提示
 	if value < 0 then
-		message.showTip("MP不足，技能使用失败", 1.5);
+		message.showTip("MP不足，技能使用失败", TextPosition.Top, 1.5);
 		return false;
 	end
 	--消耗

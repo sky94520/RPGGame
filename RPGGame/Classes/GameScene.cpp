@@ -48,6 +48,8 @@ bool GameScene::init()
 	this->addChild(m_pOperationLayer);
 	//战斗层
 	m_pBattleScene = BattleScene::create();
+	m_pBattleScene->setVisible(false);
+	m_pBattleScene->clear();
 	this->addChild(m_pBattleScene);
 	//特效层
 	m_pEffectLayer = EffectLayer::create();
@@ -76,7 +78,6 @@ bool GameScene::init()
 	//添加角色移动结束触发器
 	_eventDispatcher->addEventCustomListener(AStarController::CHARACTER_MOVE_TO_TILE,
 		SDL_CALLBACK_1(GameScene::moveToTile, this), this);
-	this->endBattle();
 
 	this->scheduleUpdate();
 
@@ -93,6 +94,7 @@ bool GameScene::initializeMap()
 	//默认使用第一个存档
 	auto dynamicData = DynamicData::getInstance();
 	dynamicData->initializeSaveData(1);
+	m_pBagLayer->addGold(0);
 	//获取地图和主角所在位置
 	const string& mapFilename = dynamicData->getMapFilename();
 	const Point& tileCoordinate = dynamicData->getTileCoordinate();
@@ -264,7 +266,10 @@ void GameScene::equipBtnCallback(GoodLayer* goodLayer)
 
 void GameScene::closeBtnCallback(GoodLayer* goodLayer)
 {
-	m_pOperationLayer->setVisible(true);
+	if (m_gameState == GameState::Normal)
+	{
+		m_pOperationLayer->setVisible(true);
+	}
 	m_pBagLayer->closeBtnCallback(goodLayer);
 }
 
@@ -348,7 +353,7 @@ void GameScene::startBattle(const unordered_map<string, int>& enemyData)
 	m_pMapLayer->setVisible(false);
 	//添加我方和敌人
 	m_pBattleScene->startBattle(enemyData);
-	m_pOperationLayer->setVisible(false);
+	m_pOperationLayer->setTouchEnabled(false);
 	//播放战斗音乐
 	//SoundManager::getInstance()->playBackgroundMusic(STATIC_DATA_STRING("battle_bgm"), -1);
 	//SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("battle_me"), 0);
@@ -364,8 +369,8 @@ void GameScene::endBattle()
 	//显示地图
 	m_pMapLayer->setVisible(true);
 	//操作层
-	m_pOperationLayer->setVisible(true);
-	m_pOperationLayer->setPosition(Point::ZERO);
+	m_pOperationLayer->setTouchEnabled(true);
+	//m_pOperationLayer->setPosition(Point::ZERO);
 	//解锁
 	m_pBagLayer->unlockPlayer();
 	//播放原来的bgm
