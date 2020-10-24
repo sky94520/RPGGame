@@ -19,7 +19,8 @@ public:
 	bool init();
 
 	void setDelegate(OperationDelegate* pDelegate) { m_pDelegate = pDelegate; }
-	float setTouchEnabled(bool enable);
+	void setTouchEnabled(bool enable);
+	float setVisible(bool visible);
 private:
 	void openBag(Object* sender);
 	void saveProgress(Object* sender);

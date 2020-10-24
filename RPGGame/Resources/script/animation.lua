@@ -1,5 +1,5 @@
 require "rpg_core"
---基础动画 注意 检测的帧数需要是从0开始的
+--基础动画 注意 检测的帧数需要是从0开始的 和effect.plist对应
 HitPhysical = {};
 HitPhysical.localZOrder = 1;
 HitPhysical.monitorFrames = {1};
@@ -73,7 +73,7 @@ function BowEffect:frameEvent(index)
 		sound.playEffect("sound/se/Sword5.ogg", 0);
 	end
 end
---弓箭特效 火
+--火箭特效
 arrow02_hit = {};
 arrow02_hit.localZOrder = -1;
 arrow02_hit.monitorFrames = {1};

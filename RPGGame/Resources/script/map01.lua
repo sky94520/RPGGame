@@ -26,7 +26,7 @@ function change2map01_01( ... )
 end
 
 --创建一个怪物
-object.create("monster", "Skeleton01", 8, 8);
+object.create("monster", "Skeleton01", 6, 8);
 object.setTrigger("monster", TriggerType.Click, "generate_monster");
 object.setPriority("monster", Priority.Same);
 

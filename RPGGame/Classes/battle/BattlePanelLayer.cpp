@@ -141,7 +141,6 @@ void BattlePanelLayer::magicBtnCallback(Object* sender)
 {
 	//隐藏行动按钮，出现撤销按钮
 	this->setVisibileOfActionBtns(false);
-	this->setVisibileOfUndoBtn(true);
 	m_pDelegate->magicBtnCallback();
 	m_clickedType = ClickedType::Good;
 }

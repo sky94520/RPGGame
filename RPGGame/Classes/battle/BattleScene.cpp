@@ -187,12 +187,11 @@ void BattleScene::updateStateOfTurn(Turn* turn)
 
 bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 {
-	//已经显示结算面版，表示战斗结束
+	//已经显示结算面版，表示战斗结束，再次点击退回正常界面
 	if (m_pBattleResult->isVisible())
 	{
 		m_pBattleResult->setVisible(false);
-		//TODO:战斗结束 清除BattleScene
-		//GameScene::getInstance()->endBattle();
+		GameScene::getInstance()->endBattle();
 	}
 	auto type = m_pPanelLayer->getClickedType();
 	if (type == BattlePanelLayer::ClickedType::None)
@@ -231,6 +230,11 @@ bool BattleScene::onTouchBegan(Touch* touch, SDL_Event* event)
 			auto targetId = turn->fighter->getFighterID();
 			//使用道具
 			good->execute(userId, targetId);
+			if (good->isDeleption())
+			{
+				GameScene::getInstance()->getBagLayer()->updateGoods();
+			}
+			//TODO:待删除
 			//player->useItem(good);
 			m_pPanelLayer->setGood(nullptr);
 
@@ -265,6 +269,8 @@ void BattleScene::magicBtnCallback()
 	auto curTurn = m_pBattleLayer->getTopTurn();
 	auto layer = GameScene::getInstance()->getBagLayer();
 	layer->setType(BagLayer::Type::Skill);
+	layer->setVisible(true);
+	layer->updateShownOfProp();
 	layer->lockPlayer(curTurn->fighter->getFighterID());
 }
 
@@ -274,6 +280,8 @@ void BattleScene::goodBtnCallback()
 	auto curTurn = m_pBattleLayer->getTopTurn();
 	auto layer = GameScene::getInstance()->getBagLayer();
 	layer->setType(BagLayer::Type::Bag);
+	layer->setVisible(true);
+	layer->updateShownOfProp();
 	layer->lockPlayer(curTurn->fighter->getFighterID());
 }
 
@@ -289,8 +297,9 @@ void BattleScene::escapeBtnCallback()
 {
 	//主角逃跑
 	m_pBattleLayer->getTopTurn()->fighter->escape();
-	//TODO:结束战斗
-	m_pBattleLayer->endBattle();
+	//结束战斗,战斗失败
+	//m_pBattleLayer->endBattle();
+	this->showSummary(0);
 }
 
 void BattleScene::undoBtnCallback()
@@ -315,23 +324,24 @@ void BattleScene::fighterDeadCallback(EventCustom* eventCustom)
 		return;
 	//胜利或失败
 	int victory = (nEnemyNumber == 0)? 1 : 0;
+	this->showSummary(victory);
+}
+
+void BattleScene::showSummary(int victory)
+{
 	vector<string> deadOurNames = m_pBattleLayer->endBattle();
-	//TODO:死亡的友军，设置为1滴血
+	//死亡的友军，设置为1滴血
 	for (auto& name : deadOurNames)
 	{
-		/*
-		DynamicData::getInstance()->setProperty(turn->fighter->getFighterName(), PropertyType::Hp, 1);
-		GameScene::getInstance()->getGoodLayer()->updateShownOfProps();
-		*/
+		DynamicData::getInstance()->setProperty(name, PropertyType::Hp, 1);
+		GameScene::getInstance()->getBagLayer()->updateShownOfProp();
 	}
 	m_pBattleResult->showSummary(victory);
 	//增加经验、金币 掉落物品
 	if (victory == 1)
 	{
-	/*
-		auto gameScene = GameScene::getInstance();
-		gameScene->addGold(m_nGold);
-		gameScene->addExp(m_nExp);
-	*/
+		auto bagLayer = GameScene::getInstance()->getBagLayer();
+		bagLayer->addGold(m_pBattleResult->getGold());
+		bagLayer->addExp(m_pBattleResult->getExp());
 	}
 }

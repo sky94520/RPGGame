@@ -259,7 +259,6 @@ vector<string> PriorityQueue::endBattle()
 	bool victory = (m_nEnemyNumber == 0);
 	//返回已经死亡的友军的名字
 	vector<string> results;
-	//设置
 	for (auto it = m_deadTurnList.begin(); it != m_deadTurnList.end(); it++)
 	{
 		auto turn = *it;

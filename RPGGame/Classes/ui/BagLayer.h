@@ -61,7 +61,7 @@ public:
 private:
 	//物品 技能切换回调函数
 	void toggle(Object* sender);
-	void showGoodLayer(const string& titleFrameName, const string& useBtnFrameName, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage);
+	void updateGoodLayer(const string& titleFrameName, const string& useBtnFrameName, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage);
 private:
 	Type m_type;//类型(玩家背包、商店等)
 	unsigned int m_nCurPage;//当前页

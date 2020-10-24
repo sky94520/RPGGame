@@ -62,6 +62,7 @@ public:
 private:
 	void showOperationBtnCallback(EventCustom* eventCustom);
 	void fighterDeadCallback(EventCustom* eventCustom);
+	void showSummary(int victory);
 private:
 	BattleLayer* m_pBattleLayer; //战斗层
 	BattlePanelLayer* m_pPanelLayer; //ui层

@@ -37,13 +37,21 @@ bool OperationLayer::init()
 	return true;
 }
 
-float OperationLayer::setTouchEnabled(bool enable)
+void OperationLayer::setTouchEnabled(bool enable)
+{
+	m_pBagBtn->setTouchEnabled(!enable);
+	m_pTaskBtn->setTouchEnabled(!enable);
+	m_pSaveBtn->setTouchEnabled(!enable);
+	m_pArrowBtn->setTouchEnabled(!enable);
+}
+
+float OperationLayer::setVisible(bool visible)
 {
 	//当前可用且未隐藏  当前不可用且隐藏
-	if (enable && !m_bBtnHide
-		|| !enable && m_bBtnHide)
+	if (visible && !m_bBtnHide
+		|| !visible && m_bBtnHide)
 		return 0.f;
-	m_bBtnHide = !enable;
+	m_bBtnHide = !visible;
 
 	Size bagSize = m_pBagBtn->getContentSize();
 	Size taskSize = m_pTaskBtn->getContentSize();
@@ -108,7 +116,7 @@ void OperationLayer::openTask(Object* sender)
 
 void OperationLayer::clickArrow(Object* sender)
 {
-	float duration = this->setTouchEnabled(m_bBtnHide);
+	float duration = this->setVisible(m_bBtnHide);
 	//避免重复按，造成ui偏移
 	m_pArrowBtn->setTouchEnabled(false);
 

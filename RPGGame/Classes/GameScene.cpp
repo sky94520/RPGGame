@@ -213,7 +213,7 @@ void GameScene::setGameState(GameState state)
 	m_gameState = state;
 	//操作层可点击
 	bool enable = m_gameState == GameState::Normal ? true : false;
-	m_pOperationLayer->setTouchEnabled(enable);
+	m_pOperationLayer->setVisible(enable);
 	//TODO: 从脚本中结束，尝试恢复行走
 	if (m_gameState == GameState::Normal)
 	{
@@ -233,7 +233,7 @@ LuaStack* GameScene::getLuaStack() const
 //---OperationDelegate---
 void GameScene::openBag()
 {
-	m_pOperationLayer->setTouchEnabled(false);
+	m_pOperationLayer->setVisible(false);
 	m_pBagLayer->setType(BagLayer::Type::Bag);
 	m_pBagLayer->setVisible(true);
 }
@@ -264,7 +264,7 @@ void GameScene::equipBtnCallback(GoodLayer* goodLayer)
 
 void GameScene::closeBtnCallback(GoodLayer* goodLayer)
 {
-	m_pOperationLayer->setTouchEnabled(true);
+	m_pOperationLayer->setVisible(true);
 	m_pBagLayer->closeBtnCallback(goodLayer);
 }
 
@@ -314,7 +314,7 @@ void GameScene::closeBag()
 	m_pBagLayer->setVisible(false);
 	if (m_gameState == GameState::Normal)
 	{
-		m_pOperationLayer->setTouchEnabled(true);
+		m_pOperationLayer->setVisible(true);
 	}
 	auto type = m_pBagLayer->getType();
 	switch (type)
@@ -348,6 +348,7 @@ void GameScene::startBattle(const unordered_map<string, int>& enemyData)
 	m_pMapLayer->setVisible(false);
 	//添加我方和敌人
 	m_pBattleScene->startBattle(enemyData);
+	m_pOperationLayer->setVisible(false);
 	//播放战斗音乐
 	//SoundManager::getInstance()->playBackgroundMusic(STATIC_DATA_STRING("battle_bgm"), -1);
 	//SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("battle_me"), 0);
@@ -369,7 +370,6 @@ void GameScene::endBattle()
 	m_pBagLayer->unlockPlayer();
 	//播放原来的bgm
 	auto bgm = m_pMapLayer->getBGMFilename();
-
 	if (!bgm.empty())
 	{
 		SoundManager::getInstance()->playBackgroundMusic(bgm, -1);

@@ -8,6 +8,20 @@ Weapon:setEquipmentType(EquipmentType.Weapon);
 function Weapon:setWeaponType(weaponType)
 	self.weaponType = weaponType;
 end
+--设置武器挥舞特效
+function Weapon:getEffectAnimation(userID)
+	--和animation.lua中的名字对应
+	if self.weaponType == WeaponType.Cane then
+		return "CaneEffect"
+	elseif self.weaponType == WeaponType.Dagger then
+		return "ClashPhysical"
+	elseif self.weaponType == WeaponType.Bow then
+		return "BowEffect"
+	elseif self.weaponType == WeaponType.Sword then
+		return "SwordEffect"
+	end
+	return nil
+end
 --获取该武器的出手动作
 function Weapon:getFightState()
 	return FightState.Swing;
@@ -44,7 +58,7 @@ end
 --以上几个回调函数是在一个callbacks中存在，可缺省
 
 function Weapon:execute(userID, targetID, value, hurtType, atkEffect, isMelee, callbacks)
-	--获取几个回调函数
+	--hook函数
 	local beforeCallback = callbacks and callbacks["beforeCallback"];
 	local endCallback = callbacks and callbacks["endCallback"];
 
@@ -70,7 +84,14 @@ function Weapon:execute(userID, targetID, value, hurtType, atkEffect, isMelee, c
 	if beforeCallback ~= nil then
 		duration = beforeCallback();
 	end
-	--武器挥舞
+	-- 相关的武器挥舞特效
+	if self.getEffectAnimation ~= nil then
+		local animationName = self:getEffectAnimation(userID)
+		if animationName ~= nil then
+			duration = battle.showBattleAnimation(userID, animationName)
+		end
+	end
+	--人物状态动作
 	duration = battle.changeFightState(userID, self:getFightState());
 	--等待一会
 	timer.delay(duration / 3 * 2);
@@ -146,15 +167,7 @@ end
 function Cane:execute(userID,targetID)
 	--获取角色攻击力
 	local  value = battle.getProperty(userID, PropertyType.Attack);
-	--前回调函数 显示武器挥舞动作
-	local beforeCallback = function()
-		return battle.showBattleAnimation(userID, "CaneEffect");
-	end
-
-	local callbacks = {};
-	callbacks["beforeCallback"] = beforeCallback;
-
-	Weapon.execute(self, userID, targetID, value, HurtType.Attack, "HitPhysical", true, callbacks);
+	Weapon.execute(self, userID, targetID, value, HurtType.Attack, "HitPhysical", true);
 end
 --木棒
 WoodenStick = Cane:new();
@@ -186,14 +199,7 @@ function Sword:getFightState()
 end
 function Sword:execute(userID,targetID)
 	local value = battle.getProperty(userID,PropertyType.Attack);
-	--武器动画
-	local beforeCallback = function()
-		return battle.showBattleAnimation(userID, "SwordEffect");
-	end
-	local callbacks = {};
-	callbacks["beforeCallback"] = beforeCallback;
-
-	Weapon.execute(self, userID, targetID, value, HurtType.Attack, "SlashPhysical", true,callbacks);
+	Weapon.execute(self, userID, targetID, value, HurtType.Attack, "SlashPhysical", true);
 end
 --铜剑
 CopperSword = Sword:new();
@@ -213,12 +219,6 @@ function Dagger:getFightState()
 end
 function Dagger:execute(userID, targetID)
 	local value = battle.getProperty(userID,PropertyType.Attack);
-	--武器动画
-	local beforeCallback = function()
-		return battle.showBattleAnimation(userID, "DaggerEffect");
-	end
-	local callbacks = {};
-	callbacks["beforeCallback"] = beforeCallback;
 
 	Weapon.execute(self, userID, targetID, value, HurtType.Attack, "SlashPhysical", true,callbacks);
 end
@@ -258,17 +258,12 @@ function Bow:execute(userID, targetID)
 	end
 
 	local value = battle.getProperty(userID,PropertyType.Attack) + extraValue;
-	--武器动画
-	local beforeCallback = function()
-		return battle.showBattleAnimation(userID, "BowEffect");
-	end
 	--攻击前弓箭效果
 	local beforeAtkCallback = function()
 		return battle.showBullet(userID, targetID, bulletName);
 	end
 
 	local callbacks = {};
-	callbacks["beforeCallback"] = beforeCallback;
 	callbacks["beforeAtkCallback"] = beforeAtkCallback;
 
 	Weapon.execute(self, userID, targetID, value, HurtType.Attack, nil, false,callbacks);

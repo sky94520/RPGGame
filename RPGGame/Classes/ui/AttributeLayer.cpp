@@ -161,7 +161,6 @@ void AttributeLayer::updateRadioButton(RadioButton* radioBtn, Character* player)
 	sprite->setSpriteFrame(spriteFrame);
 }
 
-
 void AttributeLayer::initializeUI(Node* pXmlNode)
 {
 	//人物单选

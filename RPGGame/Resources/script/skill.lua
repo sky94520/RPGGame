@@ -53,6 +53,14 @@ function SwordAttack:getFightState()
 	return FightState.Thrust;
 end
 
+function SwordAttack:getEffectAnimation(userID)
+	local weaponName = party.getEquipment(userID, EquipmentType.Weapon)
+	if weaponName ~= nil then
+		local weapon = _G[weaponName]
+		return weapon:getEffectAnimation(userID)
+	end
+end
+
 function SwordAttack:execute(userID, targetID)
 	-- 消耗mp
 	local ret = Skill.consumeMP(userID, 2);
@@ -60,13 +68,7 @@ function SwordAttack:execute(userID, targetID)
 	if ret then
 		--获取角色攻击力
 		local  value = battle.getProperty(userID, PropertyType.Attack) + 7;
-		--前回调函数 显示武器挥舞动作 TODO
-		local beforeCallback = function()
-			return battle.showBattleAnimation( userID, "CaneEffect");
-		end
-		local callbacks = {};
-		callbacks["beforeCallback"] = beforeCallback;
 		--尝试攻击
-		Weapon.execute(self, userID, targetID, value, HurtType.Attack, "HitEffect", true,Callbacks);
+		Weapon.execute(self, userID, targetID, value, HurtType.Attack, "HitEffect", true);
 	end
 end

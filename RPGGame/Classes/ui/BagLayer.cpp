@@ -202,7 +202,7 @@ void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 		case Type::Bag:
 		{
 			const vector<Good*>& goodList = DynamicData::getInstance()->getBagGoodList();
-			this->showGoodLayer("bag_title_txt1.png", "use_text.png", "equip_text.png", goodList, m_nCurPage+delta);
+			this->updateGoodLayer("bag_title_txt1.png", "use_text.png", "equip_text.png", goodList, m_nCurPage+delta);
 
 			m_pAttributeLayer->changeToggleBtnFrame("sbt2_1.png");
 		}break;
@@ -211,7 +211,7 @@ void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 			Character* player = m_pAttributeLayer->getSelectedPlayer();
 			string name = player->getChartletName();
 			const vector<Good*>& goodList = DynamicData::getInstance()->getSkills(name);
-			this->showGoodLayer("bag_title_txt2.png", "use_text.png", "", goodList, m_nCurPage + delta);
+			this->updateGoodLayer("bag_title_txt2.png", "use_text.png", "", goodList, m_nCurPage + delta);
 
 			m_pAttributeLayer->changeToggleBtnFrame("sbt2_2.png");
 		}
@@ -430,10 +430,10 @@ void BagLayer::toggle(Object* sender)
 	}
 }
 
-void BagLayer::showGoodLayer(const string& titleFrameName, const string& useBtnFrameName
+void BagLayer::updateGoodLayer(const string& titleFrameName, const string& useBtnFrameName
 	, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage)
 {
-	this->setVisible(true);
+	//this->setVisible(true);
 	//设置title
 	m_pGoodLayer->updateShowingTitle(titleFrameName);
 	//设置使用按钮

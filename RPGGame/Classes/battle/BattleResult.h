@@ -29,6 +29,9 @@ public:
 	//添加奖励
 	void addReward(int exp, int gold);
 	void addReward(const string& name, int number);
+	int getExp()const { return m_nExp; }
+	int getGold() const { return m_nGold; }
+private:
 	//战斗胜利
 	void battleWin(LabelAtlas* goldLabel, LabelAtlas* expLabel, LabelBMFont* dropLabel);
 	//战斗失败
