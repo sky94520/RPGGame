@@ -55,6 +55,9 @@ void BattleScene::startBattle(const unordered_map<string, int>& enemyData)
 	m_pBattleResult->setBattleOver(false);
 	m_pBattleResult->setVisible(false);
 	m_pBattleLayer->roundOver();
+	//操作按钮全为false
+	m_pPanelLayer->setVisibileOfActionBtns(false);
+	m_pPanelLayer->setVisibileOfUndoBtn(false);
 	//上场我方人员 最多4人
 	vector<Character*> characterList = GameScene::getInstance()->getCharacterList();
 	for (unsigned i = 0; i < 4; i++)

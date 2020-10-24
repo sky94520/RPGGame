@@ -9,7 +9,7 @@ BattleResult::BattleResult()
 	:m_bBattleOver(true)
 	,m_nExp(0)
 	,m_nGold(0)
-	,m_bVisibility(false)
+	,m_bVisibility(true)
 	,m_pXmlNode(nullptr)
 {
 }
@@ -33,8 +33,10 @@ bool BattleResult::init(const string& xmlPath)
 	//获取战斗结果节点，并隐藏
 	m_pXmlNode = UIWidgetManager::getInstance()->createWidgetsWithXml(xmlPath);
 	this->addChild(m_pXmlNode);
-	//m_pResultLayer = m_pXmlNode->getChildByName("battle_result_layer");
-	//m_pResultLayer->setPositionY(-visibleSize.height);
+
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+	this->setPositionY(-visibleSize.height);
+	m_bVisibility = false;
 	return true;
 }
 

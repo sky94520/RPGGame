@@ -31,6 +31,7 @@ public:
 	//是否与角色发生碰撞
 	bool isCollidedWithCharacter(const Rect& rect);
 	void movePlayer(const SDL_Point& toTile);
+	bool movePlayer(Touch* touch);
 	//改变玩家的所在层
 	void changeLayerOfPlayer(Node* layer, const Point& location);
 	//获取所有的玩家角色

@@ -24,3 +24,17 @@ function change2map01_01( ... )
 	screen.fadeOut(1.0);
 	base.setGameState(GameState.Normal);
 end
+
+--创建一个怪物
+object.create("monster", "Skeleton01", 8, 8);
+object.setTrigger("monster", TriggerType.Click, "generate_monster");
+object.setPriority("monster", Priority.Same);
+
+function generate_monster()
+	local enemies = {}
+	table.insert(enemies, {name="Goblin1", number=2})
+
+	--设置背景
+	battle.specifyBattleback("battleback1/Grassland.png", "battleback2/Grassland.png");
+	battle.startBattle(enemies);
+end

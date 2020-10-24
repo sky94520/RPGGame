@@ -487,8 +487,8 @@ int changeFightState(lua_State* pL)
 	auto id = (int)luaL_checkinteger(pL, 1);
 	int nState = (int)luaL_checkinteger(pL, 2);
 	//change fight state
-	FightState state = static_cast<FightState>(nState);
 	Fighter* fighter = getBattleFighter(id);
+	FightState state = static_cast<FightState>(nState);
 
 	auto action = fighter->changeFightState(state);
 	auto duration = action->getDuration();

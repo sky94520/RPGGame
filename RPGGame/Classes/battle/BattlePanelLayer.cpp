@@ -172,6 +172,7 @@ void BattlePanelLayer::clickUndoBtnCallback(Object* sender)
 {
 	//显示行动按钮
 	this->setVisibileOfActionBtns(true);
+	this->setVisibileOfUndoBtn(false);
 	//存在物品，则释放引用
 	if (m_pGood != nullptr)
 	{

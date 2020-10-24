@@ -90,8 +90,8 @@ function Enemy:setMagicAttack(magicAttack)
 	self.magicAttack = magicAttack;
 end
 
-function Enemy:setMagicDefense(magiDefense)
-	self.magiDefense = magicDefense;
+function Enemy:setMagicDefense(magicDefense)
+	self.magicDefense = magicDefense;
 end
 
 function Enemy:setAgility(agility)
@@ -191,7 +191,7 @@ function Goblin1:initialize(id)
 	self:setExp(1);
 	--绑定动画
 	battle.setChartletName(self.id, "Goblin1");
-	battle.changeFightState(self.id, FightState.Walk);
+	battle.changeFightState(self.id, FightState.Idle);
 end
 
 function Goblin1:hurt(afterDamage)
@@ -230,7 +230,7 @@ function StoneMonster1:initialize(id)
 	self:setExp(9);
 	--绑定动画
 	battle.setChartletName(self.id, "StoneMonster1");
-	battle.changeFightState(self.id, FightState.Walk);
+	battle.changeFightState(self.id, FightState.Idle);
 end
 
 function StoneMonster1:execute()
@@ -265,7 +265,7 @@ function DeathKnight:initialize(id)
 	self:setExp(15000);
 	--绑定动画
 	battle.setChartletName(self.id, "BowKnight");
-	battle.changeFightState(id, FightState.Walk);
+	battle.changeFightState(id, FightState.Idle);
 	battle.setFlipX(id, true);
 end
 

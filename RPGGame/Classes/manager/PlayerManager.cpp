@@ -1,5 +1,6 @@
 #include "PlayerManager.h"
 #include "../GameMacros.h"
+#include "../GameScene.h"
 
 #include "../entity/Character.h"
 #include "../entity/AStarController.h"
@@ -7,6 +8,11 @@
 
 #include "../data/StaticData.h"
 #include "../data/DynamicData.h"
+
+#include "../layer/MapLayer.h"
+#include "../layer/EffectLayer.h"
+
+#include "../manager/ScriptManager.h"
 
 PlayerManager::PlayerManager()
 {
@@ -143,6 +149,41 @@ void PlayerManager::movePlayer(const SDL_Point& toTile)
 {
 	auto controller = m_controllers.front();
 	controller->moveToward(toTile);
+}
+
+bool PlayerManager::movePlayer(Touch* touch)
+{
+	auto gameScene = GameScene::getInstance();
+	//转换成地图坐标
+	auto location = touch->getLocation();
+	auto pMapLayer = gameScene->getMapLayer();
+	auto tiledMap = pMapLayer->getTiledMap();
+	auto tileSize = tiledMap->getTileSize();
+	auto nodePos = tiledMap->convertToNodeSpace(location);
+	SDL_Point toTile = { int(nodePos.x / tileSize.width), int(nodePos.y / tileSize.height) };
+
+	//显示点击特效
+	auto collisionLayer = pMapLayer->getCollisionLayer();
+	Point pos((toTile.x + 0.5f) * tileSize.width, (toTile.y + 0.3f) * tileSize.height);
+
+	gameScene->getEffectLayer()->showClickAnimation(pos, collisionLayer);
+
+	//是否点击了相同优先级的NPC
+	LuaObject* luaObject = gameScene->getScriptManager()->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
+
+	if (luaObject != nullptr)
+	{
+		auto controller = this->getAStarController();
+		controller->setTriggerObject(luaObject);
+	}
+	//目的地无法移动
+	else if (!gameScene->isPassing(toTile))
+	{
+		return true;
+	}
+	this->movePlayer(toTile);
+
+	return true;
 }
 
 void PlayerManager::changeLayerOfPlayer(Node* layer, const Point& location)

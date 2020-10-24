@@ -179,37 +179,15 @@ void GameScene::moveToTile(EventCustom* eventCustom)
 bool GameScene::onTouchBegan(Touch* touch, SDL_Event* event)
 {
 	//只有正常状态下才可以寻路
-	if (m_gameState != GameState::Normal || m_pBagLayer->isShowing())
-		return true;
-	//转换成地图坐标
-	auto location = touch->getLocation();
-	auto tiledMap = m_pMapLayer->getTiledMap();
-	auto tileSize = tiledMap->getTileSize();
-	auto nodePos = tiledMap->convertToNodeSpace(location);
-	SDL_Point toTile = { int(nodePos.x / tileSize.width), int(nodePos.y / tileSize.height) };
-
-	//显示点击特效
-	auto collisionLayer = m_pMapLayer->getCollisionLayer();
-	Point pos((toTile.x + 0.5f) * tileSize.width, (toTile.y + 0.3f) * tileSize.height);
-
-	m_pEffectLayer->showClickAnimation(pos, collisionLayer);
-
-	//是否点击了相同优先级的NPC
-	LuaObject* luaObject = m_pScriptManager->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
-
-	if (luaObject != nullptr)
+	if (m_gameState == GameState::Normal && !m_pBagLayer->isShowing())
 	{
-		auto controller = m_pPlayerManager->getAStarController();
-		controller->setTriggerObject(luaObject);
+		return m_pPlayerManager->movePlayer(touch);
 	}
-	//目的地无法移动
-	else if (!isPassing(toTile))
+	else if (m_gameState == GameState::Fighting)
 	{
-		return true;
+		return m_pBattleScene->onTouchBegan(touch, event);
 	}
-	m_pPlayerManager->movePlayer(toTile);
-
-	return true;
+	return false;
 }
 
 void GameScene::update(float dt)
@@ -217,6 +195,10 @@ void GameScene::update(float dt)
 	m_pMapLayer->update(dt);
 	m_pPlayerManager->update(dt);
 	m_pScriptManager->update(dt, m_gameState);
+	if (m_gameState == GameState::Fighting)
+	{
+		m_pBattleScene->update(dt);
+	}
 }
 
 Node* GameScene::getCollisionLayer() const

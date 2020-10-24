@@ -67,7 +67,8 @@ void BattleLayer::addOur(Actor* actor)
 	//获得位置
 	const Json::Value& arr = StaticData::getInstance()->getValueForKey("battle_our_pos_arr");
 	int nOurNumber = m_pPriorityQueue->getOurNumber();
-	auto pos = PointFromString(arr[nOurNumber].asString());
+	string str = arr[nOurNumber].asString();
+	auto pos = PointFromString(str);
 	//设置位置
 	actor->setPosition(pos);
 	//添加到层中
