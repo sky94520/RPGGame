@@ -26,7 +26,7 @@ public:
 
 	//从文件中读取数据
 	bool read(const string& filename, bool bFirstGame);
-	bool write(const string& filename);
+	bool write(const string& filename, const string&mapName, const Point& tilePos);
 
 	Properties getTotalProperties(const string& playerName);
 	//装备

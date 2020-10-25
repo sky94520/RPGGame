@@ -1,5 +1,5 @@
 #include "UserRecord.h"
-#include "Archive.h"
+#include "XMLArchive.h"
 
 #include "../entity/Good.h"
 #include "../entity/Character.h"
@@ -45,9 +45,9 @@ bool UserRecord::read(const string& filename, bool bFirstGame)
 	return m_pArchive->read(filename, bFirstGame);
 }
 
-bool UserRecord::write(const string& filename)
+bool UserRecord::write(const string& filename, const string&mapName, const Point& tilePos)
 {
-	return m_pArchive->write(filename);
+	return m_pArchive->write(filename, mapName, tilePos);
 }
 
 Properties UserRecord::getTotalProperties(const string& playerName)

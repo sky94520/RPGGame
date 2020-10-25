@@ -37,6 +37,7 @@ bool BattleScene::init()
 	//ui层
 	m_pPanelLayer = BattlePanelLayer::create("scene/battle/battle_scene.xml");
 	m_pPanelLayer->setDelegate(this);
+	m_pPanelLayer->setVisibileOfActionBtns(false);
 	this->addChild(m_pPanelLayer);
 	//战斗结果层
 	m_pBattleResult = BattleResult::create("scene/battle/battle_result_layer.xml");
