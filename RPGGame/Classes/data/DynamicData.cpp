@@ -6,21 +6,6 @@
 
 DynamicData* DynamicData::s_pInstance = nullptr;
 
-DynamicData* DynamicData::getInstance()
-{
-	if (s_pInstance == nullptr)
-	{
-		s_pInstance = new DynamicData();
-		s_pInstance->init();
-	}
-	return s_pInstance;
-}
-
-void DynamicData::purge()
-{
-	SDL_SAFE_RELEASE_NULL(s_pInstance);
-}
-
 DynamicData::DynamicData()
 	:m_bFirstGame(true)
 	,m_nSaveDataIndex(0)

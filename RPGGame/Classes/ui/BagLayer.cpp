@@ -147,8 +147,8 @@ void BagLayer::addExp(int exp)
 {
 	//获取角色列表
 	auto playerManager = GameScene::getInstance()->getPlayerManager();
-	auto& list = playerManager->getCharacterList();
-	//数据
+	vector<Character*>&& list = playerManager->getCharacterList();
+	//角色数据
 	auto dynamicData = DynamicData::getInstance();
 	auto characterData = StaticData::getInstance()->getCharacterData();
 	//TODO:有的可能无法获得经验值
@@ -158,10 +158,9 @@ void BagLayer::addExp(int exp)
 
 		auto curExp = dynamicData->getExp(chartletName);
 		auto curLevel = dynamicData->getLevel(chartletName);
-		//获取本级的应有属性
-		auto& lvStruct = characterData->getDataByLevel(chartletName, curLevel);
-		//获取下一等级的应有属性
-		auto& nextLvStruct = characterData->getDataByLevel(chartletName, curLevel + 1);
+		//获取本级的应有属性、获取下一等级的应有属性
+		LevelUp& lvStruct = characterData->getDataByLevel(chartletName, curLevel);
+		LevelUp& nextLvStruct = characterData->getDataByLevel(chartletName, curLevel + 1);
 		//增加经验
 		curExp += exp;
 		//升级
@@ -224,7 +223,7 @@ void BagLayer::pageBtnCallback(GoodLayer* pGoodLayer, int delta)
 void BagLayer::updateGoodHook(LabelAtlas* pCostLabel, LabelAtlas* pNumberLabel, int cost, int number)
 {
 	pNumberLabel->setString(StringUtils::toString(number));
-	//价钱的更新受到当前的出售比例和打开类型有关
+	//价钱的更新受到当前的出售比例和类型有关
 	if (m_type == Type::Skill)
 	{
 		pCostLabel->setVisible(false);
@@ -255,9 +254,10 @@ void BagLayer::useBtnCallback(GoodLayer* goodLayer)
 	//根据不同类型 =》不同行为
 	switch (m_type)
 	{
-		//使用 在战斗状态下会消耗此次行动
+		
 	case BagLayer::Type::Bag:
 	case BagLayer::Type::Skill:
+		//使用 在战斗状态下会消耗此次行动
 		gameScene->useGood(good);
 		break;
 	case BagLayer::Type::ShopBuy:
@@ -386,8 +386,7 @@ void BagLayer::selectGoodCallback(GoodLayer* goodLayer, GoodInterface* item)
 			auto chartletName = player->getChartletName();
 			oldEquip = dynamicData->getEquipment(chartletName, good->getEquipmentType());
 		}
-		//更改按钮显示 装备 or 卸下
-		//点击了已经装备的武器，显示卸下 并设置装备属性相反
+		//更改按钮显示 装备 or 卸下 点击了已经装备的武器，显示卸下 并设置装备属性相反
 		if (good == oldEquip)
 		{
 			equipFrameName = STATIC_DATA_STRING("unequip_frame_name");
@@ -433,7 +432,6 @@ void BagLayer::toggle(Object* sender)
 void BagLayer::updateGoodLayer(const string& titleFrameName, const string& useBtnFrameName
 	, const string& equipBtnFrameName, const vector<Good*>& vec, int curPage)
 {
-	//this->setVisible(true);
 	//设置title
 	m_pGoodLayer->updateShowingTitle(titleFrameName);
 	//设置使用按钮

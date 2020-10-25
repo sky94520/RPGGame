@@ -73,8 +73,10 @@ public:
 	virtual bool onTouchBegan(Touch* touch,SDL_Event* event);
 	void update(float dt);
 	Node* getCollisionLayer() const;
+
 	GameState getGameState() const { return m_gameState; }
 	void setGameState(GameState state);
+
 	vector<Character*> getCharacterList();
 	LuaStack* getLuaStack() const;
 public: //OperationDelegate

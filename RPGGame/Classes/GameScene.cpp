@@ -235,6 +235,7 @@ LuaStack* GameScene::getLuaStack() const
 //---OperationDelegate---
 void GameScene::openBag()
 {
+	//m_pOperationLayer的回调函数
 	m_pOperationLayer->setVisible(false);
 	m_pBagLayer->setType(BagLayer::Type::Bag);
 	m_pBagLayer->setVisible(true);
@@ -242,6 +243,7 @@ void GameScene::openBag()
 
 void GameScene::saveProgress()
 {
+	//m_pOperationLayer的回调函数
 }
 //---GoodLayerDelegate---
 void GameScene::pageBtnCallback(GoodLayer* goodLayer, int value)
@@ -361,7 +363,7 @@ void GameScene::startBattle(const unordered_map<string, int>& enemyData)
 
 void GameScene::endBattle()
 {
-	//恢复 TODO
+	//恢复为正常状态
 	this->setGameState(GameState::Normal);
 	//战斗场景消失
 	m_pBattleScene->setVisible(false);
@@ -370,8 +372,7 @@ void GameScene::endBattle()
 	m_pMapLayer->setVisible(true);
 	//操作层
 	m_pOperationLayer->setTouchEnabled(true);
-	//m_pOperationLayer->setPosition(Point::ZERO);
-	//解锁
+	//解锁角色
 	m_pBagLayer->unlockPlayer();
 	//播放原来的bgm
 	auto bgm = m_pMapLayer->getBGMFilename();

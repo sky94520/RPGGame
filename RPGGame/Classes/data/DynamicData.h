@@ -18,8 +18,19 @@ struct PlayerData;
 class DynamicData : public Object
 {
 public:
-	static DynamicData* getInstance();
-	static void purge();
+	static DynamicData* getInstance()
+	{
+		if (s_pInstance == nullptr)
+		{
+			s_pInstance = new DynamicData();
+			s_pInstance->init();
+		}
+		return s_pInstance;
+	}
+	static void purge()
+	{
+		SDL_SAFE_RELEASE_NULL(s_pInstance);
+	}
 public:
 	//读取存档
 	bool initializeSaveData(int idx);

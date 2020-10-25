@@ -171,13 +171,10 @@ bool PlayerManager::movePlayer(Touch* touch)
 	//是否点击了相同优先级的NPC
 	LuaObject* luaObject = gameScene->getScriptManager()->getClickedNPC(Rect(nodePos, Size(1.f, 1.f)), PRIORITY_SAME);
 
-	if (luaObject != nullptr)
-	{
-		auto controller = this->getAStarController();
-		controller->setTriggerObject(luaObject);
-	}
+	auto controller = this->getAStarController();
+	controller->setTriggerObject(luaObject);
 	//目的地无法移动
-	else if (!gameScene->isPassing(toTile))
+	if (luaObject == nullptr && !gameScene->isPassing(toTile))
 	{
 		return true;
 	}
