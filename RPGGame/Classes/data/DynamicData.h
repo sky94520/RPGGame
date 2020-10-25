@@ -66,7 +66,7 @@ public:
 	//获取玩家的装备
 	Good* getEquipment(const string& playerName, EquipmentType equipmentType);
 	bool removeEquipment(const string& playerName, const string& goodName, int number);
-	//拆分装备
+	//拆分和添加装备
 	bool splitEquipment(const string& playerName, EquipmentType type, Good* good, int number);
 	void overlyingEquipment(const string& playerName, Good* good, int number);
 	//添加物品到背包
@@ -89,7 +89,7 @@ public:
 	const unordered_map<string, PlayerData*>& getTotalPlayerData() const;
 	PlayerData* getPlayerData(const string& name) const;
 	//获取背包物品
-	const vector<Good*>& getBagGoodList() const { return m_pUserRecord->m_bagGoodList; }
+	const vector<Good*>& getBagGoodList() const { return m_pUserRecord->bagGoodList; }
 private:
 	DynamicData();
 	~DynamicData();

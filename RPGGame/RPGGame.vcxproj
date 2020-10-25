@@ -136,6 +136,7 @@
     <ClCompile Include="Classes\battle\Fighter.cpp" />
     <ClCompile Include="Classes\battle\HpBar.cpp" />
     <ClCompile Include="Classes\battle\PriorityQueue.cpp" />
+    <ClCompile Include="Classes\data\Archive.cpp" />
     <ClCompile Include="Classes\data\CharacterData.cpp" />
     <ClCompile Include="Classes\data\DynamicData.cpp" />
     <ClCompile Include="Classes\data\StaticData.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Classes\battle\Fighter.h" />
     <ClInclude Include="Classes\battle\HpBar.h" />
     <ClInclude Include="Classes\battle\PriorityQueue.h" />
+    <ClInclude Include="Classes\data\Archive.h" />
     <ClInclude Include="Classes\data\CharacterData.h" />
     <ClInclude Include="Classes\data\DynamicData.h" />
     <ClInclude Include="Classes\data\StaticData.h" />

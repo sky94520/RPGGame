@@ -43,7 +43,7 @@ bool DynamicData::initializeSaveData(int idx)
 
 	m_nSaveDataIndex = idx;
 	//读取文件 获取数据
-	m_pUserRecord->readFromXML(filepath, m_bFirstGame);
+	m_pUserRecord->read(filepath, m_bFirstGame);
 
 	return true;
 }
@@ -152,114 +152,32 @@ vector<Good*>& DynamicData::getSkills(const string& playerName)
 
 Good* DynamicData::getEquipment(const string& playerName, EquipmentType equipmentType)
 {
-	PlayerData* data = m_pUserRecord->players.at(playerName);
-	auto& equipments = data->equipments;
-	//获取用户
-	auto iter = equipments.find(equipmentType);
-
-	if (iter == equipments.end())
-		return nullptr;
-	else
-		return iter->second;
+	return m_pUserRecord->getEquipment(playerName, equipmentType);
 }
 
 bool DynamicData::removeEquipment(const string& playerName, const string& goodName, int number)
 {
-	bool ret = false;
-	PlayerData* data = m_pUserRecord->players[playerName];
-	auto& equipments = data->equipments;
-
-	auto it = find_if(equipments.begin(), equipments.end(), [&goodName](const pair<EquipmentType, Good*>& it)
-	{
-		return (it.second)->getTableName() == goodName;
-	});
-	//找到对应的装备
-	if (it != equipments.end())
-	{
-		auto good = it->second;
-		auto num = good->getNumber() - number;
-
-		SDL_SAFE_RETAIN(good);
-
-		if (num > 0)
-		{
-			good->setNumber(num);
-		}
-		else if (num == 0)
-		{
-			good->unequip();
-			good->setNumber(0);
-			SDL_SAFE_RELEASE(good);
-
-			equipments.erase(it);
-		}
-		SDL_SAFE_RELEASE(good);
-	}
-	return ret;
+	return m_pUserRecord->removeEquipment(playerName, goodName, number);
 }
 
 bool DynamicData::splitEquipment(const string& playerName, EquipmentType type, Good* good, int number)
 {
-	SDL_SAFE_RETAIN(good);
-	auto count = good->getNumber();
-	bool ret = false;
-
-	if (count > number)
-	{
-		good->setNumber(count - number);
-		ret = true;
-	}
-	else if (count == number)
-	{
-		this->unequip(playerName, type);
-		ret = true;
-	}
-	//添加拆分的物品到背包
-	if (ret)
-		this->addGood(good->getPrototype(), number);
-	SDL_SAFE_RELEASE(good);
-
-	return ret;
+	return m_pUserRecord->splitEquipment(playerName, type, good, number);
 }
 
 void DynamicData::overlyingEquipment(const string& playerName, Good* good, int number)
 {
-	good->setNumber(good->getNumber() + number);
+	m_pUserRecord->overlyingEquipment(playerName, good, number);
 }
 
 Good* DynamicData::addGood(const string& goodName, int number)
 {
-	Good* good = nullptr;
-	vector<Good*>& goodList = m_pUserRecord->m_bagGoodList;
-	//是否存在该物品
-	auto it = find_if(goodList.begin(), goodList.end(), [&goodName](Good* good)
-	{
-		return good->getPrototype() == goodName;
-	});
-	//背包中存在该物品
-	if (it != goodList.end())
-	{
-		good = *it;
-		good->setNumber(good->getNumber() + number);
-	}//背包中不存在该物品，创建
-	else
-	{
-		good = Good::create(goodName, number);
-		SDL_SAFE_RETAIN(good);
-		goodList.push_back(good);
-	}
-	return good;
+	return m_pUserRecord->addGood(goodName, number);
 }
 
 void DynamicData::updateGood(Good* good)
 {
-	if (good->getNumber() > 0)
-		return;
-	//移除
-	vector<Good*>& goodList = m_pUserRecord->m_bagGoodList;
-	auto it = find(goodList.begin(), goodList.end(), good);
-	goodList.erase(it);
-	SDL_SAFE_RELEASE(good);
+	m_pUserRecord->updateGood(good);
 }
 
 Good* DynamicData::getGood(const string& goodName)
@@ -269,66 +187,12 @@ Good* DynamicData::getGood(const string& goodName)
 
 bool DynamicData::removeGood(const string& goodName, int number)
 {
-	bool ret = false;
-	vector<Good*>& goodList = m_pUserRecord->m_bagGoodList;
-	//背包中是否存在该物品
-	auto it = find_if(goodList.begin(), goodList.end(), [goodName](Good*good)
-	{
-		return good->getPrototype() == goodName;
-	});
-	//背包中不存在该物品
-	if (it == goodList.end())
-	{
-		return false;
-	}
-	auto good = *it;
-	auto oldNumber = good->getNumber();
-	SDL_SAFE_RETAIN(good);
-	//存在足够的物品 扣除
-	if (good->getNumber() > number)
-	{
-		good->setNumber(oldNumber - number);
-		ret = true;
-	}//直接删除
-	else if (oldNumber == number)
-	{
-		good->setNumber(0);
-		goodList.erase(it);
-
-		SDL_SAFE_RELEASE(good);
-		ret = true;
-	}
-	//操作成功，才进行存档更新
-	SDL_SAFE_RELEASE(good);
-	return ret;
+	return m_pUserRecord->removeGood(goodName, number);
 }
 
 bool DynamicData::removeGood(Good* good, int number)
 {
-	vector<Good*>& goodList = m_pUserRecord->m_bagGoodList;
-	bool ret = false;
-	auto goodNum = good->getNumber();
-	//个数足够
-	if (goodNum > number)
-	{
-		good->setNumber(goodNum - number);
-		ret = true;
-	}
-	else if (goodNum == number)
-	{
-		auto it = find_if(goodList.begin(), goodList.end(), [good](Good* g)
-		{
-			return good == g;
-		});
-		if (it != goodList.end())
-		{
-			goodList.erase(it);
-			SDL_SAFE_RELEASE(good);
-
-			ret = true;
-		}
-	}
-	return ret;
+	return m_pUserRecord->removeGood(good, number);
 }
 
 void DynamicData::equip(const string&playerName, int uniqueId, Good* good)

@@ -1,13 +1,17 @@
 #include "UserRecord.h"
+#include "Archive.h"
+
 #include "../entity/Good.h"
 #include "../entity/Character.h"
+
 #include "../data/StaticData.h"
-#include "../data/CharacterData.h"
 
 UserRecord::UserRecord()
 	:goldNumber(0)
 	,sellRatio(0.f)
 {
+	m_pArchive = new XMLArchive();
+	m_pArchive->setUserRecord(this);
 }
 
 UserRecord::~UserRecord()
@@ -27,62 +31,23 @@ UserRecord::~UserRecord()
 		it = players.erase(it);
 	}
 	//释放背包物品
-	for (auto it = m_bagGoodList.begin(); it != m_bagGoodList.end();)
+	for (auto it = bagGoodList.begin(); it != bagGoodList.end();)
 	{
 		auto good = *it;
-		it = m_bagGoodList.erase(it);
+		it = bagGoodList.erase(it);
 		SDL_SAFE_RELEASE(good);
 	}
+	SDL_SAFE_DELETE(m_pArchive);
 }
 
-bool UserRecord::readFromXML(const string& filename, bool bFirstGame)
+bool UserRecord::read(const string& filename, bool bFirstGame)
 {
-	rapidxml::xml_document<> doc;
-	std::unique_ptr<char> text_ptr = std::move(FileUtils::getInstance()->getUniqueDataFromFile(filename));
-	std::string text;
-
-	//文件读取失败
-	if (text_ptr == nullptr)
-		return false;
-	try
-	{
-		doc.parse<0>(text_ptr.get());
-		//root
-		auto root = doc.first_node();
-		//对节点进行遍历
-		for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
-		{
-			string name = node->name();
-
-			if (name == "map")
-				mapFilename = node->value();
-			else if (name == "tile_position")
-				tileCoordinate = PointFromString(node->value());
-			else if (name == "gold")
-				goldNumber = SDL_atoi(node->value());
-			else if (name == "sell_ratio")
-				sellRatio = SDL_atof(node->value());
-			else if (name == "direction")
-				;
-			else if (name == "player")
-				this->parsePlayer(node, bFirstGame);
-			else if (name == "bag")
-				this->parseBag(node);
-		}
-	}
-	catch(std::runtime_error e)
-	{
-		std::cout << e.what() << std::endl;
-	}
-	//清除缓存
-	text_ptr.reset();
-
-	return true;
+	return m_pArchive->read(filename, bFirstGame);
 }
 
-bool UserRecord::writeToXML(const string& filename)
+bool UserRecord::write(const string& filename)
 {
-	return true;
+	return m_pArchive->write(filename);
 }
 
 Properties UserRecord::getTotalProperties(const string& playerName)
@@ -247,97 +212,188 @@ void UserRecord::setProperty(const string& playerName, PropertyType type, unsign
 	}
 }
 
+Good* UserRecord::getEquipment(const string& playerName, EquipmentType equipmentType)
+{
+	PlayerData* data = this->players.at(playerName);
+	auto& equipments = data->equipments;
+	//获取用户
+	auto iter = equipments.find(equipmentType);
+
+	if (iter == equipments.end())
+		return nullptr;
+	else
+		return iter->second;
+}
+
+bool UserRecord::removeEquipment(const string& playerName, const string& goodName, int number)
+{
+	bool ret = false;
+	PlayerData* data = this->players[playerName];
+	auto& equipments = data->equipments;
+
+	auto it = find_if(equipments.begin(), equipments.end(), [&goodName](const pair<EquipmentType, Good*>& it)
+	{
+		return (it.second)->getTableName() == goodName;
+	});
+	//找到对应的装备
+	if (it != equipments.end())
+	{
+		auto good = it->second;
+		auto num = good->getNumber() - number;
+
+		SDL_SAFE_RETAIN(good);
+
+		if (num > 0)
+		{
+			good->setNumber(num);
+		}
+		else if (num == 0)
+		{
+			good->unequip();
+			good->setNumber(0);
+			SDL_SAFE_RELEASE(good);
+
+			equipments.erase(it);
+		}
+		SDL_SAFE_RELEASE(good);
+	}
+	return ret;
+}
+
+bool UserRecord::splitEquipment(const string& playerName, EquipmentType type, Good* good, int number)
+{
+	SDL_SAFE_RETAIN(good);
+	auto count = good->getNumber();
+	bool ret = false;
+
+	if (count > number)
+	{
+		good->setNumber(count - number);
+		ret = true;
+	}
+	else if (count == number)
+	{
+		this->unequip(playerName, type);
+		ret = true;
+	}
+	//添加拆分的物品到背包
+	if (ret)
+		this->addGood(good->getPrototype(), number);
+	SDL_SAFE_RELEASE(good);
+
+	return ret;
+}
+
+void UserRecord::overlyingEquipment(const string& playerName, Good* good, int number)
+{
+	good->setNumber(good->getNumber() + number);
+}
+
 Good* UserRecord::getGood(const string& goodName)
 {
 	Good* good = nullptr;
-	auto it = find_if(m_bagGoodList.begin(), m_bagGoodList.end(), [&goodName](Good* good)
+	auto it = find_if(bagGoodList.begin(), bagGoodList.end(), [&goodName](Good* good)
 	{
 		return good->getPrototype() == goodName;
 	});
-	if (it != m_bagGoodList.end())
+	if (it != bagGoodList.end())
 	{
 		good = *it;
 	}
 	return good;
 }
 
-void UserRecord::parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame)
+Good* UserRecord::addGood(const string& goodName, int number)
 {
-	string playerName;
-	PlayerData* data = new PlayerData();
-	//获取player节点的属性
-	for (auto attr = root->first_attribute(); attr != nullptr; attr = attr->next_attribute())
+	Good* good = nullptr;
+	//是否存在该物品
+	auto it = find_if(bagGoodList.begin(), bagGoodList.end(), [&goodName](Good* good)
 	{
-		auto name = attr->name();
-		auto value = attr->value();
-
-		if (strcmp(name, "name") == 0)
-			playerName = value;
-		else if (strcmp(name, "level") == 0)
-			data->level = SDL_atoi(value);
-		else if (strcmp(name, "exp") == 0)
-			data->exp = SDL_atoi(value);
-	}
-	//技能
-	auto skillRoot = root->first_node("skill");
-	if (skillRoot != nullptr) {
-		this->parseSkill(skillRoot, data);
-	}
-	players.insert(make_pair(playerName, data));
-	//第一次进入游戏，使用预设的级别一
-	if (bFirstGame)
+		return good->getPrototype() == goodName;
+	});
+	//背包中存在该物品
+	if (it != bagGoodList.end())
 	{
-		auto characterData = StaticData::getInstance()->getCharacterData();
-		auto &lvStruct = characterData->getDataByLevel(playerName, 1);
-		auto &properties = lvStruct.properties;
-		//设置属性
-		data->properties = properties;
-		data->maxHp = lvStruct.properties.hp;
-		data->maxMp = lvStruct.properties.mp;
-	}
-}
-
-void UserRecord::parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData)
-{
-	//解析并创建技能
-	string skillName = root->first_attribute("name")->value();
-	Good* skill = Good::create(skillName);
-	skill->retain();
-	playerData->skills.push_back(skill);
-}
-
-void UserRecord::parseBag(rapidxml::xml_node<>* root)
-{
-	//背包物品<good name="Herbs" number="2">
-	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
+		good = *it;
+		good->setNumber(good->getNumber() + number);
+	}//背包中不存在该物品，创建
+	else
 	{
-		//<good name="Herbs" number="2">
-		auto nameAttr = node->first_attribute("name");
-		auto numberAttr = node->first_attribute("number");
-		//获取物品的名称和数量
-		string name = nameAttr->value();
-		int number = 1;
-		if (numberAttr != nullptr) {
-			number = SDL_atoi(numberAttr->value());
-		}
-		//创建物品
-		Good* good = Good::create(name, number);
+		good = Good::create(goodName, number);
 		SDL_SAFE_RETAIN(good);
-		m_bagGoodList.push_back(good);
+		bagGoodList.push_back(good);
 	}
+	return good;
 }
 
-void UserRecord::parseEquipment(rapidxml::xml_node<>* root, Character* player)
+void UserRecord::updateGood(Good* good)
 {
-	auto chartletName = player->getChartletName();
-	auto uniqueID = player->getUniqueID();
-	//解析装备 <equipment name="Sword" number="1"/>
-	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
+	if (good->getNumber() > 0)
+		return;
+	//移除
+	auto it = find(bagGoodList.begin(), bagGoodList.end(), good);
+	bagGoodList.erase(it);
+	SDL_SAFE_RELEASE(good);
+}
+
+bool UserRecord::removeGood(const string& goodName, int number)
+{
+	bool ret = false;
+	//背包中是否存在该物品
+	auto it = find_if(bagGoodList.begin(), bagGoodList.end(), [goodName](Good*good)
 	{
-		string goodName = node->first_attribute("name")->value();
-		int number = stoi(node->first_attribute("number")->value());
-		//创建并装备
-		auto good = Good::create(goodName, number);
-		this->equip(chartletName, uniqueID, good);
+		return good->getPrototype() == goodName;
+	});
+	//背包中不存在该物品
+	if (it == bagGoodList.end())
+	{
+		return false;
 	}
+	auto good = *it;
+	auto oldNumber = good->getNumber();
+	SDL_SAFE_RETAIN(good);
+	//存在足够的物品 扣除
+	if (good->getNumber() > number)
+	{
+		good->setNumber(oldNumber - number);
+		ret = true;
+	}//直接删除
+	else if (oldNumber == number)
+	{
+		good->setNumber(0);
+		bagGoodList.erase(it);
+
+		SDL_SAFE_RELEASE(good);
+		ret = true;
+	}
+	//操作成功，才进行存档更新
+	SDL_SAFE_RELEASE(good);
+	return ret;
+}
+
+bool UserRecord::removeGood(Good* good, int number)
+{
+	bool ret = false;
+	auto goodNum = good->getNumber();
+	//个数足够
+	if (goodNum > number)
+	{
+		good->setNumber(goodNum - number);
+		ret = true;
+	}
+	else if (goodNum == number)
+	{
+		auto it = find_if(bagGoodList.begin(), bagGoodList.end(), [good](Good* g)
+		{
+			return good == g;
+		});
+		if (it != bagGoodList.end())
+		{
+			bagGoodList.erase(it);
+			SDL_SAFE_RELEASE(good);
+
+			ret = true;
+		}
+	}
+	return ret;
 }
