@@ -105,6 +105,20 @@ bool GameScene::initializeMap()
 	m_pPlayerManager->initializePlayers(collisionLayer);
 	//设置中心点
 	m_pMapLayer->setViewpointFollow(m_pPlayerManager->getPlayer());
+	//调用装备的equip函数
+	auto& characters = m_pPlayerManager->getCharacterList();
+	for (auto player : characters)
+	{
+		auto chartletName = player->getChartletName();
+		auto uniqueID = player->getUniqueID();
+		PlayerData* data = DynamicData::getInstance()->getPlayerData(chartletName);
+		for (auto pair : data->equipments)
+		{
+			Good* equipment = pair.second;
+			equipment->equip(uniqueID);
+		}
+	}
+
 
 	return true;
 }
@@ -244,7 +258,26 @@ void GameScene::openBag()
 void GameScene::saveProgress()
 {
 	//m_pOperationLayer的回调函数
+		//当前所在地图
+	auto mapFilename = m_pMapLayer->getFilepath();
+	//获取主角位置和主角方向
+	auto player = m_pPlayerManager->getPlayer();
+
+	auto tilePos = m_pMapLayer->convertToTileCoordinate(player->getPosition());
+	auto nDir = static_cast<int>(player->getDirection());
+	//进行保存
+	bool ret = DynamicData::getInstance()->save(mapFilename, tilePos, nDir);
+	//提示是否保存成功
+	auto &array = StaticData::getInstance()->getValueForKey("save_result_array");
+	auto text = array[ret].asString();
+	m_pMsgLayer->showTip(text, TextPosition::Middle, 1.5f);
+
+	if (ret)
+	{
+		SoundManager::getInstance()->playEffect(STATIC_DATA_STRING("save_data_se"), 0);
+	}
 }
+
 //---GoodLayerDelegate---
 void GameScene::pageBtnCallback(GoodLayer* goodLayer, int value)
 {

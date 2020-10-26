@@ -2,7 +2,10 @@
 #include "UserRecord.h"
 
 #include "../GameMacros.h"
+#include "../GameScene.h"
 #include "../entity/Good.h"
+#include "../entity/Character.h"
+#include "../manager/PlayerManager.h"
 
 DynamicData* DynamicData::s_pInstance = nullptr;
 
@@ -22,8 +25,62 @@ bool DynamicData::init()
 {
 	m_pUserRecord = UserRecord::create();
 	SDL_SAFE_RETAIN(m_pUserRecord);
+	//读取公共存档
+	this->readPublicArchive();
 
 	return true;
+}
+
+bool DynamicData::readPublicArchive()
+{
+	//尝试打开管理存档文件
+	auto fileUtil = FileUtils::getInstance();
+	string path = fileUtil->getWritablePath();
+	//对应的存档完整路径
+	m_publicArchiveFilename = path + "public.plist";
+	m_publicArchiveMap = FileUtils::getInstance()->getValueMapFromFile(m_publicArchiveFilename);
+	//是否存在music chunk键
+	auto it = m_publicArchiveMap.find("music");
+
+	if (it != m_publicArchiveMap.end())
+	{
+		SoundManager::getInstance()->setPlayingMusic(it->second.asBool());
+	}
+	it = m_publicArchiveMap.find("chunk");
+
+	if (it != m_publicArchiveMap.end())
+	{
+		SoundManager::getInstance()->setPlayingChunk(it->second.asBool());
+	}
+	return true;
+}
+
+bool DynamicData::writePublicArchive()
+{
+	bool ret = false;
+	auto key = StringUtils::format("save%d", m_nSaveDataIndex);
+	auto it = m_publicArchiveMap.find(key);
+	int gameTime = SDL_GetTicks() / 1000;
+	ValueMap* descMap = nullptr;
+	//TODO:目前仅有一个游戏时间
+	if (it != m_publicArchiveMap.end())
+	{
+		descMap = &it->second.asValueMap();
+
+		gameTime += descMap->at("game_time").asInt();
+	}
+	else
+	{
+		m_publicArchiveMap[key] = ValueMap();
+		descMap = &m_publicArchiveMap[key].asValueMap();
+	}
+	(*descMap)["game_time"] = Value(gameTime);
+	//保存音乐和音效
+	m_publicArchiveMap["music"] = Value(SoundManager::getInstance()->isPlayingMusic());
+	m_publicArchiveMap["chunk"] = Value(SoundManager::getInstance()->isPlayingChunk());
+
+	ret = FileUtils::getInstance()->writeValueMapToFile(m_publicArchiveMap, m_publicArchiveFilename);
+	return ret;
 }
 
 bool DynamicData::initializeSaveData(int idx)
@@ -44,13 +101,17 @@ bool DynamicData::initializeSaveData(int idx)
 	m_nSaveDataIndex = idx;
 	//读取文件 获取数据
 	m_pUserRecord->read(filepath, m_bFirstGame);
-
 	return true;
 }
 
-bool DynamicData::save(const string&map,const Point& tilePos, int nDir)
+bool DynamicData::save(const string&mapFilename, const Point& tilePos, int nDir)
 {
-	return true;
+	//写入存档
+	bool ret = m_pUserRecord->write(m_filename, mapFilename, tilePos);
+	//回写管理存档
+	ret |= this->writePublicArchive();
+
+	return ret;
 }
 
 int DynamicData::getMaxHitPoint(const string& playerName)const

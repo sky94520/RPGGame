@@ -1,6 +1,7 @@
 #ifndef __XMLArchive_H__
 #define __XMLArchive_H__
 
+#include <map>
 #include <string>
 #include <SDL_Engine/SDL_Engine.h>
 #include "Archive.h"
@@ -28,7 +29,7 @@ private:
 	void parseBag(rapidxml::xml_node<>* root);
 	void writeBag(rapidxml::xml_document<>& doc, rapidxml::xml_node<>*root);
 
-	void parseEquipment(rapidxml::xml_node<>* root, Character* player);
+	void parseEquipment(rapidxml::xml_node<>* root, PlayerData* data);
 	void writeEquipment(rapidxml::xml_document<>& doc, rapidxml::xml_node<>* root, PlayerData* playerData);
 };
 #endif

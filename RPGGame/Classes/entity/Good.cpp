@@ -50,7 +50,7 @@ bool Good::init(const string& prototype, int number)
 	m_prototype = prototype;
 	//获取lua的table name，并构造lua对象
 	int uniqueID = this->getUniqueID(true);
-	m_tableName = StringUtils::format("%s%04d", m_prototype.c_str(), uniqueID);
+	m_tableName = StringUtils::format("%s_%04d", m_prototype.c_str(), uniqueID);
 	string codes = StringUtils::format("%s=%s:new()", m_tableName.c_str(), m_prototype.c_str());
 	//构造lua对象
 	LuaStack* luaStack = GameScene::getInstance()->getScriptManager()->getLuaStack();

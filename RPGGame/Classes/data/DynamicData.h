@@ -94,6 +94,8 @@ private:
 	DynamicData();
 	~DynamicData();
 	bool init();
+	bool readPublicArchive();
+	bool writePublicArchive();
 private:
 	static DynamicData* s_pInstance;
 private:
@@ -104,5 +106,8 @@ private:
 	//是否第一次进入游戏
 	bool m_bFirstGame;
 	UserRecord* m_pUserRecord;
+	//公共存档 文件名称
+	string m_publicArchiveFilename;
+	ValueMap m_publicArchiveMap;
 };
 #endif

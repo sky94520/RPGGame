@@ -77,8 +77,11 @@ bool XMLArchive::write(const string& fullpath, const string&mapName, const Point
 	//出售比例
 	string sellRatioStr = StringUtils::toString(m_pUserRecord->sellRatio);
 	rapidxml::xml_node<>* sellRatio = doc.allocate_node(rapidxml::node_element, "sell_ratio", sellRatioStr.c_str());
+	root->append_node(sellRatio);
 	//玩家状态
 	this->writePlayer(doc, root);
+	//背包物品
+	this->writeBag(doc, root);
 	//保存
 	std::string text;
 	rapidxml::print(std::back_inserter(text),doc,0);
@@ -92,22 +95,44 @@ void XMLArchive::parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame)
 	//获取player节点的属性
 	for (auto attr = root->first_attribute(); attr != nullptr; attr = attr->next_attribute())
 	{
-		auto name = attr->name();
+		string name = attr->name();
 		auto value = attr->value();
 
-		if (strcmp(name, "name") == 0)
+		if (name == "name")
 			playerName = value;
-		else if (strcmp(name, "level") == 0)
+		else if (name == "level")
 			data->level = SDL_atoi(value);
-		else if (strcmp(name, "exp") == 0)
+		else if (name == "exp")
 			data->exp = SDL_atoi(value);
+		else if (name == "maxHp")
+			data->maxHp = SDL_atoi(value);
+		else if (name == "maxMp")
+			data->maxMp = SDL_atoi(value);
+		else if (name == "hp")
+			data->properties.hp = SDL_atoi(value);
+		else if (name == "mp")
+			data->properties.mp = SDL_atoi(value);
+		else if (name == "attack")
+			data->properties.attack = SDL_atoi(value);
+		else if (name == "defense")
+			data->properties.defense = SDL_atoi(value);
+		else if (name == "magicAttack")
+			data->properties.magicAttack = SDL_atoi(value);
+		else if (name == "magicDefense")
+			data->properties.magicDefense = SDL_atoi(value);
+		else if (name == "agility")
+			data->properties.agility = SDL_atoi(value);
+		else if (name == "luck")
+			data->properties.luck = SDL_atoi(value);
 	}
-	//技能
-	auto skillRoot = root->first_node("skill");
-	if (skillRoot != nullptr) {
-		this->parseSkill(skillRoot, data);
+	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
+	{
+		string name = node->name();
+		if (name == "skill")
+			this->parseSkill(node, data);
+		else if (name == "equipment")
+			this->parseEquipment(node, data);
 	}
-	m_pUserRecord->players.insert(make_pair(playerName, data));
 	//第一次进入游戏，使用预设的级别一
 	if (bFirstGame)
 	{
@@ -119,6 +144,7 @@ void XMLArchive::parsePlayer(rapidxml::xml_node<>* root, bool bFirstGame)
 		data->maxHp = lvStruct.properties.hp;
 		data->maxMp = lvStruct.properties.mp;
 	}
+	m_pUserRecord->players.insert(make_pair(playerName, data));
 }
 
 void XMLArchive::parseSkill(rapidxml::xml_node<>* root, PlayerData* playerData)
@@ -134,9 +160,9 @@ void XMLArchive::writeSkill(rapidxml::xml_document<>& doc, rapidxml::xml_node<>*
 {
 	for (Good* skill : playerData->skills)
 	{
-		const string skillName = skill->getPrototype();
+		char* skillName = doc.allocate_string(skill->getPrototype().c_str());
 		rapidxml::xml_node<>* node = doc.allocate_node(rapidxml::node_element, "skill");
-		node->append_attribute(doc.allocate_attribute("name", skillName.c_str()));
+		node->append_attribute(doc.allocate_attribute("name", skillName));
 		root->append_node(node);
 	}
 }
@@ -164,35 +190,32 @@ void XMLArchive::parseBag(rapidxml::xml_node<>* root)
 
 void XMLArchive::writeBag(rapidxml::xml_document<>& doc, rapidxml::xml_node<>*root)
 {
-	rapidxml::xml_node<>* bagNode = doc.allocate_node(rapidxml::node_element, "player");
+	rapidxml::xml_node<>* bagNode = doc.allocate_node(rapidxml::node_element, "bag");
 	root->append_node(bagNode);
 
 	vector<Good*>& bagGoodList = m_pUserRecord->bagGoodList;
 	for (Good* good : bagGoodList)
 	{
-		string goodName = good->getPrototype();
-		string number = StringUtils::toString(good->getNumber());
+		char* goodName = doc.allocate_string(good->getPrototype().c_str());
+		char* number = doc.allocate_string(StringUtils::toString(good->getNumber()).c_str());
 
 		rapidxml::xml_node<>* node = doc.allocate_node(rapidxml::node_element, "good");
-		node->append_attribute(doc.allocate_attribute("name", goodName.c_str()));
-		node->append_attribute(doc.allocate_attribute("number", number.c_str()));
+		node->append_attribute(doc.allocate_attribute("name", goodName));
+		node->append_attribute(doc.allocate_attribute("number", number));
 		bagNode->append_node(node);
 	}
 }
 
-void XMLArchive::parseEquipment(rapidxml::xml_node<>* root, Character* player)
+void XMLArchive::parseEquipment(rapidxml::xml_node<>* node, PlayerData* data)
 {
-	auto chartletName = player->getChartletName();
-	auto uniqueID = player->getUniqueID();
 	//解析装备 <equipment name="Sword" number="1"/>
-	for (auto node = root->first_node(); node != nullptr; node = node->next_sibling())
-	{
-		string goodName = node->first_attribute("name")->value();
-		int number = stoi(node->first_attribute("number")->value());
-		//创建并装备
-		auto good = Good::create(goodName, number);
-		m_pUserRecord->equip(chartletName, uniqueID, good);
-	}
+	string goodName = node->first_attribute("name")->value();
+	int number = stoi(node->first_attribute("number")->value());
+	//创建并装备
+	auto good = Good::create(goodName, number);
+	SDL_SAFE_RETAIN(good);
+	auto type = good->getEquipmentType();
+	data->equipments.insert(make_pair(type, good));
 }
 
 void XMLArchive::writeEquipment(rapidxml::xml_document<>& doc, rapidxml::xml_node<>* root, PlayerData* playerData)
@@ -201,12 +224,12 @@ void XMLArchive::writeEquipment(rapidxml::xml_document<>& doc, rapidxml::xml_nod
 	{
 		EquipmentType type = iter2->first;
 		Good* good = iter2->second;
-		string goodName = good->getPrototype();
-		string number = StringUtils::toString(good->getNumber());
+		char* goodName = doc.allocate_string(good->getPrototype().c_str());
+		char* number = doc.allocate_string(StringUtils::toString(good->getNumber()).c_str());
 
 		rapidxml::xml_node<>* node = doc.allocate_node(rapidxml::node_element, "equipment");
-		node->append_attribute(doc.allocate_attribute("name", goodName.c_str()));
-		node->append_attribute(doc.allocate_attribute("number", number.c_str()));
+		node->append_attribute(doc.allocate_attribute("name", goodName));
+		node->append_attribute(doc.allocate_attribute("number", number));
 		root->append_node(node);
 	}
 }
@@ -220,21 +243,30 @@ void XMLArchive::writePlayer(rapidxml::xml_document<>& doc, rapidxml::xml_node<>
 		rapidxml::xml_node<>* playerNode = doc.allocate_node(rapidxml::node_element, "player");
 		root->append_node(playerNode);
 		//name="" level="" exp="" maxHp maxMp
-		playerNode->append_attribute(doc.allocate_attribute("name", name.c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("level", StringUtils::toString(data->level).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("exp", StringUtils::toString(data->exp).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("maxHp", StringUtils::toString(data->maxHp).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("maxMp", StringUtils::toString(data->maxMp).c_str()));
+		playerNode->append_attribute(doc.allocate_attribute("name", doc.allocate_string(name.c_str())));
+		map<string, int> attrs;
+		//属性
+		attrs["level"] = data->level;
+		attrs["exp"] = data->exp;
+		attrs["mapHp"] = data->maxHp;
+		attrs["maxMp"] = data->maxMp;
 		//properties
 		Properties& prop = data->properties;
-		playerNode->append_attribute(doc.allocate_attribute("hp", StringUtils::toString(prop.hp).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("mp", StringUtils::toString(prop.mp).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("attack", StringUtils::toString(prop.attack).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("defense", StringUtils::toString(prop.defense).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("magicAttack", StringUtils::toString(prop.magicAttack).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("magicDefense", StringUtils::toString(prop.magicDefense).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("agiliti", StringUtils::toString(prop.agility).c_str()));
-		playerNode->append_attribute(doc.allocate_attribute("luck", StringUtils::toString(prop.luck).c_str()));
+		attrs["hp"] = prop.hp;
+		attrs["mp"] = prop.mp;
+		attrs["attack"] = prop.attack;
+		attrs["defense"] = prop.defense;
+		attrs["magicAttack"] = prop.magicAttack;
+		attrs["magicDefense"] = prop.magicDefense;
+		attrs["agility"] = prop.agility;
+		attrs["luck"] = prop.luck;
+
+		for (auto iter2 = attrs.begin(); iter2 != attrs.end(); iter2++)
+		{
+			char* key = doc.allocate_string(iter2->first.c_str());
+			string value = StringUtils::toString(iter2->second);
+			playerNode->append_attribute(doc.allocate_attribute(key, doc.allocate_string(value.c_str())));
+		}
 		//技能
 		this->writeSkill(doc, playerNode, data);
 		//装备
